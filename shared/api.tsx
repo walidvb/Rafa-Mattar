@@ -7,8 +7,10 @@ const client = createClient({
   accessToken: process.env.CONTENTFUL_API_ACCESS_TOKEN as string,
 })
 
-export const getEntries = async () => {
-  const res = await client.getEntries()
+export const getProjects = async () => {
+  const res = await client.getEntries({
+    content_type: 'project',
+  })
   const { items } = res as { items: IProject[]}
   return items
 }

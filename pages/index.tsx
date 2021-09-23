@@ -4,7 +4,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 import logo from '../public/images/Logo Esteso Negativo WEB.png'
-import { getEntries } from '../shared/api';
+import { getProjects } from '../shared/api';
 import RichText from '../shared/ui/RichText';
 // @ts-ignore
 import { IProject } from '@types/contentful'
@@ -31,7 +31,7 @@ const Home = ({ items }: { items: IProject[]}) => {
 export default Home
 
 export const getStaticProps = async () => {
-  const items: IProject[] = await getEntries()
+  const items: IProject[] = await getProjects()
   return {
     props: { items },
   }
