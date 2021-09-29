@@ -29,6 +29,7 @@ const BackgroundDiv = styled.div`
 
 const Home = ({ items }: { items: IProject[]}) => {
   const [isDesktop, setIsDesktop] = useState(false)
+
   useEffect(() => {
     setIsDesktop(window.innerWidth > 800)
     window.addEventListener('resize', () => {
@@ -36,12 +37,13 @@ const Home = ({ items }: { items: IProject[]}) => {
     })
     return () => window.removeEventListener('resize', () => {})
   }, [])
+
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-black">
       <Head>
         <title>Futur Proche</title>
         <meta name="description" content="Futur Proche Productions" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       { isDesktop 
         ? <FullScreenVideo id={'617766691'}/>
