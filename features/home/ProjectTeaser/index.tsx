@@ -7,7 +7,7 @@ import { TwoCol } from './TwoCol';
 import { WithMask } from './WithMask';
 
 
-export type IProps = { image: Asset, title: string, shortDescription: Document };
+export type IProps = { image: Asset, title: string, shortDescription: Document | undefined };
 
 
 

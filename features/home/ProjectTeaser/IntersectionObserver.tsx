@@ -1,7 +1,7 @@
 import { useIntersection as nativeUseIntersection } from 'react-use';
 import React,  { useRef, useEffect, ReactNode, useCallback, useMemo } from 'react';
 
-export const useIntersection = ({ callback }: { callback: (percentage: number) => void; }) => {
+export const useIntersection = ({ callback }: { callback: (percentage: number, isBelowFold: boolean) => void; }) => {
   const intersectionRef = useRef<HTMLDivElement>(null);
   const intersection = nativeUseIntersection(intersectionRef, {
     root: null,
@@ -10,10 +10,11 @@ export const useIntersection = ({ callback }: { callback: (percentage: number) =
   });
   const listener = useCallback((e) => {
     // compute percentage of div in viewport
+    //@ts-ignore
     const { top } = intersectionRef.current?.getBoundingClientRect();
     const percentage = 1 - Math.abs(top / window.innerHeight);
     if (percentage > 0){
-      callback?.(percentage);
+      callback?.(percentage, top > 0);
     }
     else{
       window.removeEventListener('scroll', listener);
