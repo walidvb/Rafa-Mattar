@@ -1,6 +1,6 @@
 import Layout from '@shared/layout/Layout';
 import RichText from '@shared/ui/RichText';
-import { IProject } from '@types/contentful';
+import { IProject } from '../../@types/contentful';
 import Image from 'next/image';
 
 const ProjectPage = ({ project, }: { project: IProject }) => {

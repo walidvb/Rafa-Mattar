@@ -1,5 +1,5 @@
 // @ts-ignore
-import { IProject } from '@types/contentful';
+import { IProject } from '../types/contentful';
 import ProjectPage from '../features/Project/ProjectPage';
 import { getProjects } from '../shared/api';
 

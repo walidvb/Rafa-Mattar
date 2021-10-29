@@ -1,6 +1,6 @@
 import Layout from '@shared/layout/Layout';
 // @ts-ignore
-import { IProject, ISiteSettings } from '@types/contentful';
+import { IProject, ISiteSettings } from '../..types/contentful';
 import Head from 'next/head';
 import styled from 'styled-components';
 import RichText from '../../shared/ui/RichText';

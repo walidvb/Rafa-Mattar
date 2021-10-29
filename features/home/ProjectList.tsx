@@ -1,4 +1,4 @@
-import { IProject } from '@types/contentful';
+import { IProject } from '../../@types/contentful';
 import ProjectTeaser from './ProjectTeaser';
 
 

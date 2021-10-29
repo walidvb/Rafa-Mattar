@@ -3,7 +3,7 @@ import { getProjects } from '../shared/api';
 import RichText from '../shared/ui/RichText';
 import styled from 'styled-components'
 // @ts-ignore
-import { IProject, ISiteSettings } from '@types/contentful'
+import { IProject, ISiteSettings } from '../types/contentful'
 import HomeScreen from '../features/home/HomeScreen';
 import { getSiteSettings } from '@shared/api';
 

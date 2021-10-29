@@ -2,7 +2,7 @@
 import { getSiteSettings } from '@shared/api';
 import Layout from '@shared/layout/Layout';
 import RichText from '@shared/ui/RichText';
-import { ISiteSettings } from '@types/contentful';
+import { ISiteSettings } from '../@types/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import Image from 'next/image';
 

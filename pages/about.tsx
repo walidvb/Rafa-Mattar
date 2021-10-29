@@ -1,7 +1,7 @@
 
 import { getSiteSettings } from '@shared/api';
 import Layout from '@shared/layout/Layout';
-import { ISiteSettings } from '@types/contentful';
+import { ISiteSettings } from '../@types/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
