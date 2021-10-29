@@ -13,12 +13,15 @@ export type IProps = { image: Asset, title: string, shortDescription: Document |
 
 const ProjectTeaser = ({ layout, slug, ...props }: IProps & { slug: string, layout?: IProjectFields['homeLayout'] }) => {
   const teaser = (() => {
-    return <WithMask {...props} />
     if(layout === 'two columns'){
       return <TwoCol {...props} />
     }
-    if(layout === 'with mask')
+    if(layout === 'with mask'){
       return <WithMask {...props} />
+    }
+    if(layout === 'full width'){
+      return <WithMask {...props} />
+    }
   })()
 
   return <Link href={`${slug}`}>

@@ -4,7 +4,8 @@ import { IProps } from './index';
 import styled from 'styled-components';
 import { useIntersection } from './IntersectionObserver';
 import { useCallback, useState } from 'react';
-import { map } from '@shared/helpers';
+import { map } from '@shared/helpers';;
+import MaskedImage from '@shared/ui/Mask';
 
 const Wrapper = styled.div`
   grid-template-columns: 1fr var(--column-width, 0);
@@ -41,7 +42,15 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   }}>
     <div className="relative">
       <div className="flex place-content-center items-center h-full">
-        <Image src={'https:' + image.fields.file.url} alt={image.fields.title} width={200} height={200} />
+        <MaskedImage
+          src={'https:' + image.fields.file.url} alt={image.fields.title}
+          width={800}
+          height={800}
+          style={{
+            width: '812',
+            height: '80vh',
+          }}
+        />
       </div>
     </div>
     {width !== 0 && <div className="relative bg-gray-400 text-white ">
