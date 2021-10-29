@@ -8,7 +8,7 @@ type IProps = { image: Asset, title: string };
 
 const TwoCol = ({ image, title }: IProps) => {
   return <div className="min-h-screen min-w-screen grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
-    <div className="grid place-content-center text-2xl">
+    <div className="grid place-content-center text-4xl">
       {title}
     </div>
     <div className="relative">

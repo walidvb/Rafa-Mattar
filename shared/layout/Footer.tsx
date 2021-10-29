@@ -9,9 +9,9 @@ const Footer = ({ }) => {
     <div>
       Via Gallo 6
       <br />
-      <a href="mailto:info@futurproche.com">info@futurproche.com</a>
+      <a className="hover:text-black" href="mailto:info@futurproche.com">info@futurproche.com</a>
       <br />
-      <a href="tel:+393287312924">+39 3287312924</a>
+      <a className="hover:text-black" href="tel:+393287312924">+39 3287312924</a>
     </div>
   </div>
 }

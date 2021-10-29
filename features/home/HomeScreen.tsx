@@ -23,7 +23,7 @@ const Intro = ({ textData }: { textData: Document}) => {
   return <Slide className="grid place-content-center md:grid-cols-[70ch] px-4 min-h-[60vh] md:min-h-screen">
     <Link href="/about">
       <a className="hover:text-brand">
-        <div className="font-serif text-3xl md:text-6xl font-bold md:leading-[1.2em]">
+        <div className="text-3xl md:text-4xl font-bold md:leading-[1.2em]">
           {documentToReactComponents(textData)}
         </div>
       </a>
@@ -35,7 +35,11 @@ const Outro = () => {
   return <Slide className="grid place-content-center px-4 text-center min-h-[60vh] md:min-h-screen">
     <Link href="/team">
       <a className="text-4xl hover:text-brand" >
-        Antoine Harari / Valeria Mazzucchi
+        Antoine Harari
+        <br className="md:hidden" />
+        &nbsp;/&nbsp;
+        <br className="md:hidden" />
+        Valeria Mazzucchi
       </a>
     </Link>
     <div className="text-gray-400 mt-6">
