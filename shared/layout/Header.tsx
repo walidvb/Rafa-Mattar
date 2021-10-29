@@ -1,8 +1,7 @@
+import logoSmall from '@public/images/logo_small.png';
 import Image from 'next/image';
-
-import logo from '@public/images/logo.png'
-import logoSmall from '@public/images/logo_small.png'
 import Link from 'next/link';
+
 
 const Header = ({ }) => {
 

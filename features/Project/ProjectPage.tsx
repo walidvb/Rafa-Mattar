@@ -4,7 +4,6 @@ import { IProject } from '@types/contentful';
 import Image from 'next/image';
 
 const ProjectPage = ({ project, }: { project: IProject }) => {
-    console.log(project, project.fields)
     const { fields: { 
       shortDescription,
       headerImage,
