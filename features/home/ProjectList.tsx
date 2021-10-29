@@ -9,6 +9,7 @@ const ProjectList = ({ projects }: { projects: IProject[]}) => {
         key={project.sys.id}
         image={project.fields.homeImage}
         title={project.fields.title}
+        shortDescription={project.fields.shortDescription}
         slug={project.fields.slug}
       />
     )}
