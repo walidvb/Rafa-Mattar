@@ -9,13 +9,15 @@ const client = createClient({
   accessToken: process.env.CONTENTFUL_API_ACCESS_TOKEN as string,
 })
 
-export const getProjects = async () => {
+export const getProjects = async (search = {}) => {
   const res = await client.getEntries({
     content_type: 'project',
+    ...search
   })
   const { items: projects } = res as { items: IProject[]}
   return projects
 }
+
 
 export const getSiteSettings = async () => {
   const res = await client.getEntry(SITE_SETTINGS_ID)

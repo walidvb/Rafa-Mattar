@@ -7,6 +7,12 @@ export interface IProjectFields {
   /** Title */
   title: string;
 
+  /** slug */
+  slug: string;
+
+  /** Home Layout */
+  homeLayout?: "two columns" | "full width" | "with mask" | undefined;
+
   /** Short Description */
   shortDescription?: Document | undefined;
 
@@ -21,9 +27,6 @@ export interface IProjectFields {
 
   /** Body */
   body?: Document | undefined;
-
-  /** Home Layout */
-  homeLayout?: "two columns" | "full width" | "with mask" | undefined;
 }
 
 export interface IProject extends Entry<IProjectFields> {

@@ -10,10 +10,6 @@ import { Document } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 
-function Project({ project, settings }: { project: IProject, settings: ISiteSettings }) {
-  const { fields: { shortDescription } } = project
-  return <RichText data={shortDescription} />
-}
 
 const Slide = styled.div`
   width: 100vw;
@@ -35,7 +31,7 @@ const Intro = ({ textData }: { textData: Document}) => {
 const Outro = () => {
   return <Slide className="grid place-content-center px-4 min-h-full text-center">
     <Link href="/team">
-      <a className="text-4xl" >
+      <a className="text-4xl hover:text-brand" >
         Antoine Harari / Valeria Mazzucchi
       </a>
     </Link>

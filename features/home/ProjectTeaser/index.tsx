@@ -2,6 +2,7 @@
 import { Asset } from 'contentful';
 import { IProjectFields } from '../../../@types/contentful.d';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type IProps = { image: Asset, title: string };
 
@@ -16,11 +17,19 @@ const TwoCol = ({ image, title }: IProps) => {
   </div>
 }
 
-const ProjectTeaser = ({ layout, ...props }: IProps & { layout?: IProjectFields['homeLayout'] }) => {
-  if(layout === 'two columns'){
+const ProjectTeaser = ({ layout, slug, ...props }: IProps & { slug: string, layout?: IProjectFields['homeLayout'] }) => {
+  const teaser = (() => {
+    if(layout === 'two columns'){
+      return <TwoCol {...props} />
+    }
     return <TwoCol {...props} />
-  }
-  return <TwoCol {...props} />
+  })()
+
+  return <Link href={`${slug}`}>
+    <a>
+      {teaser}
+    </a>
+  </Link>
 }
 
 export default ProjectTeaser
