@@ -1,16 +1,9 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-
-import logo from '../public/images/Logo Esteso Negativo WEB.png'
 import { getProjects } from '../shared/api';
 import RichText from '../shared/ui/RichText';
 import styled from 'styled-components'
 // @ts-ignore
 import { IProject } from '@types/contentful'
-import FullScreenVideo from '../entities/FullScreenVideo';
-import { useEffect, useState } from 'react'
 
 function Project({ project }: { project: IProject}){
   const { fields: { shortDescription } } = project
@@ -18,39 +11,47 @@ function Project({ project }: { project: IProject}){
   return <RichText data={shortDescription} />
 }
 import img from '@public/images/coming_soon.jpg'
+import Header from '../shared/layout/Header';
+import Layout from '@shared/layout/Layout'
+import ProjectList from '../features/home/ProjectList';
 
-const BackgroundDiv = styled.div`
-  background-image: url(${img.src});
+const Slide = styled.div`
   width: 100vw;
   height: 100vh;
-  background-size: cover;
-  background-position: center;
 `
 
-const Home = ({ items }: { items: IProject[]}) => {
-  const [isDesktop, setIsDesktop] = useState(false)
+const Intro = () => {
+  return <Slide className="grid place-content-center md:grid-cols-[70ch] px-4 min-h-full">
+    <div className="font-serif text-3xl md:text-6xl font-bold">
+      Ma allora io le potrei dire anche con il rispetto per l&apos;autorità, che anche soltanto le due cose come vice-sindaco, capisce? Non si intrometta!
+    </div>
+  </Slide>
+}
 
-  useEffect(() => {
-    setIsDesktop(window.innerWidth > 800)
-    window.addEventListener('resize', () => {
-      setIsDesktop(window.innerWidth > 800)
-    })
-    return () => window.removeEventListener('resize', () => {})
-  }, [])
+const Outro = () => {
+  return <Slide className="grid place-content-center px-4 min-h-full text-center">
+    <div className="text-4xl">
+      Antoine Harari / Valeria Mazzucchi
+    </div>
+    <div className="text-gray-400 mt-6">
+      Founders of Futur Proche
+    </div>
+  </Slide>
+}
+
+const Home = ({ items }: { items: IProject[]}) => {
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-black">
+    <Layout>
       <Head>
         <title>Futur Proche</title>
         <meta name="description" content="Futur Proche Productions" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      { isDesktop 
-        ? <FullScreenVideo id={'617766691'}/>
-        : <BackgroundDiv />
-      }
-      {/* <Image src={logo} alt="logo"/> */}
-    </div>
+      <Intro />
+      <ProjectList />
+      <Outro />
+    </Layout>
   )
 }
 
