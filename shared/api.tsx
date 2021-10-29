@@ -11,6 +11,6 @@ export const getProjects = async () => {
   const res = await client.getEntries({
     content_type: 'project',
   })
-  const { items } = res as { items: IProject[]}
-  return items
+  const { items: projects } = res as { items: IProject[]}
+  return projects
 }

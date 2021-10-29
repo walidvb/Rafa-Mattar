@@ -5,7 +5,7 @@ import { Document } from "@contentful/rich-text-types";
 
 export interface IProjectFields {
   /** Title */
-  title?: string | undefined;
+  title: string;
 
   /** Short Description */
   shortDescription?: Document | undefined;
@@ -21,6 +21,9 @@ export interface IProjectFields {
 
   /** Body */
   body?: Document | undefined;
+
+  /** Home Layout */
+  homeLayout?: "two columns" | "full width" | "with mask" | undefined;
 }
 
 export interface IProject extends Entry<IProjectFields> {
