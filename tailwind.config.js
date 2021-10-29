@@ -4,8 +4,8 @@ module.exports = {
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     fontFamily: {
-      body: ['sparkregular', , "Times New Roman", "Times", "serif"],
-      serif: ['sparkregular', , "Times New Roman", "Times", "serif"],
+      body: ['spratregular', "Times New Roman", "Times", "serif"],
+      serif: ['spratregular', "Times New Roman", "Times", "serif"],
     },
     extend: {
       colors: {
