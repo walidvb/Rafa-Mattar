@@ -6,6 +6,7 @@ import { useIntersection } from './IntersectionObserver';
 import { useCallback, useState } from 'react';
 import { map } from '@shared/helpers';;
 import MaskedImage from '@shared/ui/Mask';
+import { Layout } from '@shared/layout/Layout';
 
 const Wrapper = styled.div`
   grid-template-columns: 1fr var(--column-width, 0);
@@ -24,14 +25,15 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   
   const onRatioChange = useCallback((percentage, isBelowFold) => {
     if (isBelowFold){
-      if (percentage > .7){
-        setWidth(Math.min(1, Math.max(0, map(percentage, .7, .9, 0, 1))))
+      if (percentage > .85){
+        setWidth(Math.min(1, Math.max(0, map(percentage, .85, .95, 0, 1))))
       }
       else{
         setWidth(0)
       }
     }
     else{
+      setWidth(1)
     }
   }, [setWidth])
 
@@ -46,10 +48,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
           src={'https:' + image.fields.file.url} alt={image.fields.title}
           width={800}
           height={800}
-          style={{
-            width: '812',
-            height: '80vh',
-          }}
+          // layout="responsive"
         />
       </div>
     </div>
