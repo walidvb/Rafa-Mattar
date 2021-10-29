@@ -51,7 +51,7 @@ export interface ISiteSettingsFields {
   introText: Document;
 
   /** About */
-  about?: Document | undefined;
+  about: Document;
 
   /** Valeria Bio */
   valeriaBio: Document;

@@ -22,9 +22,13 @@ const Slide = styled.div`
 
 const Intro = ({ textData }: { textData: Document}) => {
   return <Slide className="grid place-content-center md:grid-cols-[70ch] px-4 min-h-full">
-    <div className="font-serif text-3xl md:text-6xl font-bold md:leading-[1.2em]">
-      {documentToReactComponents(textData)}
-    </div>
+    <Link href="/about">
+      <a className="hover:text-brand">
+        <div className="font-serif text-3xl md:text-6xl font-bold md:leading-[1.2em]">
+          {documentToReactComponents(textData)}
+        </div>
+      </a>
+    </Link>
   </Slide>
 }
 

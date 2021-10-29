@@ -3,7 +3,11 @@ module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './entities/**/*.{js,ts,jsx,tsx}', './shared/**/*.{js,ts,jsx,tsx}', './features/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brand: '#FC4949',
+      }
+    },
   },
   variants: {
     extend: {},
