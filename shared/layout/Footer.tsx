@@ -4,7 +4,7 @@ import logo from '@public/images/logo.png'
 
 const Footer = ({ }) => {
 
-  return <div className="h-20 md:flex flex-row flex-grow-0  px-4 justify-between text-gray-400">
+  return <div className="leading-10 md:flex flex-row flex-grow-0 py-8 px-4 justify-between text-gray-400 items-center">
     <div className="">FUTUR PROCHE</div>
     <div>
       Via Gallo 6

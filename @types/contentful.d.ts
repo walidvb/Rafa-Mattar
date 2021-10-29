@@ -17,7 +17,7 @@ export interface IProjectFields {
   homeImage: Asset;
 
   /** header image */
-  headerImage?: Asset | undefined;
+  headerImage: Asset;
 
   /** Body */
   body?: Document | undefined;
@@ -43,7 +43,43 @@ export interface IProject extends Entry<IProjectFields> {
   };
 }
 
-export type CONTENT_TYPE = "project";
+export interface ISiteSettingsFields {
+  /** Couple Image */
+  biographyImage: Asset;
+
+  /** Intro Text */
+  introText: Document;
+
+  /** About */
+  about?: Document | undefined;
+
+  /** Valeria Bio */
+  valeriaBio: Document;
+
+  /** Antoine Bio */
+  antoineBio: Document;
+}
+
+/** Container for all non-project related copy and assets */
+
+export interface ISiteSettings extends Entry<ISiteSettingsFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "siteSettings";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
+export type CONTENT_TYPE = "project" | "siteSettings";
 
 export type LOCALE_CODE = "en-US";
 

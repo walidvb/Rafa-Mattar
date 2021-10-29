@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 import Header from './Header';
 import Footer from './Footer';
 
-const Layout = ({ children }: { children: ReactNode}) => {
+const Layout = ({ children, className }: { children: ReactNode, className?: string}) => {
 
   return <div className="min-h-screen flex flex-col font-serif">
     <Header />
-    <div className="flex-grow">
+    <div className={`${className} flex-grow`}>
       { children}
     </div>
     <Footer />

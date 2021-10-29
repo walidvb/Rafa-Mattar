@@ -1,5 +1,7 @@
 import { createClient, EntryCollection } from 'contentful'
-import { IProject } from '../@types/contentful.d';
+import { IProject, ISiteSettings } from '../@types/contentful.d';
+
+const SITE_SETTINGS_ID = '3x1XAGynLaSjkDDBSaBFrl'
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID as string,
@@ -13,4 +15,10 @@ export const getProjects = async () => {
   })
   const { items: projects } = res as { items: IProject[]}
   return projects
+}
+
+export const getSiteSettings = async () => {
+  const res = await client.getEntry(SITE_SETTINGS_ID)
+  const entry = res as ISiteSettings
+  return entry
 }
