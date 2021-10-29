@@ -9,10 +9,10 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
       headerImage,
     } } = project
     return <Layout>
-      <div className="min-h-[60vh] relative">
+      <div className="min-h-[35vh] md:min-h-[60vh] relative">
         <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
       </div>
-      <div className="container mx-auto mt-4 md:mt-10">
+      <div className="container mx-auto mt-4 md:mt-10 px-4">
         <h1 className="text-2xl">
           {project.fields.title}
         </h1>

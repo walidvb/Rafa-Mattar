@@ -13,11 +13,14 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 const Slide = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 60vh;
+  @media (min-width: 768px) {
+    min-height: 100vh;
+  }
 `
 
 const Intro = ({ textData }: { textData: Document}) => {
-  return <Slide className="grid place-content-center md:grid-cols-[70ch] px-4 min-h-full">
+  return <Slide className="grid place-content-center md:grid-cols-[70ch] px-4 min-height-[60vh] md:min-height-screen">
     <Link href="/about">
       <a className="hover:text-brand">
         <div className="font-serif text-3xl md:text-6xl font-bold md:leading-[1.2em]">
@@ -29,7 +32,7 @@ const Intro = ({ textData }: { textData: Document}) => {
 }
 
 const Outro = () => {
-  return <Slide className="grid place-content-center px-4 min-h-full text-center">
+  return <Slide className="grid place-content-center px-4 text-center min-height-[60vh] md:min-height-screen">
     <Link href="/team">
       <a className="text-4xl hover:text-brand" >
         Antoine Harari / Valeria Mazzucchi

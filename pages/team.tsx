@@ -8,8 +8,8 @@ import Image from 'next/image';
 
 const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
   console.log(settings)
-  return <Layout className="flex flex-col min-h-screen">
-    <div className="flex-grow relative">
+  return <Layout className="flex flex-col min-h-screen-header">
+    <div className="flex-grow relative min-h-[30vh]">
       <Image 
         src={'https:' + settings.fields.biographyImage.fields.file.url} 
         alt={settings.fields.biographyImage.fields.title}
@@ -17,16 +17,16 @@ const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
         objectFit="cover"
       />
     </div>
-    <div className="grid grid-cols-2 py-8 px-4 bg-red-500 text-white items-center gap-4">
-      <div className="grid grid-cols-2 items-center">
-        <h1 className="text-4xl font-bold mx-auto">Antoine<br />Harari</h1>
+    <div className="grid gap-8 md:grid-cols-2 py-8 px-4 bg-red-500 text-white items-center">
+      <div className="grid gap-4 md:grid-cols-2 items-center">
+        <h1 className="text-2xl md:text-4xl font-bold md:mx-auto">Antoine <br className="hidden md_block" />Harari</h1>
         <div>
           {documentToReactComponents(settings.fields.antoineBio)}
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4 items-center">
-        <h1 className="text-4xl font-bold text-right mx-auto order-1">Valeria<br />Mazucchi</h1>
-        <div className="text-right">
+      <div className="grid gap-4 md:grid-cols-2 items-center md:text-right">
+        <h1 className="text-2xl md:text-4xl font-bold md:mx-auto md:order-1">Valeria <br className="hidden md_block" />Mazucchi</h1>
+        <div>
           {documentToReactComponents(settings.fields.valeriaBio)}
         </div>
       </div>

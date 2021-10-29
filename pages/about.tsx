@@ -7,11 +7,11 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
   console.log(settings)
   return <Layout className="items-center flex justify-center">
-    <div className="grid grid-cols-2">
+    <div className="grid md:grid-cols-2">
       <div className="bg-brand grid place-content-center text-white font-bold text-2xl min-h-[40vh]">
         The Project
       </div>
-      <div className="px-8 max-w-[70ch]">
+      <div className="px-4 md:px-8 mt-6 max-w-[70ch]">
         {documentToReactComponents(settings.fields.about)}
       </div>
     </div>
