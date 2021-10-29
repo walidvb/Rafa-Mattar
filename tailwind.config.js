@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     fontFamily: {
       body: ['sparkregular', , "Times New Roman", "Times", "serif"],
-      sans: ['sparkregular', , "Times New Roman", "Times", "serif"],
+      serif: ['sparkregular', , "Times New Roman", "Times", "serif"],
     },
     extend: {
       colors: {
