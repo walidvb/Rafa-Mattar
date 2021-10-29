@@ -26,7 +26,7 @@ const ProjectTeaser = ({ layout, slug, ...props }: IProps & { slug: string, layo
   })()
 
   return <Link href={`${slug}`}>
-    <a>
+    <a className="hover:text-brand">
       {teaser}
     </a>
   </Link>
