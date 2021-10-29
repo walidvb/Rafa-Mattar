@@ -29,7 +29,7 @@ const BWImage = styled.div`
   }
 `
 
-function MaskedImage(props) {
+function MaskedImage(props: any) {
   return (
     <BWImage className="relative flex justify-center">
       <Image {...props} />
