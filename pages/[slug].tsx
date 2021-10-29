@@ -11,13 +11,13 @@ const Project = (props: { project: IProject }) => {
 
 export default Project
 
-export const getStaticPaths = async () => {
-  const projects = await getProjects()
-  const paths = projects.map(project => '/' + project.fields.slug)
-  return { paths, fallback: false }
-}
+// export const getStaticPaths = async () => {
+//   const projects = await getProjects()
+//   const paths = projects.map(project => '/' + project.fields.slug)
+//   return { paths, fallback: false }
+// }
 
-export const getStaticProps = async ({ params }: { params: any }) => {
+export const getServerSideProps = async ({ params }: { params: any }) => {
   const projects = await getProjects({ "fields.slug": params.slug })
   const project: IProject = projects[0]
   return {
