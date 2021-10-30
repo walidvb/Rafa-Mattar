@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 
 export const WithPointer = ({ children, className = '', onClick,  pointerTitle }: { children: ReactNode; onClick?: () => void, className?: string, pointerTitle: string; }) => {
-  const [top, setTop] = useState<string>('0px');
-  const [left, setLeft] = useState<string>('0px');
+  const [top, setTop] = useState<string>('-100px');
+  const [left, setLeft] = useState<string>('-100px');
   const ref = useRef<HTMLDivElement>(null);
   const onMouseMove = (evt: any) => {
     if (!ref.current) {
