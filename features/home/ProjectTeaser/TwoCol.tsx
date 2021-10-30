@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const Fader = styled.div`
   opacity: var(--opacity);
   @media (min-width: 768px){
-    :nth-child(2n){
+    :nth-child(2n + 1){
       opacity: calc(1 - var(--opacity));
     }
   }
