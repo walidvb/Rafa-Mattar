@@ -11,7 +11,13 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
   const onRatioChange = useCallback((percentage, isBelowFold) => {
     if (isBelowFold && percentage > .5) {
       setOpacity(map(percentage, 0.5, .9, 0, 1));
+      return
     }
+    if (!isBelowFold){
+      setOpacity(1);
+      return
+    }
+    setOpacity(0);
   }, [setOpacity]);
 
   const ref = useIntersection({ callback: onRatioChange });
