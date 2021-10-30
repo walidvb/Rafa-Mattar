@@ -4,7 +4,7 @@ import ProjectTeaser from './ProjectTeaser';
 
 
 const ProjectList = ({ projects }: { projects: IProject[]}) => {
-  return <div>
+  return <div className="divide-y-4 divide-gray-400 divide-solid">
     {[...projects, ...projects, ...projects].map((project, i) => <ProjectTeaser
         key={project.sys.id}
         image={project.fields.homeImage}

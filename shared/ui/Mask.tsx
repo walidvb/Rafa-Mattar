@@ -16,13 +16,13 @@ const SvgMask = styled.svg`
 const BWImage = styled.div`
   filter: grayscale(1);
   transition: all .3s ease-in-out;
-  svg{
-    transform: scale(1.01);
+  svg path{
+    transform: scale(1);
     transition: all .8s .1s ease-in-out;
   }
   &:hover{
     filter: grayscale(0);
-    svg{
+    svg path{
       transform: scale(1.03);
       transition: all .3s ease-in-out;
     }

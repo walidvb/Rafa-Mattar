@@ -17,9 +17,22 @@ export const OpacityDiv = styled.div`
   }
 `
 
-const Mover = styled.div`
+const TRANSLATE_STYLES = 'transform: translateX(calc(1vw * var(--translateTo) * ((1 - var(--x)))));'
+
+const TImage = styled.div`
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  transform: translateX(calc(100% * var(--x)));
   @media(min-width: 768px){
-    transform: translateX(calc(1vw * var(--translateTo) * ((1 - var(--x)))));
+    ${TRANSLATE_STYLES}
+    position: static;
+  }
+  `
+  
+  const TText = styled.div`
+  @media(min-width: 768px){
+    ${TRANSLATE_STYLES}
   }
 `
 
@@ -28,9 +41,9 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   
   const onRatioChange = useCallback((percentage, isBelowFold) => {
     if (isBelowFold){
-      const threshold = window.innerWidth > 768 ? .85 : .4
-      if (percentage > threshold){
-        setWidth(Math.min(1, Math.max(0, map(percentage, threshold, .95, 0, 1))))
+      const threshold = window.innerWidth > 768 ? [.85, .95] : [.5, .8]
+      if (percentage > threshold[0]){
+        setWidth(Math.min(1, Math.max(0, map(percentage, threshold[0], threshold[1], 0, 1))))
       }
       else{
         setWidth(0)
@@ -50,21 +63,21 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
     src={'https:' + image.fields.file.url} alt={image.fields.title}
     width={800}
     height={800}
-    className="max-h-[30vh] max-w-[30vh]"
+
   />
 
   // @ts-ignore
-  return <animated.div ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-screen">
-    <div className="relative">
-      <Mover style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center items-center h-full will-change">
-        {img}
-      </Mover>
-    </div>
-    <Mover style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
+  return <animated.div ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-screen relative">
+      <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center h-full will-change bg-white">
+        <div>
+          {img}
+
+</div>      </TImage>
+    <TText style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
       <div  className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
         <div className="text-2xl font-bold">{title}</div>
         <RichText data={shortDescription} />
       </div>
-    </Mover>
+    </TText>
   </animated.div>;
 };
