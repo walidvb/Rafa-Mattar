@@ -20,8 +20,8 @@ export const Outro = () => {
 
   const onRatioChange = useCallback((percentage, isBelowFold) => {
     if (isBelowFold) {
-      if (percentage > .5) {
-        setTranslate(Math.min(1, Math.max(0, map(percentage, .5, 1, 0, 1))))
+      if (percentage > .3) {
+        setTranslate(Math.min(1, Math.max(0, map(percentage, .3, 1, 0, 1))))
       }
       else {
         setTranslate(0)

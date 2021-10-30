@@ -5,12 +5,17 @@ import { useIntersection } from './IntersectionObserver';
 import Image from 'next/image';
 import RichText from '@shared/ui/RichText';
 import { OpacityDiv } from './WithMask';
+import styled from 'styled-components';
 
+
+const Title = styled.h2`
+  transform: translateY(calc(10px * (1 - var(--x))));
+`
 export const FullWidth = ({ image, title, shortDescription }: IProps) => {
   const [opacity, setOpacity] = useState(0);
   const onRatioChange = useCallback((percentage, isBelowFold) => {
-    if (isBelowFold && percentage > .5) {
-      setOpacity(map(percentage, 0.5, .9, 0, 1));
+    if (isBelowFold && percentage > .6) {
+      setOpacity(Math.min(1, map(percentage, 0.6, .9, 0, 1)));
       return
     }
     if (!isBelowFold){
@@ -39,7 +44,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
           "--x": opacity,
         }}
         >
-          {title}
+          <Title>{title}</Title>
         </OpacityDiv>
         <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
       </div>

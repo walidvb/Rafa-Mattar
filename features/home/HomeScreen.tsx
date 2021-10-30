@@ -21,7 +21,7 @@ export const Slide = styled.div`
 `
 
 const Intro = ({ textData }: { textData: Document}) => {
-  return <Slide className="grid place-content-center mt-4 md:grid-cols-[70ch] px-4 min-h-screen-header">
+  return <Slide className="grid place-content-center mt-4 lg:grid-cols-[70ch] px-4 min-h-screen-header">
     <Link href="/about">
       <a className="hover:text-brand">
         <div className="text-3xl md:text-6xl font-bold md:leading-[1.2em]">

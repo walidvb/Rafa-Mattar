@@ -30,9 +30,17 @@ const TImage = styled.div`
   }
   `
   
-  const TText = styled.div`
+const TTextWrapper = styled.div`
   @media(min-width: 768px){
     ${TRANSLATE_STYLES}
+  }
+`
+
+const TText = styled(OpacityDiv)`
+  
+transform: translateX(calc(-20px * (1 - var(--x)))) ;
+  @media(min-width: 768px){
+    transform: translateX(calc(400px * (1 - var(--x)))) translateY(-50%);
   }
 `
 
@@ -73,11 +81,11 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
           {img}
 
 </div>      </TImage>
-    <TText style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
-      <div  className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
+    <TTextWrapper style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
+      <TText className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2">
         <div className="text-2xl font-bold">{title}</div>
         <RichText data={shortDescription} />
-      </div>
-    </TText>
+      </TText>
+    </TTextWrapper>
   </animated.div>;
 };

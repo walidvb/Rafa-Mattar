@@ -17,7 +17,7 @@ const BWImage = styled.div`
   filter: grayscale(1);
   transition: all .3s ease-in-out;
   svg path{
-    transform: scale(1);
+    transform: scale(1.01);
     transition: all .8s .1s ease-in-out;
   }
   &:hover{
@@ -31,7 +31,9 @@ const BWImage = styled.div`
 
 function MaskedImage({ className, ...props }: any) {
   return (
-    <BWImage className={`relative flex justify-center ${className}`}>
+    // 3px padding as the image underneath moves slightly slower
+    // so you can see the borders
+    <BWImage className={`relative flex justify-center p-[3px] ${className}`}>
       <Image {...props} />
       <SvgMask
         xmlns="http://www.w3.org/2000/svg"
