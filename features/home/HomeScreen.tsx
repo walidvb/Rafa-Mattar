@@ -33,9 +33,8 @@ const Intro = ({ textData }: { textData: Document}) => {
 }
 
 const HomeScreen = ({ projects, settings }: { projects: IProject[], settings: ISiteSettings }) => {
-  console.log(projects)
   return (
-    <Layout>
+    <Layout fullLogo>
       <Head>
         <title>Futur Proche</title>
         <meta name="description" content="Futur Proche Productions" />

@@ -12,7 +12,7 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
       <div className="min-h-[35vh] md:min-h-[60vh] relative">
         <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
       </div>
-      <div className="container mx-auto mt-4 md:mt-12 px-4">
+      <div className="container mx-auto mt-8 md:mt-12 px-4">
         <h1 className="text-4xl mb-8 font-bold">
           {project.fields.title}
         </h1>
