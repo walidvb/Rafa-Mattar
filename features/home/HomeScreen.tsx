@@ -14,14 +14,14 @@ import { Outro } from './Outro';
 
 export const Slide = styled.div`
   width: 100vw;
-  min-height: 60vh;
+  min-height: 100vh;
   @media (min-width: 768px) {
     min-height: 100vh;
   }
 `
 
 const Intro = ({ textData }: { textData: Document}) => {
-  return <Slide className="grid place-content-center md:grid-cols-[70ch] px-4 min-h-[60vh] md:min-h-screen">
+  return <Slide className="grid place-content-center mt-4 md:grid-cols-[70ch] px-4 min-h-screen-header">
     <Link href="/about">
       <a className="hover:text-brand">
         <div className="text-3xl md:text-6xl font-bold md:leading-[1.2em]">

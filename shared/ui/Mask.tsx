@@ -17,13 +17,13 @@ const BWImage = styled.div`
   filter: grayscale(1);
   transition: all .3s ease-in-out;
   svg{
-    transform: scale(1);
+    transform: scale(1.01);
     transition: all .8s .1s ease-in-out;
   }
   &:hover{
     filter: grayscale(0);
     svg{
-      transform: scale(1.02);
+      transform: scale(1.03);
       transition: all .3s ease-in-out;
     }
   }

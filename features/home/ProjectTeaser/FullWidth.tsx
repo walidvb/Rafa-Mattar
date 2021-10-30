@@ -26,6 +26,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
           flex place-content-center items-center
           top-0 left-0 right-0 bottom-0 bg-[#1117] 
           z-10
+          text-white
         "
         style={{
           // @ts-ignore
