@@ -3,12 +3,12 @@ import RichText from '@shared/ui/RichText';
 import { IProject } from '../../@types/contentful';
 import Image from 'next/image';
 
-import ModalVideo from 'react-modal-video';
 import { useState } from 'react';
 import ReactPlayer from 'react-player'
+import { WithPointer } from '../home/WithPointer';
 
 const Player = ({ videoUrl }: { videoUrl: undefined | string }) => {
-  const [isOpen, setOpen] = useState(false)
+  
 
   if(!videoUrl){ 
     return null
@@ -32,12 +32,17 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
       headerImage,
       videoUrl,
     } } = project
+    const [isOpen, setOpen] = useState(false)
     return <Layout>
-      <div className="min-h-[35vh] md:min-h-[60vh] relative">
+      <WithPointer onClick={() => setOpen(true)} pointerTitle="See trailer" className="min-h-[35vh] md:min-h-[60vh] relative">
         <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
-      </div>
+      </WithPointer>
       <div className="container mx-auto mt-8 md:mt-12 px-4">
-        <Player videoUrl={videoUrl}/>
+        {isOpen && <div>
+          <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2">
+            <ReactPlayer url={videoUrl} controls playing={true} />
+          </div>
+        </div>}
         <h1 className="text-4xl mb-8 font-bold">
           {project.fields.title}
         </h1>
