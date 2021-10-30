@@ -33,7 +33,7 @@ export const useIntersection = ({ callback }: { callback: (percentage: number, i
   useEffect(() => {
     if (intersection?.isIntersecting) {
       console.log('attaching listener')
-      window.addEventListener('scroll', listener);
+      window.addEventListener('scroll', debouce(listener, 5));
       return;
     }
     window.removeEventListener('scroll', listener);
@@ -41,4 +41,13 @@ export const useIntersection = ({ callback }: { callback: (percentage: number, i
   }, [intersection?.isIntersecting, listener]);
 
   return intersectionRef
+}
+
+function debouce(fn: any, time: number = 100) {
+  let timeout: any;
+  return function (...args: any[]) {
+    const functionCall = () => fn.apply(this as any, args);
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  };
 }

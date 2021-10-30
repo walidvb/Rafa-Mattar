@@ -8,14 +8,6 @@ import { map } from '@shared/helpers';;
 import MaskedImage from '@shared/ui/Mask';
 import { useSpring, animated } from 'react-spring'
 
-const Wrapper = styled(animated.div)`
-  grid-template-columns: 1fr;
-  @media (min-width: 768px){
-    grid-template-columns: 1fr var(--column-width, 0);
-  }
-  transition: all .1s ease-out;
-`
-
 export const OpacityDiv = styled.div`
   opacity: var(--opacity);
   p{
