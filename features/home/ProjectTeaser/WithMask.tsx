@@ -8,7 +8,10 @@ import { map } from '@shared/helpers';;
 import MaskedImage from '@shared/ui/Mask';
 
 const Wrapper = styled.div`
-  grid-template-columns: 1fr var(--column-width, 0);
+  grid-template-columns: 1fr;
+  @media (min-width: 768px){
+    grid-template-columns: 1fr var(--column-width, 0);
+  }
   transition: all .1s ease-out;
 `
 
@@ -37,7 +40,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   }, [setWidth])
 
   const ref = useIntersection({ callback: onRatioChange })
-  return <Wrapper ref={ref} className="grid min-h-screen" style={{
+  return <Wrapper ref={ref} className="grid md:min-h-screen" style={{
     //@ts-ignore
     '--column-width': width + 'fr',
   }}>
@@ -55,7 +58,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
       <OpacityDiv style={{
     //@ts-ignore
         '--opacity': width,
-      }} className="w-[50vw] px-12 overflow-visible absolute top-1/2 -translate-y-1/2">
+      }} className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
         <div className="text-2xl font-bold">{title}</div>
         <RichText data={shortDescription} />
       </OpacityDiv>

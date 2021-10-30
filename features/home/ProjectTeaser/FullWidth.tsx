@@ -8,8 +8,8 @@ import { OpacityDiv } from './WithMask';
 
 export const FullWidth = ({ image, title, shortDescription }: IProps) => {
   const [opacity, setOpacity] = useState(0);
-  const onRatioChange = useCallback((percentage) => {
-    if (percentage > .5) {
+  const onRatioChange = useCallback((percentage, isBelowFold) => {
+    if (isBelowFold && percentage > .5) {
       setOpacity(map(percentage, 0.5, .9, 0, 1));
     }
   }, [setOpacity]);
@@ -17,7 +17,6 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
   const ref = useIntersection({ callback: onRatioChange });
 
 
-  console.log(opacity);
   return <div ref={ref} className="min-h-screen min-w-screen flex flex-col">
       
       <div className="relative flex-grow">
