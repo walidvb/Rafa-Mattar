@@ -13,19 +13,17 @@ export const TwoCol = ({ image, title, shortDescription }: IProps) => {
 
   const ref = useIntersection({ callback: onRatioChange });
 
-
-  console.log(opacity);
-  return <div ref={ref} className="min-h-screen min-w-screen grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
-    <div className="grid place-content-center text-4xl relative">
-      <RichText data={shortDescription} style={{ opacity: opacity }} />
+  return <div ref={ref} className="min-h-screen min-w-screen flex flex-col flex-reverse md:grid md:grid-cols-2">
+    <div className="grid place-content-center text-4xl relative order-1">
       <div
         style={{ opacity: 1 - opacity * 2 }}
-        className="absolute -translate-y-1/2 top-1/2 left-0 right-0 text-center"
+        className="md:absolute md:-translate-y-1/2 top-1/2 left-0 right-0 text-center"
       >
         {title}
       </div>
+      <RichText data={shortDescription} style={{ opacity: opacity }} />
     </div>
-    <div className="relative">
+    <div className="relative min-h-[30vh] w-screen md:w-auto">
       <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
     </div>
   </div>;
