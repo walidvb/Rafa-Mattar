@@ -11,15 +11,24 @@ export const useIntersection = ({ callback }: { callback: (percentage: number, i
   const listener = useCallback((e) => {
     // compute percentage of div in viewport
     //@ts-ignore
-    const { top } = intersectionRef.current?.getBoundingClientRect();
+    const rect = intersectionRef.current?.getBoundingClientRect();
+    if(!rect){
+      rmListener(listener)
+      return
+    }
+    const { top } = rect
     const percentage = 1 - Math.abs(top / window.innerHeight);
     if (percentage > 0){
       callback?.(percentage, top > 0);
     }
     else{
-      window.removeEventListener('scroll', listener);
+      rmListener(listener)
     }
   }, [callback]);
+  
+  const rmListener = (l: any) => {
+    window.removeEventListener('scroll', l);
+  }
 
   useEffect(() => {
     if (intersection?.isIntersecting) {

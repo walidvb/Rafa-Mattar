@@ -42,25 +42,30 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
 
   const ref = useIntersection({ callback: onRatioChange })
 
-  const descStyles = useSpring({ opacity: width })
-  const wrapperStyles = useSpring({ '--column-width': width + 'fr' })
+  const wrapperStyles = useSpring({ 
+    transform: `translateX(${(1 - width) * 25}vw)`,
+  })
+  const descStyles = useSpring({ 
+    opacity: width,
+    transform: `translateX(${(1 - width) * 50}vw)`,
+   })
 
-  return <Wrapper ref={ref} className="grid md:min-h-screen" style={wrapperStyles}>
+  return <div ref={ref} className="grid md:grid-cols-2 md:min-h-screen">
     <div className="relative">
-      <div className="flex place-content-center items-center h-full">
+      <animated.div style={wrapperStyles} className="flex place-content-center items-center h-full">
         <MaskedImage
           src={'https:' + image.fields.file.url} alt={image.fields.title}
           width={800}
           height={800}
           // layout="responsive"
         />
-      </div>
+      </animated.div>
     </div>
-    {width !== 0 && <div className="relative bg-bgGray text-white ">
-      <animated.div style={descStyles} className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
+    <animated.div style={descStyles} className="relative bg-bgGray text-white ">
+      <div  className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
         <div className="text-2xl font-bold">{title}</div>
         <RichText data={shortDescription} />
-      </animated.div>
-    </div>}
-  </Wrapper>;
+      </div>
+    </animated.div>
+  </div>;
 };
