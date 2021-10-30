@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import RichText from '@shared/ui/RichText';
 import { IProps } from './index';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useIntersection } from './IntersectionObserver';
 import { useCallback, useState } from 'react';
 import { map } from '@shared/helpers';;
@@ -9,9 +9,17 @@ import MaskedImage from '@shared/ui/Mask';
 import { useSpring, animated } from 'react-spring'
 
 export const OpacityDiv = styled.div`
-  opacity: var(--opacity);
+  opacity: var(--x);
+  @media (min-width: 768px){
+  }
   p{
     color: white;
+  }
+`
+
+const Mover = styled.div`
+  @media(min-width: 768px){
+    transform: translateX(calc(1vw * var(--translateTo) * ((1 - var(--x)))));
   }
 `
 
@@ -20,8 +28,9 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   
   const onRatioChange = useCallback((percentage, isBelowFold) => {
     if (isBelowFold){
-      if (percentage > .85){
-        setWidth(Math.min(1, Math.max(0, map(percentage, .85, .95, 0, 1))))
+      const threshold = window.innerWidth > 768 ? .85 : .4
+      if (percentage > threshold){
+        setWidth(Math.min(1, Math.max(0, map(percentage, threshold, .95, 0, 1))))
       }
       else{
         setWidth(0)
@@ -31,33 +40,30 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
       setWidth(1)
     }
   }, [setWidth])
-
   const ref = useIntersection({ callback: onRatioChange })
 
-  const wrapperStyles = useSpring({ 
-    transform: `translateX(${(1 - width) * 25}vw)`,
-  })
-  const descStyles = useSpring({ 
-    opacity: width,
-    transform: `translateX(${(1 - width) * 50}vw)`,
+  const wrapperStyles = useSpring({
+    '--x': width,
    })
 
-  return <div ref={ref} className="grid md:grid-cols-2 md:min-h-screen">
+  const img = <MaskedImage
+    src={'https:' + image.fields.file.url} alt={image.fields.title}
+    width={800}
+    height={800}
+    className="max-h-[30vh] max-w-[30vh]"
+  />
+
+  return <animated.div ref={ref} style={wrapperStyles}className="grid md:grid-cols-2 md:min-h-screen">
     <div className="relative">
-      <animated.div style={wrapperStyles} className="flex place-content-center items-center h-full">
-        <MaskedImage
-          src={'https:' + image.fields.file.url} alt={image.fields.title}
-          width={800}
-          height={800}
-          // layout="responsive"
-        />
-      </animated.div>
+      <Mover style={{ '--translateTo': '25' }} className="flex place-content-center items-center h-full will-change">
+        {img}
+      </Mover>
     </div>
-    <animated.div style={descStyles} className="relative bg-bgGray text-white ">
+    <Mover style={{'--translateTo': '50'}} className="relative bg-bgGray text-white will-change ">
       <div  className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
         <div className="text-2xl font-bold">{title}</div>
         <RichText data={shortDescription} />
       </div>
-    </animated.div>
-  </div>;
+    </Mover>
+  </animated.div>;
 };

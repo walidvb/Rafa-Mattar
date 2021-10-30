@@ -19,7 +19,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
 
   return <div ref={ref} className="min-h-screen min-w-screen flex flex-col">
       
-      <div className="relative flex-grow">
+      <div className="relative flex-grow min-h-[30vh]">
         <OpacityDiv className="
           text-2xl
           absolute
@@ -30,7 +30,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
         "
         style={{
           // @ts-ignore
-          "--opacity": opacity,
+          "--x": opacity,
         }}
         >
           {title}

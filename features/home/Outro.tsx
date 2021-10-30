@@ -43,12 +43,12 @@ export const Outro = () => {
     <Link href="/team">
       <a className="text-4xl hover:text-brand">
         {/* @ts-ignore */}
-        <Antoine style={style}>Antoine Harari</Antoine>
+        <Antoine style={style}>Antoine <br className="md:hidden" />Harari</Antoine>
         <br className="md:hidden" />
         &nbsp;/&nbsp;
         <br className="md:hidden" />
         {/* @ts-ignore */}
-        <Valeria style={style}>Valeria Mazzucchi</Valeria>
+        <Valeria style={style}>Valeria <br className="md:hidden" />Mazzucchi</Valeria>
       </a>
     </Link>
     <div className="text-gray-400 mt-6">

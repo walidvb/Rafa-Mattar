@@ -29,9 +29,9 @@ const BWImage = styled.div`
   }
 `
 
-function MaskedImage(props: any) {
+function MaskedImage({ className, ...props }: any) {
   return (
-    <BWImage className="relative flex justify-center">
+    <BWImage className={`relative flex justify-center ${className}`}>
       <Image {...props} />
       <SvgMask
         xmlns="http://www.w3.org/2000/svg"
