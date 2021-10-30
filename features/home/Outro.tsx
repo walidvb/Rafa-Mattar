@@ -42,10 +42,12 @@ export const Outro = () => {
   return <Slide ref={ref} className="grid place-content-center px-4 text-center min-h-[60vh] md:min-h-screen">
     <Link href="/team">
       <a className="text-4xl hover:text-brand">
+        {/* @ts-ignore */}
         <Antoine style={style}>Antoine Harari</Antoine>
         <br className="md:hidden" />
         &nbsp;/&nbsp;
         <br className="md:hidden" />
+        {/* @ts-ignore */}
         <Valeria style={style}>Valeria Mazzucchi</Valeria>
       </a>
     </Link>
