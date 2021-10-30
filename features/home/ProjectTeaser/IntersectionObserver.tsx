@@ -46,6 +46,7 @@ export const useIntersection = ({ callback }: { callback: (percentage: number, i
 function debouce(fn: any, time: number = 100) {
   let timeout: any;
   return function (...args: any[]) {
+    // @ts-ignore
     const functionCall = () => fn.apply(this as any, args);
     clearTimeout(timeout);
     timeout = setTimeout(functionCall, time);
