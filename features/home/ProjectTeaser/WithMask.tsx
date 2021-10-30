@@ -53,13 +53,14 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
     className="max-h-[30vh] max-w-[30vh]"
   />
 
-  return <animated.div ref={ref} style={wrapperStyles}className="grid md:grid-cols-2 md:min-h-screen">
+  // @ts-ignore
+  return <animated.div ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-screen">
     <div className="relative">
-      <Mover style={{ '--translateTo': '25' }} className="flex place-content-center items-center h-full will-change">
+      <Mover style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center items-center h-full will-change">
         {img}
       </Mover>
     </div>
-    <Mover style={{'--translateTo': '50'}} className="relative bg-bgGray text-white will-change ">
+    <Mover style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
       <div  className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
         <div className="text-2xl font-bold">{title}</div>
         <RichText data={shortDescription} />
