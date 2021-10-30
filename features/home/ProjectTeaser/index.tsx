@@ -5,11 +5,10 @@ import Link from 'next/link';
 import { Document } from '@contentful/rich-text-types';
 import { TwoCol } from './TwoCol';
 import { WithMask } from './WithMask';
+import { FullWidth } from './FullWidth';
 
 
 export type IProps = { image: Asset, title: string, shortDescription: Document | undefined };
-
-
 
 const ProjectTeaser = ({ layout, slug, ...props }: IProps & { slug: string, layout?: IProjectFields['homeLayout'] }) => {
   const teaser = (() => {
@@ -20,7 +19,7 @@ const ProjectTeaser = ({ layout, slug, ...props }: IProps & { slug: string, layo
       return <WithMask {...props} />
     }
     if(layout === 'full width'){
-      return <WithMask {...props} />
+      return <FullWidth {...props} />
     }
   })()
 

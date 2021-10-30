@@ -6,14 +6,13 @@ import { useIntersection } from './IntersectionObserver';
 import { useCallback, useState } from 'react';
 import { map } from '@shared/helpers';;
 import MaskedImage from '@shared/ui/Mask';
-import { Layout } from '@shared/layout/Layout';
 
 const Wrapper = styled.div`
   grid-template-columns: 1fr var(--column-width, 0);
-  transition: var(--column-width) .1s ease-out;
+  transition: all .1s ease-out;
 `
 
-const OpacityDiv = styled.div`
+export const OpacityDiv = styled.div`
   opacity: var(--opacity);
   p{
     color: white;
@@ -52,7 +51,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
         />
       </div>
     </div>
-    {width !== 0 && <div className="relative bg-gray-400 text-white ">
+    {width !== 0 && <div className="relative bg-bgGray text-white ">
       <OpacityDiv style={{
     //@ts-ignore
         '--opacity': width,
