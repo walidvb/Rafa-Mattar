@@ -6,8 +6,9 @@ import { useIntersection } from './IntersectionObserver';
 import { useCallback, useState } from 'react';
 import { map } from '@shared/helpers';;
 import MaskedImage from '@shared/ui/Mask';
+import { useSpring, animated } from 'react-spring'
 
-const Wrapper = styled.div`
+const Wrapper = styled(animated.div)`
   grid-template-columns: 1fr;
   @media (min-width: 768px){
     grid-template-columns: 1fr var(--column-width, 0);
@@ -40,10 +41,11 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   }, [setWidth])
 
   const ref = useIntersection({ callback: onRatioChange })
-  return <Wrapper ref={ref} className="grid md:min-h-screen" style={{
-    //@ts-ignore
-    '--column-width': width + 'fr',
-  }}>
+
+  const descStyles = useSpring({ opacity: width })
+  const wrapperStyles = useSpring({ '--column-width': width + 'fr' })
+
+  return <Wrapper ref={ref} className="grid md:min-h-screen" style={wrapperStyles}>
     <div className="relative">
       <div className="flex place-content-center items-center h-full">
         <MaskedImage
@@ -55,13 +57,10 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
       </div>
     </div>
     {width !== 0 && <div className="relative bg-bgGray text-white ">
-      <OpacityDiv style={{
-    //@ts-ignore
-        '--opacity': width,
-      }} className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
+      <animated.div style={descStyles} className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2 md:-translate-y-1/2">
         <div className="text-2xl font-bold">{title}</div>
         <RichText data={shortDescription} />
-      </OpacityDiv>
+      </animated.div>
     </div>}
   </Wrapper>;
 };
