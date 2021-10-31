@@ -4,7 +4,7 @@ import Footer from './Footer';
 
 const Layout = ({ children, className, fullLogo = false }: { children: ReactNode, className?: string, fullLogo?: boolean}) => {
 
-  return <div className="min-h-screen flex flex-col font-serif">
+  return <div className="min-h-screen flex flex-col font-serif bg-white">
     <Header fullLogo={fullLogo}/>
     <div className={`${className} flex-grow`}>
       { children}

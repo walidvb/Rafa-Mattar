@@ -16,7 +16,7 @@ const Player = ({ videoUrl }: { videoUrl: undefined | string }) => {
   return (
     <>
       <button className="btn-primary" onClick={() => setOpen(true)}>VIEW TRAILER</button>
-      {isOpen && <div>
+      {isOpen && <div className="fixed bg-black bg-opacity-60 object-fill ">
         <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2">
           <ReactPlayer url={videoUrl} controls playing={true}/>
         </div>
@@ -38,7 +38,7 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
         <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
       </WithPointer>
       <div className="container mx-auto mt-8 md:mt-12 px-4">
-        {isOpen && <div>
+        { isOpen && <div className="fixed bg-black bg-opacity-40 inset-0" onClick={() => setOpen(false)}>
           <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2">
             <ReactPlayer url={videoUrl} controls playing={true} />
           </div>

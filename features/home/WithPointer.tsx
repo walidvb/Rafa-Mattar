@@ -30,7 +30,7 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
       ref={ref}
       style={pos}
       onClick={onClick}
-      className={`text-2xl font-bold group-hover:inline hidden${onClick ? ' cursor-pointer' : ' pointer-events-none'}`}
+      className={`text-3xl font-bold group-hover:inline hidden${onClick ? ' cursor-pointer' : ' pointer-events-none'}`}
     >{pointerTitle}</Pointer>
   </div>;
 };
@@ -40,5 +40,7 @@ const Pointer = styled(animated.div)`
   left: var(--left);
   transition: all .1s ease-out, color 0s;
   z-index: 1000;
+  color: white;
+  mix-blend-mode: difference;
   
 `;

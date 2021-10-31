@@ -6,7 +6,7 @@ import { WithPointer } from './WithPointer';
 
 const ProjectList = ({ projects }: { projects: IProject[]}) => {
   return <div className="divide-y-4 divide-gray-400 divide-solid">
-    {[...projects, ...projects, ...projects].map((project, i) => <WithPointer pointerTitle="View Project" key={project.sys.id}>
+    {[...projects, ...projects, ...projects].map((project, i) => <WithPointer pointerTitle="View project" key={project.sys.id}>
       <ProjectTeaser
           image={project.fields.homeImage}
           title={project.fields.title}
