@@ -75,7 +75,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   />
 
   // @ts-ignore
-  return <animated.div ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-screen relative">
+  return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-screen relative">
       <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center h-full will-change bg-white">
         <div>
           {img}
@@ -87,5 +87,5 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
         <RichText data={shortDescription} />
       </TText>
     </TTextWrapper>
-  </animated.div>;
+  </animated.article>;
 };

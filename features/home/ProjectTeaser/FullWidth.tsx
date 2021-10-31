@@ -27,9 +27,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
 
   const ref = useIntersection({ callback: onRatioChange });
 
-
-  return <div ref={ref} className="min-h-screen min-w-screen flex flex-col">
-      
+  return <article ref={ref} className="min-h-screen min-w-screen flex flex-col">
       <div className="relative flex-grow min-h-[30vh]">
         <OpacityDiv className="
           text-2xl
@@ -49,5 +47,5 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
         <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
       </div>
     <RichText data={shortDescription} style={{ opacity }} className="max-w-[95vw]"/>
-  </div>;
+  </article>;
 };
