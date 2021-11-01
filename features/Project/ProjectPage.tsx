@@ -7,25 +7,6 @@ import { useState } from 'react';
 import ReactPlayer from 'react-player'
 import { WithPointer } from '../home/WithPointer';
 
-const Player = ({ videoUrl }: { videoUrl: undefined | string }) => {
-  
-
-  if(!videoUrl){ 
-    return null
-  }
-  return (
-    <>
-      <button className="btn-primary" onClick={() => setOpen(true)}>VIEW TRAILER</button>
-      {isOpen && <div className="fixed bg-black bg-opacity-60 object-fill ">
-        <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2">
-          <ReactPlayer url={videoUrl} controls playing={true}/>
-        </div>
-      </div>}
-
-    </>
-  )
-}
-
 const ProjectPage = ({ project, }: { project: IProject }) => {
     const { fields: { 
       body,

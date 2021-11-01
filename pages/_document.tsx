@@ -28,7 +28,6 @@ class MyDocument extends Document {
           <link rel="stylesheet" href="/fonts/stylesheet.css" />
           {/* @ts-ignore */}
           {this.props.styleTags}
-
         </Head>
         <body>
           <Main />
