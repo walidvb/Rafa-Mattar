@@ -1,7 +1,6 @@
-import { ReactNode, useState, useRef } from 'react';
+import React, { ReactNode, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
-import { useDebounce } from 'react-use';
 
 export const WithPointer = ({ children, className = '', onClick,  pointerTitle }: { children: ReactNode; onClick?: () => void, className?: string, pointerTitle: string; }) => {
   const [top, setTop] = useState<string>('-100px');
@@ -25,19 +24,19 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
     }
     left = Math.min(Math.max(cLeft, left), cWidth - width);
     top = Math.min(Math.max(cTop, top), rect.bottom - height);
-    console.log('not skipping', left, top)
+    // console.log('not skipping', left, top)
     // console.log(left, cWidth, width, cWidth - width)
     setLeft(`${left}px`);
     setTop(`${top}px`);
   };
   const pos = useSpring({ left, top });
   return <div onMouseMove={onMouseMove} className={`group ${className}`}>
-    {children}
+    {React.useMemo(() => children, [])}
     <Pointer
       ref={ref}
-      style={pos}
+      style={{ '--left': pos.left, '--top': pos.top }}
       onClick={onClick}
-      className={`text-3xl font-bold group-hover:opacity-100 delay-[100ms] opacity-0 transition-all tr${onClick ? ' cursor-pointer' : ' pointer-events-none'}`}
+      className={`text-3xl font-bold group-hover:opacity-100 delay-[100ms] opacity-0 tr${onClick ? ' cursor-pointer' : ' pointer-events-none'}`}
     >{pointerTitle}</Pointer>
   </div>;
 };
@@ -46,7 +45,7 @@ const Pointer = styled(animated.div)`
   top: 0;
   left: 0;
   transform: translateX(var(--left)) translateY(var(--top));
-  transition: all .1s ease-out, color 0s;
+  transition: opacity .1s ease-out, color 0s;
   z-index: 1000;
   color: white;
   mix-blend-mode: difference;
