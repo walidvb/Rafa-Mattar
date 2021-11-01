@@ -34,7 +34,8 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
     {React.useMemo(() => children, [])}
     <Pointer
       ref={ref}
-      style={{ '--left': pos.left, '--top': pos.top }}
+      // @ts-ignore
+      style={{ '--left': pos.left, '--top': pos.top } as any}
       onClick={onClick}
       className={`text-3xl font-bold group-hover:opacity-100 delay-[100ms] opacity-0 tr${onClick ? ' cursor-pointer' : ' pointer-events-none'}`}
     >{pointerTitle}</Pointer>
