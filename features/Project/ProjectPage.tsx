@@ -38,39 +38,40 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
         </div>
         <div className="flex justify-center">
           <div>
-            <h2 className="text-4xl mb-8 font-bold">
+            {length && <h2 className="text-4xl mb-8 font-bold">
               {length}&apos;&apos;
             </h2>
-            <div className="mb-0 font-bold">
+            }
+            { production && <div className="mb-0 font-bold">
               Production:&nbsp;
               <span className="text-brand font-bold">
                 {production}
               </span>
-            </div>
-            <div className="mt-4 mb-0 font-bold">
+            </div>}
+            { music && <div className="mt-4 mb-0 font-bold">
               Music:&nbsp;
               <span className="text-brand font-bold">
                 {music}
               </span>
-            </div>
-            <div className="mt-4 mb-0 font-bold">
+            </div>}
+            { countries && <div className="mt-4 mb-0 font-bold">
               Countries: &nbsp;
               <span className="text-brand font-bold">
                 {countries}
               </span>
-            </div>
-            <div className="mt-4 mb-0 font-bold">
+            </div>}
+            { type && <div className="mt-4 mb-0 font-bold">
               Type:&nbsp;
               <span className="text-brand font-bold">
                 {type}
               </span>
-            </div>
-            <div className="mt-4 mb-0 font-bold">
+            </div>}
+            { festival && <div className="mt-4 mb-0 font-bold">
               Festivals&nbsp;
               <span className="text-brand font-bold">
                 <RichText data={festival} className="text-brand"/>
               </span>
-            </div>
+            </div>}
           </div>
         </div>
       </div>
