@@ -16,21 +16,20 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
     const { width: cWidth, height: cHeight, left: cLeft, top: cTop } = rect
     const width = parseInt(pseudoRect.width);
     const height = parseInt(pseudoRect.height);
-    let left = clientX - width / 2;
-    let top = clientY - height / 2;
+    let left = clientX - cLeft - width / 2;
+    let top = clientY - cTop - height / 2;
     if(cWidth - width < 1 || cHeight - height < 1){ 
-      console.log('skipping', target)
       return 
     }
-    left = Math.min(Math.max(cLeft, left), cWidth - width);
-    top = Math.min(Math.max(cTop, top), rect.bottom - height);
+    left = Math.min(Math.max(0, left), cWidth - width / 2);
+    top = Math.min(Math.max(0, top), cHeight - height / 2);
     // console.log('not skipping', left, top)
     // console.log(left, cWidth, width, cWidth - width)
     setLeft(`${left}px`);
     setTop(`${top}px`);
   };
   const pos = useSpring({ left, top });
-  return <div onMouseMove={onMouseMove} className={`group ${className}`}>
+  return <div onMouseMove={onMouseMove} className={`group relative overflow-hidden ${className}`}>
     {React.useMemo(() => children, [])}
     <Pointer
       ref={ref}
@@ -42,7 +41,7 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
   </div>;
 };
 const Pointer = styled(animated.div)`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   transform: translateX(var(--left)) translateY(var(--top));
