@@ -31,7 +31,7 @@ export const TwoCol = ({ image, title, shortDescription }: IProps) => {
         {title}
       </Fader>
       <Fader>
-        <RichText data={shortDescription} className="px-8"/>
+        <RichText data={shortDescription} className="px-8 mt-4 md:mt-0"/>
       </Fader>
     </div>
     <div className="relative min-h-[30vh] w-screen md:w-auto">

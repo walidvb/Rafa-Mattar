@@ -27,6 +27,24 @@ export interface IProjectFields {
 
   /** Body */
   body?: Document | undefined;
+
+  /** production */
+  production?: string | undefined;
+
+  /** length */
+  length?: number | undefined;
+
+  /** music */
+  music?: string | undefined;
+
+  /** countries */
+  countries?: string | undefined;
+
+  /** type */
+  type?: string | undefined;
+
+  /** Festival */
+  festival?: Document | undefined;
 }
 
 export interface IProject extends Entry<IProjectFields> {
