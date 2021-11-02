@@ -25,7 +25,7 @@ const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
         </div>
       </div>
       <div className="grid gap-4 lg:grid-cols-2 lg:items-center lg:text-right">
-        <h1 className="text-2xl md:text-4xl font-bold lg:mx-auto lg:order-1">Valeria <br className="hidden md:block" />Mazucchi</h1>
+        <h1 className="text-2xl md:text-4xl font-bold lg:mx-auto lg:order-1">Valeria <br className="hidden md:block" />Mazzucchi</h1>
         <div>
           {documentToReactComponents(settings.fields.valeriaBio)}
         </div>
