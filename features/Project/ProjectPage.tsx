@@ -29,14 +29,14 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
           <ReactPlayer url={videoUrl} controls playing={true} />
         </div>
       </div>}
-      <div className="md:grid md:grid-cols-2 mx-auto mt-8 md:mt-12 px-4">
+      <div className="md:grid md:grid-cols-2 gap-8 mx-auto mt-8 md:mt-12 px-4">
         <div>
           <h1 className="text-4xl mb-8 font-bold">
             {project.fields.title}
           </h1>
           <RichText data={body} />
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-12 md:mt-0">
           <div>
             {length && <h2 className="text-4xl mb-8 font-bold">
               {length}&apos;&apos;
