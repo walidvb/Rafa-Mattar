@@ -49,7 +49,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   
   const onRatioChange = useCallback((percentage, isBelowFold) => {
     if (isBelowFold){
-      const threshold = window.innerWidth > 768 ? [.85, .95] : [.5, .8]
+      const threshold = window.innerWidth > 768 ? [.85, .98] : [.5, .8]
       if (percentage > threshold[0]){
         setWidth(Math.min(1, Math.max(0, map(percentage, threshold[0], threshold[1], 0, 1))))
       }

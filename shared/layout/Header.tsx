@@ -14,7 +14,7 @@ const Header = ({ fullLogo }: { fullLogo: boolean }) => {
       </div>
     </div> }
     <div className="flex flex-row justify-between z-50 ml-4 md:ml-0 md:px-16 sticky py-2 top-0">
-      <div className="flex justify-start">
+      <div className="flex justify-start translate-x-[4px]">
         <Link href="/">
           <a>
             {/* <Image src={logo} alt="logo" objectFit='contain' height={80} /> */}
