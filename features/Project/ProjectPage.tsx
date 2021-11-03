@@ -1,3 +1,5 @@
+import { BLOCKS, MARKS } from '@contentful/rich-text-types';
+
 import Layout from '@shared/layout/Layout';
 import RichText from '@shared/ui/RichText';
 import { IProject } from '../../@types/contentful';
@@ -6,6 +8,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import ReactPlayer from 'react-player'
 import { WithPointer } from '../home/WithPointer';
+
+const wrapperClasses = "min-h-[35vh] md:min-h-[60vh] relative"
 
 const ProjectPage = ({ project, }: { project: IProject }) => {
     const { fields: { 
@@ -19,12 +23,19 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
       type,
       festival,
     } } = project
+    console.log(festival)
     const [isOpen, setOpen] = useState(false)
+    const img = <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
     return <Layout>
-      <WithPointer onClick={() => setOpen(true)} pointerTitle="See trailer" className="min-h-[35vh] md:min-h-[60vh] relative">
-        <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
-      </WithPointer>
-      { isOpen && <div className="fixed bg-black bg-opacity-40 inset-0" onClick={() => setOpen(false)}>
+        {videoUrl ? 
+          <WithPointer onClick={() => setOpen(true)} pointerTitle="See trailer" className={wrapperClasses}>
+            {img}
+          </WithPointer> :
+          <div className={wrapperClasses}>
+            {img}
+          </div>
+        }
+      { isOpen && videoUrl && <div className="fixed bg-black bg-opacity-40 inset-0" onClick={() => setOpen(false)}>
         <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2">
           <ReactPlayer url={videoUrl} controls playing={true} />
         </div>
@@ -68,8 +79,8 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
             </div>}
             { festival && <div className="mt-4 mb-0 font-bold">
               Festivals&nbsp;
-              <span className="text-brand font-bold">
-                <RichText data={festival} className="text-brand"/>
+              <span className="font-bold">
+                <RichText data={festival} options={options} />
               </span>
             </div>}
           </div>
@@ -79,3 +90,12 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
 }
 
 export default ProjectPage
+
+const options = {
+  renderMark: {
+    [MARKS.UNDERLINE]: (text: string) => <span className="text-brand">{text}</span>,
+  },
+  // renderNode: {
+  //   [BLOCKS.PARAGRAPH]: (node: any, next: any) => <p>{next(node.content).replace(/\n/g, `</br>`)}</p>
+  // }
+};
