@@ -60,7 +60,7 @@ export const Outro = () => {
       Founders of Futur Proche
     </div>
     <div>
-      <a title="contact us" className="inline-block px-10 font-bold py-2 rounded-full uppercase bg-brand text-white mt-32 hover:opacity-75 transition-all" href="mailto:info@futurproche.com"> Write to us</a>
+      <a title="contact us" className="inline-block px-10 font-bold py-2 rounded-full uppercase bg-brand text-white mt-32 hover:opacity-75 transition-all" href="mailto:info@futurproche.ch"> Write to us</a>
     </div>
   </Slide>;
 };
