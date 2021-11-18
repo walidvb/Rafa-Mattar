@@ -17,17 +17,19 @@ const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
         objectFit="cover"
       />
     </div>
-    <div className="grid gap-8 md:grid-cols-2 py-8 px-4 bg-brand text-white lg:items-center">
-      <div className="grid gap-4">
-        <h1 className="text-2xl md:text-4xl font-bold">Antoine <br className="hidden md:block" />Harari</h1>
-        <div>
-          {documentToReactComponents(settings.fields.antoineBio)}
+    <div className=" bg-brand text-white ">
+      <div className="container grid gap-8 md:grid-cols-2 py-8 px-4 lg:items-center mx-auto">
+        <div className="grid gap-4">
+          <h1 className="text-2xl md:text-4xl font-bold">Antoine <br className="hidden md:block" />Harari</h1>
+          <div>
+            {documentToReactComponents(settings.fields.antoineBio)}
+          </div>
         </div>
-      </div>
-      <div className="grid gap-4">
-        <h1 className="text-2xl md:text-4xl font-bold">Valeria <br className="hidden md:block" />Mazzucchi</h1>
-        <div>
-          {documentToReactComponents(settings.fields.valeriaBio)}
+        <div className="grid gap-4">
+          <h1 className="text-2xl md:text-4xl font-bold">Valeria <br className="hidden md:block" />Mazzucchi</h1>
+          <div>
+            {documentToReactComponents(settings.fields.valeriaBio)}
+          </div>
         </div>
       </div>
     </div>
