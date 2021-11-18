@@ -19,6 +19,6 @@ export const getServerSideProps = async () => {
   const projects: IProject[] = await getProjects()
   const settings = await getSiteSettings()
   return {
-    props: { projects, settings },
+    props: { projects, settings, revalidate: 1, },
   }
 }

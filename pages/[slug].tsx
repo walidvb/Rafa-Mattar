@@ -22,5 +22,6 @@ export const getServerSideProps = async ({ params }: { params: any }) => {
   const project: IProject = projects[0]
   return {
     props: { project },
+    revalidate: 1,
   }
 }
