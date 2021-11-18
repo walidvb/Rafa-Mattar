@@ -18,14 +18,14 @@ const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
       />
     </div>
     <div className="grid gap-8 md:grid-cols-2 py-8 px-4 bg-brand text-white lg:items-center">
-      <div className="grid gap-4 lg:grid-cols-2 items-center">
-        <h1 className="text-2xl md:text-4xl font-bold lg:mx-auto">Antoine <br className="hidden md:block" />Harari</h1>
+      <div className="grid gap-4">
+        <h1 className="text-2xl md:text-4xl font-bold">Antoine <br className="hidden md:block" />Harari</h1>
         <div>
           {documentToReactComponents(settings.fields.antoineBio)}
         </div>
       </div>
-      <div className="grid gap-4 lg:grid-cols-2 lg:items-center lg:text-right">
-        <h1 className="text-2xl md:text-4xl font-bold lg:mx-auto lg:order-1">Valeria <br className="hidden md:block" />Mazzucchi</h1>
+      <div className="grid gap-4">
+        <h1 className="text-2xl md:text-4xl font-bold">Valeria <br className="hidden md:block" />Mazzucchi</h1>
         <div>
           {documentToReactComponents(settings.fields.valeriaBio)}
         </div>
