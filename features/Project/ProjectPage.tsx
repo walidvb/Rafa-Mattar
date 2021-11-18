@@ -53,32 +53,32 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
               {length}&apos;&apos;
             </h2>
             }
-            { production && <div className="mb-0 font-bold">
-              Production:&nbsp;
-              <span className="text-brand font-bold">
+            {production && <div className="mb-0 font-bold">
+              <span className="text-brand">Production:&nbsp;</span>
+              <span className="font-bold">
                 {production}
               </span>
             </div>}
-            { music && <div className="mt-4 mb-0 font-bold">
-              Music:&nbsp;
-              <span className="text-brand font-bold">
+            {music && <div className="mt-4 mb-0 font-bold">
+              <span className="text-brand">Music:&nbsp;</span>
+              <span className=" font-bold">
                 {music}
               </span>
             </div>}
-            { countries && <div className="mt-4 mb-0 font-bold">
-              Countries: &nbsp;
-              <span className="text-brand font-bold">
+            {countries && <div className="mt-4 mb-0 font-bold">
+              <span className="text-brand">Countries: &nbsp;</span>
+              <span className=" font-bold">
                 {countries}
               </span>
             </div>}
-            { type && <div className="mt-4 mb-0 font-bold">
-              Type:&nbsp;
-              <span className="text-brand font-bold">
+            {type && <div className="mt-4 mb-0 font-bold">
+              <span className="text-brand">Type:&nbsp;</span>
+              <span className="font-bold">
                 {type}
               </span>
             </div>}
-            { festival && <div className="mt-4 mb-0 font-bold">
-              Festivals&nbsp;
+            {festival && <div className="mt-4 mb-0 font-bold">
+              <span className="text-brand">Festivals&nbsp;</span>
               <span className="font-bold">
                 <RichText data={festival} options={options} />
               </span>
@@ -93,7 +93,7 @@ export default ProjectPage
 
 const options = {
   renderMark: {
-    [MARKS.UNDERLINE]: (text: string) => <span className="text-brand">{text}</span>,
+    [MARKS.UNDERLINE]: (text: string) => <span className="text- ">{text}</span>,
   },
   // renderNode: {
   //   [BLOCKS.PARAGRAPH]: (node: any, next: any) => <p>{next(node.content).replace(/\n/g, `</br>`)}</p>
