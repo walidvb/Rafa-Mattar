@@ -9,7 +9,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        brand: '#7FD380',
+        brand: '#6CFFC2',
         bgGray: '#C3C3C3',
       }
     },
