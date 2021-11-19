@@ -83,7 +83,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
       </TImage>
     <TTextWrapper style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
       <TText className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2">
-        <div className="text-4xl font-bold">{title}</div>
+        <div className="text-4xl font-bold mb-4">{title}</div>
         <RichText data={shortDescription} />
       </TText>
     </TTextWrapper>
