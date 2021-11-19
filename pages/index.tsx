@@ -15,7 +15,7 @@ const Home = (props: { projects: IProject[], settings: ISiteSettings }) => {
 
 export default Home
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const projects: IProject[] = await getProjects()
   const settings = await getSiteSettings()
   return {
