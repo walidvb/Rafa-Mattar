@@ -42,7 +42,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
           "--x": opacity,
         }}
         >
-          <Title>{title}</Title>
+          <Title className="font-bold text-4xl">{title}</Title>
         </OpacityDiv>
         <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
       </div>

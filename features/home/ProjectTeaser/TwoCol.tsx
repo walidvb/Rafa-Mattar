@@ -17,7 +17,7 @@ const Fader = styled.div`
 
 export const TwoCol = ({ image, title, shortDescription }: IProps) => {
   const [opacity, setOpacity] = useState(0);
-  const onRatioChange = useCallback((percentage) => {
+  const onRatioChange = useCallback((percentage: number) => {
     const thresholds = window.innerWidth > 768 ? [.8, .9] : [.4, .7]
     setOpacity(map(percentage, thresholds[0], thresholds[1], 0, 1));
   }, [setOpacity]);
@@ -27,7 +27,7 @@ export const TwoCol = ({ image, title, shortDescription }: IProps) => {
 
   return <article ref={ref} style={{ '--opacity': opacity } as React.CSSProperties} className="min-h-screen min-w-screen flex flex-col flex-reverse md:grid md:grid-cols-2">
     <div className="grid place-content-center text-4xl relative order-1 mt-4 md:mt-0">
-      <Fader className="md:absolute md:-translate-y-1/2 top-1/2 left-0 right-0 text-center">
+      <Fader className="md:absolute md:-translate-y-1/2 top-1/2 left-0 right-0 text-center font-bold">
         {title}
       </Fader>
       <Fader>

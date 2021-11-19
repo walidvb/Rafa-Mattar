@@ -47,7 +47,7 @@ transform: translateX(calc(-20px * (1 - var(--x)))) ;
 export const WithMask = ({ image, title, shortDescription }: IProps) => {
   const [width, setWidth] = useState<number>(0)
   
-  const onRatioChange = useCallback((percentage, isBelowFold) => {
+  const onRatioChange = useCallback((percentage: number, isBelowFold: boolean) => {
     if (isBelowFold){
       const threshold = window.innerWidth > 768 ? [.85, .98] : [.5, .8]
       if (percentage > threshold[0]){
@@ -79,11 +79,11 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
       <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center h-full will-change bg-white">
         <div>
           {img}
-
-</div>      </TImage>
+        </div>
+      </TImage>
     <TTextWrapper style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
       <TText className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2">
-        <div className="text-2xl font-bold">{title}</div>
+        <div className="text-4xl font-bold">{title}</div>
         <RichText data={shortDescription} />
       </TText>
     </TTextWrapper>
