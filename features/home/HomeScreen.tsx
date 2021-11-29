@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { Document } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Outro } from './Outro';
+import FullScreenVideo from '@entities/FullScreenVideo';
 
 
 
@@ -40,6 +41,7 @@ const HomeScreen = ({ projects, settings }: { projects: IProject[], settings: IS
         <meta name="description" content="Futur Proche Productions" />
         <link rel="icon" href="/favicon.png" />
       </Head>
+      <FullScreenVideo src={settings.fields.homeVideo} />
       <Intro textData={settings.fields.introText}/>
       <ProjectList projects={projects} />
       <Outro />
