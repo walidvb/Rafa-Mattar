@@ -79,6 +79,9 @@ export interface ISiteSettingsFields {
 
   /** Antoine Bio */
   antoineBio: Document;
+
+  /** Home Video */
+  homeVideo?: string | undefined;
 }
 
 /** Container for all non-project related copy and assets */
