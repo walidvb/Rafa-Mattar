@@ -56,9 +56,6 @@ export const Outro = () => {
         <Valeria style={style}>Valeria <br className="md:hidden" />Mazzucchi</Valeria>
       </a>
     </Link>
-    <div className="text-gray-400 mt-6">
-      Founders of Futur Proche
-    </div>
     <div>
       <a title="contact us" className="inline-block px-10 font-bold py-2 rounded-full uppercase bg-brand text-white mt-32 hover:opacity-75 transition-all" href="mailto:info@futurproche.ch"> Write to us</a>
     </div>
