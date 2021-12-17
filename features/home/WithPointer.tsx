@@ -30,14 +30,14 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
   };
   const pos = useSpring({ left, top });
   return <div onMouseMove={onMouseMove} className={`group relative overflow-hidden ${className}`}>
-    {React.useMemo(() => children, [])}
+    {React.useMemo(() => children, [children])}
     <Pointer
       ref={ref}
       // @ts-ignore
       style={{ '--left': pos.left, '--top': pos.top } as any}
       onClick={onClick}
       className={`text-3xl font-bold group-hover:opacity-100 delay-[100ms] opacity-0 tr${onClick ? ' cursor-pointer' : ' pointer-events-none'} w-xs`}
-    >View Projects</Pointer>
+    >{pointerTitle}</Pointer>
   </div>;
 };
 const Pointer = styled(animated.div)`

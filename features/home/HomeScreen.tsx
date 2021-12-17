@@ -34,6 +34,13 @@ const Intro = ({ textData }: { textData: Document}) => {
 }
 
 const HomeScreen = ({ projects, settings }: { projects: IProject[], settings: ISiteSettings }) => {
+  const [isVisible, setIsVisible] = useState(true)
+  if(isVisible){
+    return <WithPointer className="font-serif" onClick={() => setIsVisible(false)} pointerTitle="Enter">
+      <FullScreenVideo src={settings.fields.homeVideo} />  
+    </WithPointer>
+  }
+
   return (
     <Layout fullLogo>
       <Head>
@@ -41,10 +48,9 @@ const HomeScreen = ({ projects, settings }: { projects: IProject[], settings: IS
         <meta name="description" content="Futur Proche Productions" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <FullScreenVideo src={settings.fields.homeVideo} />
-      <Intro textData={settings.fields.introText}/>
-      <ProjectList projects={projects} />
-      <Outro />
+        <Intro textData={settings.fields.introText}/>
+        <ProjectList projects={projects} />
+        <Outro />
     </Layout>
   )
 }

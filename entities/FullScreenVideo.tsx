@@ -11,11 +11,8 @@ const BackgroundDiv = styled.div`
   background-position: center;
 `
 
-
-export default function FullScreenVideo({ src }: { src: string }){
+const useDesktop = (): boolean => {
   const [isDesktop, setIsDesktop] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
-  
   useEffect(() => {
     setIsDesktop(window.innerWidth > 800)
     window.addEventListener('resize', () => {
@@ -24,16 +21,14 @@ export default function FullScreenVideo({ src }: { src: string }){
     return () => window.removeEventListener('resize', () => { })
   }, [])
 
-  if (!isVisible){
-    return null
-  }
+  return isDesktop
+}
 
+export default function FullScreenVideo({ src }: { src: string }){
+  const isDesktop = useDesktop()
   const id = getIdFromVimeoUrl(src)
 
-  return <div 
-    onClick={() => setIsVisible(false)}
-    className="w-screen h-screen flex items-center justify-center bg-black"
-  >
+  return <div className="w-screen h-screen flex items-center justify-center bg-black">
   <div className="vimeo-wrapper">
       { !isDesktop ? 
         <BackgroundDiv /> : 
