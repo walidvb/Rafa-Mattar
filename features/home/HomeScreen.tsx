@@ -10,6 +10,8 @@ import { Document } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Outro } from './Outro';
 import FullScreenVideo from '@entities/FullScreenVideo';
+import { useState } from 'react';
+import { WithPointer } from './WithPointer';
 
 
 
@@ -23,13 +25,9 @@ export const Slide = styled.div`
 
 const Intro = ({ textData }: { textData: Document}) => {
   return <Slide className="grid place-content-center mt-4 lg:grid-cols-[70ch] px-4 min-h-screen-header">
-    <Link href="/about">
-      <a className="hover:text-brand">
-        <div className="text-3xl md:text-6xl font-bold md:leading-[1.2em]">
-          {documentToReactComponents(textData)}
-        </div>
-      </a>
-    </Link>
+      <div className="hover:text-brand text-3xl md:text-6xl font-bold md:leading-[1.2em]">
+        {documentToReactComponents(textData)}
+      </div>
   </Slide>
 }
 
