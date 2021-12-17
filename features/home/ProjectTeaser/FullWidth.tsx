@@ -6,6 +6,7 @@ import Image from 'next/image';
 import RichText from '@shared/ui/RichText';
 import { OpacityDiv } from './WithMask';
 import styled from 'styled-components';
+import { BWImage } from '../../../shared/ui/BWImage';
 
 
 const Title = styled.h2`
@@ -27,7 +28,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
 
   const ref = useIntersection({ callback: onRatioChange });
 
-  return <article ref={ref} className="min-h-screen min-w-screen flex flex-col">
+  return <article ref={ref} className="min-h-screen min-w-screen flex flex-col filter grayscale hover:grayscale-0 transition-all">
       <div className="relative flex-grow min-h-[30vh]">
         <OpacityDiv className="
           text-2xl
@@ -44,8 +45,8 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
         >
           <Title className="font-bold text-4xl">{title}</Title>
         </OpacityDiv>
-        <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
+          <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
       </div>
-    <RichText data={shortDescription} style={{ opacity }} className="max-w-[95vw] mx-auto mt-4"/>
-  </article>;
+      <RichText data={shortDescription} style={{ opacity }} className="max-w-[95vw] mx-auto mt-4"/>
+    </article>;
 };

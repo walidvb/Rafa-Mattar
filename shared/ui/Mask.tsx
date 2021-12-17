@@ -2,20 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Image from 'next/image';
 import { map } from '../helpers/map';
+import { BWImage } from "./BWImage";
 
-const BWImage = styled.div`
-  filter: grayscale(1);
-
-  svg circle{
-    transition: all .8s .3s ease-in-out;
-  }
-  &:hover{
-    filter: grayscale(0);
-    svg circle{
-      transition: all .5s ease-in-out;
-    }
-  }
-`
 
 const ClippedImage = styled(Image)`
   clip-path: url(#clip);
@@ -26,14 +14,14 @@ function MaskedImage({ className, ...props }: any) {
   return (
     // 3px padding as the image underneath moves slightly slower
     // so you can see the borders
-    <BWImage
+    <Wrapper
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative flex justify-center p-[3px] ${className}`}
     >
       <ClippedImage {...props} objectFit="cover" />
       <SVGMask isHovered={isHovered}/>
-    </BWImage>
+    </Wrapper>
   );
 }
 
@@ -86,4 +74,15 @@ const Svg = styled.svg`
   max-width: 100%;
   max-height: 100%;
   background: black;
+`
+
+const Wrapper = styled(BWImage)`
+  svg circle{
+    transition: all .8s .3s ease-in-out;
+  }
+  &:hover{
+    svg circle{
+      transition: all .5s ease-in-out;
+    }
+  }
 `

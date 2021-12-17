@@ -5,6 +5,7 @@ import RichText from '@shared/ui/RichText';
 import { IProps } from './index';
 import { map } from '../../../shared/helpers/map';
 import styled from 'styled-components';
+import { BWImage } from '../../../shared/ui/BWImage';
 
 const Fader = styled.div`
   opacity: var(--opacity);
@@ -34,8 +35,8 @@ export const TwoCol = ({ image, title, shortDescription }: IProps) => {
         <RichText data={shortDescription} className="px-8 mt-4 md:mt-0"/>
       </Fader>
     </div>
-    <div className="relative min-h-[30vh] w-screen md:w-auto">
+    <BWImage className="relative min-h-[30vh] w-screen md:w-auto">
       <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
-    </div>
+    </BWImage>
   </article>;
 };

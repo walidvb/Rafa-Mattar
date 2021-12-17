@@ -36,8 +36,8 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
       // @ts-ignore
       style={{ '--left': pos.left, '--top': pos.top } as any}
       onClick={onClick}
-      className={`text-3xl font-bold group-hover:opacity-100 delay-[100ms] opacity-0 tr${onClick ? ' cursor-pointer' : ' pointer-events-none'}`}
-    >{pointerTitle}</Pointer>
+      className={`text-3xl font-bold group-hover:opacity-100 delay-[100ms] opacity-0 tr${onClick ? ' cursor-pointer' : ' pointer-events-none'} w-xs`}
+    >View Projects</Pointer>
   </div>;
 };
 const Pointer = styled(animated.div)`

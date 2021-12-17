@@ -28,7 +28,7 @@ const TImage = styled.div`
     ${TRANSLATE_STYLES}
     position: static;
   }
-  `
+`
   
 const TTextWrapper = styled.div`
   @media(min-width: 768px){
