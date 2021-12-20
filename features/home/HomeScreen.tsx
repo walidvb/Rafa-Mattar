@@ -43,7 +43,7 @@ const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[]
   }, [])
 
   if(isVisible){
-    return <WithPointer className="font-serif" onClick={() => setIsVisible(false)} pointerTitle="Enter">
+    return <WithPointer onClick={() => setIsVisible(false)} pointerTitle="Entrer">
       <FullScreenVideo src={settings.fields.homeVideo} />  
     </WithPointer>
   }

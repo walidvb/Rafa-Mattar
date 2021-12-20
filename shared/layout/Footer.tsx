@@ -1,7 +1,7 @@
 
 const Footer = ({ }) => {
 
-  return <div className="md:flex flex-row flex-grow-0 py-8 px-4 justify-between text-gray-400 items-center container mx-auto">
+  return <div className="md:grid gap-8 md:grid-cols-[7fr,5fr] lg:grid-cols-[8fr,4fr] flex-row flex-grow-0 py-8 px-4 md:px-0 justify-between text-gray-400 items-center container mx-auto">
     <div className="">FUTUR PROCHE</div>
     <div>
       28 boulevard du pont d&apos;arve 

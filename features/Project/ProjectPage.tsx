@@ -28,7 +28,7 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
     const img = <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
     return <Layout>
         {videoUrl ? 
-          <WithPointer onClick={() => setOpen(true)} pointerTitle="See trailer" className={wrapperClasses}>
+          <WithPointer onClick={() => setOpen(true)} pointerTitle="Voir la bande-annonce" className={wrapperClasses}>
             {img}
           </WithPointer> :
           <div className={wrapperClasses}>
@@ -40,7 +40,7 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
           <ReactPlayer url={videoUrl} controls playing={true} />
         </div>
       </div>}
-      <div className="md:grid md:grid-cols-2 gap-8 mx-auto mt-8 md:mt-12 px-4">
+      <div className="md:grid md:grid-cols-[7fr,5fr] lg:grid-cols-[8fr,4fr] gap-8 mt-8 md:mt-12 container mx-auto px-4 md:px-0">
         <div>
           <h1 className="text-4xl mb-8 font-bold">
             {project.fields.title}
