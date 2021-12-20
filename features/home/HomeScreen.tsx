@@ -3,15 +3,14 @@ import Layout from '@shared/layout/Layout';
 import { IProject, ISiteSettings } from '../..types/contentful';
 import Head from 'next/head';
 import styled from 'styled-components';
-import RichText from '../../shared/ui/RichText';
 import ProjectList from './ProjectList';
-import Link from 'next/link';
 import { Document } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Outro } from './Outro';
 import FullScreenVideo from '@entities/FullScreenVideo';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { WithPointer } from './WithPointer';
+import { useCookies } from "react-cookie"
 
 
 
@@ -31,8 +30,18 @@ const Intro = ({ textData }: { textData: Document}) => {
   </Slide>
 }
 
-const HomeScreen = ({ projects, settings }: { projects: IProject[], settings: ISiteSettings }) => {
-  const [isVisible, setIsVisible] = useState(true)
+const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[], settings: ISiteSettings, isFirstVisit: boolean }) => {
+  const [isVisible, setIsVisible] = useState(isFirstVisit)
+  const [cookie, setCookie] = useCookies(["futurproche"])
+
+  useEffect(() => {
+    setCookie("futurproche", JSON.stringify({ isFirstVisit: false }), {
+      path: "/",
+      maxAge: 60, // Expires after 1hr
+      sameSite: true,
+    })
+  }, [])
+
   if(isVisible){
     return <WithPointer className="font-serif" onClick={() => setIsVisible(false)} pointerTitle="Enter">
       <FullScreenVideo src={settings.fields.homeVideo} />  
