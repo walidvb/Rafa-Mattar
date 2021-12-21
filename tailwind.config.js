@@ -10,6 +10,9 @@ module.exports = {
       colors: {
         brand: '#6CFFC2',
         bgGray: '#C3C3C3',
+      },
+      minHeight: {
+        "quasi-screen": '70vh',
       }
     },
   },

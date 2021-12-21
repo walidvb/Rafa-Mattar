@@ -10,9 +10,9 @@ const Ig = () => <svg className="h-6 w-6" width="24" height="25" viewBox="0 0 24
 const Footer = ({ }) => {
 
   return <div className="md:grid gap-8 md:grid-cols-[7fr,5fr] lg:grid-cols-[8fr,4fr] flex-row flex-grow-0 py-8 px-4 md:px-0 justify-between text-gray-400 items-center container mx-auto">
-    <div className="">
+    <div className="flex justify-between items-center md:block">
       FUTUR PROCHE
-      <div className="flex gap-4 flex-row mt-2">
+      <div className="flex gap-4 flex-row mt-0 md:mt-2">
         <a className="hover:text-brand" href="https://facebook.com" rel="noreferrer" target="_blank">
           <Fb />
         </a>

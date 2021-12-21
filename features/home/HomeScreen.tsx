@@ -32,7 +32,7 @@ const Intro = ({ textData }: { textData: Document}) => {
 
 const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[], settings: ISiteSettings, isFirstVisit: boolean }) => {
   const [isVisible, setIsVisible] = useState(isFirstVisit)
-  const [cookie, setCookie] = useCookies(["futurproche"])
+  const [, setCookie] = useCookies(["futurproche"])
 
   useEffect(() => {
     setCookie("futurproche", JSON.stringify({ isFirstVisit: false }), {

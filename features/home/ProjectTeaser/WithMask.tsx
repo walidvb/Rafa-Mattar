@@ -49,7 +49,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   
   const onRatioChange = useCallback((percentage: number, isBelowFold: boolean) => {
     if (isBelowFold){
-      const threshold = window.innerWidth > 768 ? [.85, .98] : [.5, .8]
+      const threshold = window.innerWidth > 768 ? [.50, .85] : [.5, .8]
       if (percentage > threshold[0]){
         setWidth(Math.min(1, Math.max(0, map(percentage, threshold[0], threshold[1], 0, 1))))
       }
@@ -75,7 +75,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   />
 
   // @ts-ignore
-  return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-screen relative">
+  return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-quasi-screen relative">
       <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center h-full will-change bg-white">
         <div>
           {img}

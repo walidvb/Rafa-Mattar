@@ -39,7 +39,7 @@ export const Outro = () => {
     "--x": (1 - translate) * 40 + 'px',
   })
 
-  return <Slide ref={ref} className="grid place-content-center px-4 text-center min-h-[60vh] md:min-h-screen">
+  return <Slide ref={ref} className="grid place-content-center px-4 text-center min-h-[60vh] md:min-h-quasi-screen py-4">
     <Link href="/team">
       <a className="text-4xl hover:text-brand">
         {/* @ts-ignore */}
