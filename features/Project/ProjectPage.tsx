@@ -47,42 +47,44 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
           </h1>
           <RichText data={body} />
         </div>
-        <div className="flex justify-center mt-12 md:mt-0">
+        <div className="mt-12 md:mt-0">
           <div>
             {length && <h2 className="text-4xl mb-8 font-bold">
               {length}&apos;&apos;
             </h2>
             }
-            {production && <div className="mb-0">
-              <div className="text-brand font-bold">Production:&nbsp;</div>
-              <span className="">
-                {production}
-              </span>
-            </div>}
-            {music && <div className="mt-4 mb-0">
-              <div className="text-brand font-bold">Music:&nbsp;</div>
-              <span className="">
-                {music}
-              </span>
-            </div>}
-            {countries && <div className="mt-4 mb-0">
-              <div className="text-brand font-bold">Countries: &nbsp;</div>
-              <span className="">
-                {countries}
-              </span>
-            </div>}
-            {type && <div className="mt-4 mb-0">
-              <div className="text-brand font-bold">Type:&nbsp;</div>
-              <span className="">
-                {type}
-              </span>
-            </div>}
-            {festival && <div className="mt-4 mb-0">
-              <div className="text-brand font-bold">Festivals&nbsp;</div>
-              <span className="">
-                <RichText data={festival} options={options} />
-              </span>
-            </div>}
+            <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4">
+              {production && <div className="">
+                <div className="text-brand font-bold">Production:&nbsp;</div>
+                <span className="">
+                  {production}
+                </span>
+              </div>}
+              {music && <div className="">
+                <div className="text-brand font-bold">Music:&nbsp;</div>
+                <span className="">
+                  {music}
+                </span>
+              </div>}
+              {countries && <div className="">
+                <div className="text-brand font-bold">Countries: &nbsp;</div>
+                <span className="">
+                  {countries}
+                </span>
+              </div>}
+              {type && <div className="">
+                <div className="text-brand font-bold">Type:&nbsp;</div>
+                <span className="">
+                  {type}
+                </span>
+              </div>}
+              {festival && <div className="col-span-2">
+                <div className="text-brand font-bold">Festivals&nbsp;</div>
+                <span className="">
+                  <RichText data={festival} options={options} />
+                </span>
+              </div>}
+            </div>
           </div>
         </div>
       </div>
