@@ -53,33 +53,33 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
               {length}&apos;&apos;
             </h2>
             }
-            {production && <div className="mb-0 font-bold">
-              <div className="text-brand">Production:&nbsp;</div>
-              <span className="font-bold">
+            {production && <div className="mb-0">
+              <div className="text-brand font-bold">Production:&nbsp;</div>
+              <span className="">
                 {production}
               </span>
             </div>}
-            {music && <div className="mt-4 mb-0 font-bold">
-              <div className="text-brand">Music:&nbsp;</div>
-              <span className=" font-bold">
+            {music && <div className="mt-4 mb-0">
+              <div className="text-brand font-bold">Music:&nbsp;</div>
+              <span className="">
                 {music}
               </span>
             </div>}
-            {countries && <div className="mt-4 mb-0 font-bold">
-              <div className="text-brand">Countries: &nbsp;</div>
-              <span className=" font-bold">
+            {countries && <div className="mt-4 mb-0">
+              <div className="text-brand font-bold">Countries: &nbsp;</div>
+              <span className="">
                 {countries}
               </span>
             </div>}
-            {type && <div className="mt-4 mb-0 font-bold">
-              <div className="text-brand">Type:&nbsp;</div>
-              <span className="font-bold">
+            {type && <div className="mt-4 mb-0">
+              <div className="text-brand font-bold">Type:&nbsp;</div>
+              <span className="">
                 {type}
               </span>
             </div>}
-            {festival && <div className="mt-4 mb-0 font-bold">
-              <div className="text-brand">Festivals&nbsp;</div>
-              <span className="font-bold">
+            {festival && <div className="mt-4 mb-0">
+              <div className="text-brand font-bold">Festivals&nbsp;</div>
+              <span className="">
                 <RichText data={festival} options={options} />
               </span>
             </div>}
