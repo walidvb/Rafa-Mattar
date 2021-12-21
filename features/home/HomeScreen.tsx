@@ -37,10 +37,10 @@ const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[]
   useEffect(() => {
     setCookie("futurproche", JSON.stringify({ isFirstVisit: false }), {
       path: "/",
-      maxAge: 60, // Expires after 1hr
+      maxAge: 3600, // Expires after 1hr
       sameSite: true,
     })
-  }, [])
+  }, [setCookie])
 
   if(isVisible){
     return <WithPointer onClick={() => setIsVisible(false)} pointerTitle="Entrer">
