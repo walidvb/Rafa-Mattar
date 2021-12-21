@@ -61,13 +61,13 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
                 </span>
               </div>}
               {music && <div className="">
-                <div className="text-brand font-bold">Music:&nbsp;</div>
+                <div className="text-brand font-bold">Musique:&nbsp;</div>
                 <span className="">
                   {music}
                 </span>
               </div>}
               {countries && <div className="">
-                <div className="text-brand font-bold">Countries: &nbsp;</div>
+                <div className="text-brand font-bold">Pays: &nbsp;</div>
                 <span className="">
                   {countries}
                 </span>
