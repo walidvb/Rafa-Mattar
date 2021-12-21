@@ -6,30 +6,26 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
   const [top, setTop] = useState<string>('-100px');
   const [left, setLeft] = useState<string>('-100px');
   const ref = useRef<HTMLDivElement>(null);
+  const wrapper = useRef<HTMLDivElement>(null);
   const onMouseMove = (evt: any) => {
-    if (!ref.current) {
+    if (!ref.current || !wrapper.current) {
       return;
     }
     const { target, clientX, clientY } = evt;
     const pseudoRect = window.getComputedStyle(ref.current);
-    const rect = target.getBoundingClientRect();
+    const rect = wrapper.current.getBoundingClientRect();
     const { width: cWidth, height: cHeight, left: cLeft, top: cTop } = rect
     const width = parseInt(pseudoRect.width);
     const height = parseInt(pseudoRect.height);
     let left = clientX - cLeft - width / 2;
     let top = clientY - cTop - height / 2;
-    if(cWidth - width < 1 || cHeight - height < 1){ 
-      return 
-    }
-    left = Math.min(Math.max(0, left), cWidth - width / 2);
-    top = Math.min(Math.max(0, top), cHeight - height / 2);
-    // console.log('not skipping', left, top)
-    // console.log(left, cWidth, width, cWidth - width)
+    left = Math.min(Math.max(0, left), cWidth - width);
+    top = Math.min(Math.max(0, top), cHeight - height);
     setLeft(`${left}px`);
     setTop(`${top}px`);
   };
   const pos = useSpring({ left, top });
-  return <div onMouseMove={onMouseMove} className={`group relative overflow-hidden ${className}`}>
+  return <div ref={wrapper} onMouseMove={onMouseMove} className={`group relative overflow-hidden ${className}`}>
     {React.useMemo(() => children, [children])}
     <Pointer
       ref={ref}
@@ -37,7 +33,9 @@ export const WithPointer = ({ children, className = '', onClick,  pointerTitle }
       style={{ '--left': pos.left, '--top': pos.top } as any}
       onClick={onClick}
       className={`text-3xl font-bold group-hover:opacity-100 delay-[100ms] opacity-0 tr${onClick ? ' cursor-pointer' : ' pointer-events-none'} w-xs`}
-    >{pointerTitle}</Pointer>
+    >
+      {pointerTitle}
+      </Pointer>
   </div>;
 };
 const Pointer = styled(animated.div)`
