@@ -20,7 +20,7 @@ function MaskedImage({ className, ...props }: any) {
       className={`relative flex justify-center p-[3px] ${className}`}
     >
       <ClippedImage {...props} objectFit="cover" />
-      <SVGMask isHovered={isHovered}/>
+      <SVGMask isHovered={isHovered} />
     </Wrapper>
   );
 }
@@ -44,7 +44,7 @@ const SVGMask = React.memo(function SVG({ isHovered } : { isHovered: boolean }) 
 
       let r = map(distToCenter, w / 2, w / 6, 0, (STEP_SIZE / 2) * scale);
       r = Math.min(r, (STEP_SIZE / 2) * scale);
-      if (r <= 0) {
+      if (r <= 0.0001) {
         continue
       }
       circles.push(
