@@ -8,7 +8,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        brand: '#6CFFC2',
+        brand: '#4DCAA4',
         bgGray: '#C3C3C3',
       },
       minHeight: {
