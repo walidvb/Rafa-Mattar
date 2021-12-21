@@ -54,31 +54,31 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
             </h2>
             }
             {production && <div className="mb-0 font-bold">
-              <span className="text-brand">Production:&nbsp;</span>
+              <div className="text-brand">Production:&nbsp;</div>
               <span className="font-bold">
                 {production}
               </span>
             </div>}
             {music && <div className="mt-4 mb-0 font-bold">
-              <span className="text-brand">Music:&nbsp;</span>
+              <div className="text-brand">Music:&nbsp;</div>
               <span className=" font-bold">
                 {music}
               </span>
             </div>}
             {countries && <div className="mt-4 mb-0 font-bold">
-              <span className="text-brand">Countries: &nbsp;</span>
+              <div className="text-brand">Countries: &nbsp;</div>
               <span className=" font-bold">
                 {countries}
               </span>
             </div>}
             {type && <div className="mt-4 mb-0 font-bold">
-              <span className="text-brand">Type:&nbsp;</span>
+              <div className="text-brand">Type:&nbsp;</div>
               <span className="font-bold">
                 {type}
               </span>
             </div>}
             {festival && <div className="mt-4 mb-0 font-bold">
-              <span className="text-brand">Festivals&nbsp;</span>
+              <div className="text-brand">Festivals&nbsp;</div>
               <span className="font-bold">
                 <RichText data={festival} options={options} />
               </span>
