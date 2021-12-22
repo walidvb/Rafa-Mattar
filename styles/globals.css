@@ -1,4 +1,6 @@
-
+:root{
+  --header-height: 80px;
+}
 
 html,
 body {
