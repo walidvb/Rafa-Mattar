@@ -1,3 +1,4 @@
+import { SendEmail } from "./Header"
 
 const Fb = () => <svg className="h-6 w-6" width="18" height="33" viewBox="0 0 18 33" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path d="M16.4459 18.5L17.3349 12.709H11.7779V8.95101C11.7779 7.36701 12.5539 5.82201 15.0429 5.82201H17.5689V0.892007C17.5689 0.892007 15.2769 0.501007 13.0849 0.501007C8.50891 0.501007 5.51791 3.27501 5.51791 8.29601V12.71H0.430908V18.501H5.51791V32.501H11.7779V18.501L16.4459 18.5Z" fill="currentColor" />
@@ -19,6 +20,7 @@ const Footer = ({ }) => {
         <a className="hover:text-brand" href="https://instagram.com" rel="noreferrer" target="_blank">
           <Ig />
         </a>
+        <SendEmail />
       </div>
     </div>
     <div>
