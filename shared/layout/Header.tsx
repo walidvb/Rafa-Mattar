@@ -38,7 +38,7 @@ const Header = ({ fullLogo }: { fullLogo: boolean }) => {
         <Image src={logo_full} alt="logo" width={330} height={144}/>
       </div>
     </div> }
-    <div className="md:flex flex-row justify-between items-end z-50 sticky py-2 top-0 container mx-auto">
+    <div className="md:flex flex-row justify-between items-center z-50 sticky py-2 top-0 container mx-auto">
       <div className="flex justify-start">
         <Link href="/">
           <a className="inline-flex">
