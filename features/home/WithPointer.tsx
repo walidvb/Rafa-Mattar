@@ -2,7 +2,7 @@ import React, { ReactNode, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useSpring, animated } from 'react-spring';
 
-export const WithPointer = ({ children, className = '', onClick, pointerTitle, within = true }: { children: ReactNode; onClick?: () => void, className?: string, pointerTitle: string; within: boolean }) => {
+export const WithPointer = ({ children, className = '', onClick, pointerTitle, within = true }: { children: ReactNode; onClick?: () => void, className?: string, pointerTitle: string; within?: boolean }) => {
   const [top, setTop] = useState<string>('-100px');
   const [left, setLeft] = useState<string>('-100px');
   const ref = useRef<HTMLDivElement>(null);
