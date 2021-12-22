@@ -76,7 +76,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
 
   // @ts-ignore
   return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 md:min-h-quasi-screen relative">
-      <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center h-full will-change bg-white">
+      <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center h-full will-change bg-white p-8">
         <div>
           {img}
         </div>

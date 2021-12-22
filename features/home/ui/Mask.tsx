@@ -28,7 +28,7 @@ function MaskedImage({ className, ...props }: any) {
 export default MaskedImage;
 
 
-const STEP_SIZE = 0.025;
+const STEP_SIZE = 0.04;
 const RESOLUTION = 1;
 
 const SVGMask = React.memo(function SVG({ isHovered } : { isHovered: boolean }) {
