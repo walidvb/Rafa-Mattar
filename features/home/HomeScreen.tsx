@@ -11,6 +11,7 @@ import FullScreenVideo from '@entities/FullScreenVideo';
 import { useState, useEffect } from 'react';
 import { WithPointer } from './WithPointer';
 import { useCookies } from "react-cookie"
+import { Activity } from './Activity';
 
 
 
@@ -29,6 +30,7 @@ const Intro = ({ textData }: { textData: Document}) => {
       </div>
   </Slide>
 }
+
 
 const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[], settings: ISiteSettings, isFirstVisit: boolean }) => {
   const [isVisible, setIsVisible] = useState(isFirstVisit)
@@ -57,6 +59,7 @@ const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[]
       </Head>
         <Intro textData={settings.fields.introText}/>
         <ProjectList projects={projects} />
+        <Activity />
         <Outro />
     </Layout>
   )
