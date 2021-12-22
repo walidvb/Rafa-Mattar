@@ -60,7 +60,6 @@ const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[]
         <Intro textData={settings.fields.introText}/>
         <ProjectList projects={projects} />
         <Activity />
-        <Outro />
     </Layout>
   )
 }
