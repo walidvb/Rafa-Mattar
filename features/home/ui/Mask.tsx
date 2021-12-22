@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Image from 'next/image';
-import { map } from '../helpers/map';
+import { map } from '../../../shared/helpers/map';
 import { BWImage } from "./BWImage";
 
 

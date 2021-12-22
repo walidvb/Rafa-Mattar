@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { useIntersection } from './IntersectionObserver';
 import { useCallback, useState } from 'react';
 import { map } from '@shared/helpers';;
-import MaskedImage from '@shared/ui/Mask';
+import MaskedImage from '@features/home/ui/Mask';
 import { useSpring, animated } from 'react-spring'
 
 export const OpacityDiv = styled.div`

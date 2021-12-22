@@ -6,7 +6,6 @@ import Image from 'next/image';
 import RichText from '@shared/ui/RichText';
 import { OpacityDiv } from './WithMask';
 import styled from 'styled-components';
-import { BWImage } from '../../../shared/ui/BWImage';
 
 
 const Title = styled.h2`

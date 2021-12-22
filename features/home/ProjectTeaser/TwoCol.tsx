@@ -5,7 +5,7 @@ import RichText from '@shared/ui/RichText';
 import { IProps } from './index';
 import { map } from '../../../shared/helpers/map';
 import styled from 'styled-components';
-import { BWImage } from '../../../shared/ui/BWImage';
+import { BWImage } from '../ui/BWImage';
 
 const Fader = styled.div`
   opacity: var(--opacity);
