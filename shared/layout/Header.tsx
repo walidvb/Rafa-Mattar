@@ -29,7 +29,7 @@ export const SendEmail = () => <a className="inline-flex hover:text-brand" href=
   <Mail />
 </a>
 
-const MenuLinks = ({ className = '' }: { className?: string }) => <ul className={`flex gap-8 pl-2 ${className}`}>
+const MenuLinks = ({ className = '' }: { className?: string }) => <ul className={`flex md:gap-8 pl-2 ${className}`}>
   {menuItems.map(item => (
     <li key={item.label}>
       <Link href={item.href}>
@@ -46,12 +46,12 @@ const MenuLinks = ({ className = '' }: { className?: string }) => <ul className=
 const Header = ({ fullLogo }: { fullLogo: boolean }) => {
 
   return <>
-    { fullLogo && <div className="relative mt-8 md:mt-12 container mx-auto">
-      <div className="absolute top-2 bg-white z-20 w-full">
+    { fullLogo && <div className="relative mt-8 md:mt-12 container mx-auto px-2 md:px-0">
+      <div className="absolute top-2 bg-white md:bg-transparent z-20 w-full">
         <Image src={logo_full} alt="logo" width={330} height={144}/>
       </div>
     </div> }
-    <div className="md:flex flex-row justify-between items-center z-50 sticky py-2 top-0 container mx-auto">
+    <div className={`${!fullLogo && 'justify-between'} md:justify-between flex flex-row items-center z-50 sticky py-2 top-0 container mx-auto`}>
       <div className="flex justify-start">
         <Link href="/">
           <a className="inline-flex">
@@ -61,9 +61,10 @@ const Header = ({ fullLogo }: { fullLogo: boolean }) => {
           </a>
         </Link>
       </div>
-      <MenuLinks className="hidden md:inline-flex"/>
+      {!fullLogo && <MenuLinks className={`md:inline-flex flex-grow pl-4 justify-between md:justify-end`}/>}
+      {fullLogo && <MenuLinks className="hidden md:flex justify-end pr-2 sticky top-6 z-10 right-0 gap-4"/>}
     </div>
-    <MenuLinks className="md:hidden justify-end pr-2 sticky top-10 z-10 right-0"/>
+      {fullLogo && <MenuLinks className="md:hidden justify-end pr-2 sticky top-6 z-10 right-0 gap-4"/>}
   </>
 }
 
