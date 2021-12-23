@@ -28,17 +28,28 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
     const [isOpen, setOpen] = useState(false)
     const img = <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
 
+  const videoHeader = (() => {
+    const header = <WithPointer onClick={() => setOpen(true)} pointerTitle="Voir la bande-annonce" className={wrapperClasses}>
+      {img}
+    </WithPointer> 
+    if(isDesktop) return header
+    if(!isOpen) return header
+
+    return (<div className="w-full relative bg-blue">
+      <div className="pb-[56.25%] w-full bg-red">
+        <ReactPlayer className="absolute" width="100%" height="100%" url={videoUrl} controls playing={true} />
+      </div>
+    </div>)
+  })()
     return <Layout>
-        {videoUrl ? 
-          <WithPointer onClick={() => setOpen(true)} pointerTitle="Voir la bande-annonce" className={wrapperClasses}>
-            {img}
-          </WithPointer> :
+        {videoUrl ?
+          videoHeader:
           <div className={wrapperClasses}>
             {img}
           </div>
         }
 
-      { isOpen && videoUrl && <div className="fixed bg-black bg-opacity-40 inset-0" onClick={() => setOpen(false)}>
+      { isDesktop && isOpen && videoUrl && <div className="fixed bg-black bg-opacity-40 inset-0" onClick={() => setOpen(false)}>
         <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2 w-[70vw] bg-blue">
           <div className="pb-[56.25%] w-full bg-red">
             <ReactPlayer className="absolute" width="100%" height="100%" url={videoUrl} controls playing={true} />
