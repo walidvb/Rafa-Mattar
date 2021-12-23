@@ -51,7 +51,8 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
     if (isBelowFold){
       const threshold = window.innerWidth > 768 ? [.50, .85] : [.5, .8]
       if (percentage > threshold[0]){
-        setWidth(Math.min(1, Math.max(0, map(percentage, threshold[0], threshold[1], 0, 1))))
+        // setWidth(Math.min(1, Math.max(0, map(percentage, threshold[0], threshold[1], 0, 1))))
+        setWidth(1);
       }
       else{
         setWidth(0)

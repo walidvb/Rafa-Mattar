@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import img from '@public/images/coming_soon.jpg'
-import { useState, useEffect } from 'react';
+import { useDesktop } from '../shared/hooks/useDesktop';
 
 const BackgroundDiv = styled.div`
   background-image: url(${img.src});
@@ -10,19 +10,6 @@ const BackgroundDiv = styled.div`
   background-size: cover;
   background-position: center;
 `
-
-const useDesktop = (): boolean => {
-  const [isDesktop, setIsDesktop] = useState(false)
-  useEffect(() => {
-    setIsDesktop(window.innerWidth > 800)
-    window.addEventListener('resize', () => {
-      setIsDesktop(window.innerWidth > 800)
-    })
-    return () => window.removeEventListener('resize', () => { })
-  }, [])
-
-  return isDesktop
-}
 
 export default function FullScreenVideo({ src }: { src: string }){
   const isDesktop = useDesktop()

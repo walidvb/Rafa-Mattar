@@ -8,10 +8,12 @@ import Image from 'next/image';
 import { useState } from 'react';
 import ReactPlayer from 'react-player'
 import { WithPointer } from '../home/WithPointer';
+import { useDesktop } from '../../shared/hooks/useDesktop';
 
 const wrapperClasses = "min-h-[35vh] md:min-h-[60vh] relative"
 
 const ProjectPage = ({ project, }: { project: IProject }) => {
+    const isDesktop = useDesktop()
     const { fields: { 
       body,
       headerImage,
@@ -23,9 +25,9 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
       type,
       festival,
     } } = project
-    console.log(festival)
     const [isOpen, setOpen] = useState(false)
     const img = <Image src={"https:" + headerImage.fields.file.url} alt={headerImage.fields.title} layout="fill" objectFit="cover" />
+
     return <Layout>
         {videoUrl ? 
           <WithPointer onClick={() => setOpen(true)} pointerTitle="Voir la bande-annonce" className={wrapperClasses}>
@@ -35,9 +37,12 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
             {img}
           </div>
         }
+
       { isOpen && videoUrl && <div className="fixed bg-black bg-opacity-40 inset-0" onClick={() => setOpen(false)}>
-        <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2">
-          <ReactPlayer url={videoUrl} controls playing={true} />
+        <div className="fixed -translate-y-1/2 top-1/2 left-1/2 -translate-x-1/2 w-[70vw] bg-blue">
+          <div className="pb-[56.25%] w-full bg-red">
+            <ReactPlayer className="absolute" width="100%" height="100%" url={videoUrl} controls playing={true} />
+          </div>
         </div>
       </div>}
       <div className="md:grid md:grid-cols-[7fr,5fr] lg:grid-cols-[8fr,4fr] gap-8 mt-8 md:mt-12 container mx-auto px-4 md:px-0">
