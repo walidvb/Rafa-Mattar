@@ -31,6 +31,9 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
   const videoHeader = (() => {
     const header = <WithPointer onClick={() => setOpen(true)} pointerTitle="Voir la bande-annonce" className={wrapperClasses}>
       {img}
+      <div className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-16 w-16 bg-white rounded-full border-2 border-red-500 p-3">
+        <Image src={require('/public/images/play.png')} alt="play" layout="responsive" objectFit='cover'/>
+      </div>
     </WithPointer> 
     if(isDesktop) return header
     if(!isOpen) return header

@@ -29,7 +29,7 @@ export const SendEmail = () => <a className="inline-flex hover:text-brand" href=
   <Mail />
 </a>
 
-const MenuLinks = ({ className = '' }: { className?: string }) => <ul className={`flex md:gap-8 pl-2 ${className}`}>
+const MenuLinks = ({ className = '' }: { className?: string }) => <ul className={`flex md:gap-8 pl-2 pr-2 md:pr-0 ${className}`}>
   {menuItems.map(item => (
     <li key={item.label}>
       <Link href={item.href}>
