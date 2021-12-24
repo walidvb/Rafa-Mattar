@@ -5,7 +5,7 @@ import { getProjects } from '../shared/api';
 
 
 
-const Project = (props: { project: IProject }) => {
+const Project = (props: { project: IProject, related: IProject[] }) => {
   return <ProjectPage {...props} />
 }
 
@@ -18,9 +18,10 @@ export default Project
 // }
 
 export const getServerSideProps = async ({ params }: { params: any }) => {
-  const projects = await getProjects({ "fields.slug": params.slug })
-  const project: IProject = projects[0]
+  const projects = await getProjects()
+  const project: IProject = projects.find(project => project.fields.slug === params.slug)
+  const related = projects.filter(project => project.fields.slug !== params.slug)
   return {
-    props: { project },
+    props: { project, related, projects },
   }
 }

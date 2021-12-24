@@ -9,10 +9,11 @@ import { useState } from 'react';
 import ReactPlayer from 'react-player'
 import { WithPointer } from '../home/WithPointer';
 import { useDesktop } from '../../shared/hooks/useDesktop';
+import { Related } from './Related';
 
 const wrapperClasses = "min-h-[35vh] md:min-h-[60vh] relative"
 
-const ProjectPage = ({ project, }: { project: IProject }) => {
+const ProjectPage = ({ project, related }: { project: IProject, related: IProject[] }) => {
     const isDesktop = useDesktop()
     const { fields: { 
       body,
@@ -59,7 +60,7 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
           </div>
         </div>
       </div>}
-      <div className="md:grid md:grid-cols-[7fr,5fr] lg:grid-cols-[8fr,4fr] gap-8 mt-8 md:mt-12 container mx-auto px-4 md:px-0">
+      <div className="md:grid md:grid-cols-[7fr,5fr] lg:grid-cols-[8fr,4fr] gap-8 mt-8 md:mt-12 container mx-auto px-4 md:px-0 mb-8 md:mb-32">
         <div>
           <h1 className="text-4xl mb-8 font-bold">
             {project.fields.title}
@@ -107,6 +108,7 @@ const ProjectPage = ({ project, }: { project: IProject }) => {
           </div>
         </div>
       </div>
+      <Related projects={related}/>
     </Layout>
 }
 
