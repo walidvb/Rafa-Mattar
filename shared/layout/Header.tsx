@@ -37,9 +37,11 @@ const MenuLinks = ({ className = '' }: { className?: string }) => <ul className=
       </Link>
     </li>))}
     <li>
-    <WithPointer className="h-full flex items-center" pointerTitle="Écrivez-nous" within={false}>
-      <SendEmail />
-      </WithPointer>
+    {/* <WithPointer className="h-full flex items-center" pointerTitle="Écrivez-nous" within={false}> */}
+      <div className="h-full flex items-center">
+        <SendEmail />
+      </div>
+      {/* </WithPointer> */}
     </li>
 </ul>
 
