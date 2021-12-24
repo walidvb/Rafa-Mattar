@@ -32,7 +32,7 @@ const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
           <div className="col-span-5 col-start-2">
             {documentToReactComponents(settings.fields.about)}
           </div>
-          <div className="flex justify-between col-span-5 col-start-2 items-end">
+          <div className="flex justify-between col-span-5 col-start-2 items-end md:mx-auto md:gap-20">
             <TeamMember img={settings.fields.valeriaImage.fields.file.url} name={"Valeria Mazzucchi"} />
             <TeamMember img={settings.fields.antoineImage.fields.file.url} name={"Antoine Harari"} className="flex-row-reverse text-right" />
           </div>
