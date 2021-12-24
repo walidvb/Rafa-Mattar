@@ -11,7 +11,7 @@ import { WithPointer } from '../home/WithPointer';
 import { useDesktop } from '../../shared/hooks/useDesktop';
 import { Related } from './Related';
 
-const wrapperClasses = "min-h-[35vh] md:min-h-[60vh] relative"
+const wrapperClasses = "min-h-banner md:min-h-[60vh] relative"
 
 const ProjectPage = ({ project, related }: { project: IProject, related: IProject[] }) => {
     const isDesktop = useDesktop()

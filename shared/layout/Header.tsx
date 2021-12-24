@@ -56,7 +56,7 @@ const Header = ({ fullLogo }: { fullLogo: boolean }) => {
     <div className={`${!fullLogo ? 'justify-between flex' : 'w-[fit-content] inline-block md:flex'} md:justify-between flex-row items-center z-50 sticky py-2 top-0 md:container md:mx-auto `}>
       <div className="flex justify-start">
         <Link href="/">
-          <a className="inline-flex pl-2">
+          <a className="inline-flex pl-2 md:pl-0">
             {/* <Image src={logo} alt="logo" objectFit='contain' height={80} /> */}
             {/* <Image src={logoSmall} alt="logo" objectFit='contain' height={80} /> */}
             <Logo />

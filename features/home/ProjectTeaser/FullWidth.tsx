@@ -27,8 +27,8 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
 
   const ref = useIntersection({ callback: onRatioChange });
 
-  return <article ref={ref} className="min-h-quasi-screen min-w-screen flex flex-col filter grayscale hover:grayscale-0 transition-all">
-      <div className="relative flex-grow min-h-[30vh]">
+  return <article ref={ref} className="min-h-banner-lg md:min-h-quasi-screen min-w-screen flex flex-col filter grayscale hover:grayscale-0 transition-all">
+      <div className="relative flex-grow min-h-banner">
         <OpacityDiv className="
           text-2xl
           absolute

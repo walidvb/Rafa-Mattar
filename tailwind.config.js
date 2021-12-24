@@ -13,6 +13,8 @@ module.exports = {
       },
       minHeight: {
         "quasi-screen": '70vh',
+        'banner': '300px',
+        'project': '600px',
       }
     },
   },

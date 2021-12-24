@@ -8,7 +8,7 @@ import Image from 'next/image';
 const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
   console.log(settings)
   return <Layout className="flex flex-col min-h-screen-header">
-    <div className="flex-grow relative min-h-[30vh]">
+    <div className="flex-grow relative min-h-banner">
       <Image 
         src={'https:' + settings.fields.biographyImage.fields.file.url} 
         alt={settings.fields.biographyImage.fields.title}
