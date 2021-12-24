@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import ProjectList from './ProjectList';
 import { Document } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { Outro } from './Outro';
 import FullScreenVideo from '@entities/FullScreenVideo';
 import { useState, useEffect } from 'react';
 import { WithPointer } from './WithPointer';
@@ -46,7 +45,7 @@ const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[]
 
   if(isVisible){
     return <WithPointer onClick={() => setIsVisible(false)} pointerTitle="Entrer">
-      <FullScreenVideo src={settings.fields.homeVideo} />  
+      <FullScreenVideo src={settings.fields.homeVideo} imgSrc={settings.fields.homeImage?.fields.file.url}/>  
     </WithPointer>
   }
 

@@ -88,6 +88,9 @@ export interface ISiteSettingsFields {
 
   /** Valeria Image */
   valeriaImage: Asset;
+
+  /** Home Image */
+  homeImage: Asset;
 }
 
 /** Container for all non-project related copy and assets */

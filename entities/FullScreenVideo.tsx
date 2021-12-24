@@ -4,21 +4,27 @@ import img from '@public/images/coming_soon.jpg'
 import { useDesktop } from '../shared/hooks/useDesktop';
 
 const BackgroundDiv = styled.div`
-  background-image: url(${img.src});
+  ${
+    // @ts-ignore
+    ({ img }) => `
+     background-image: url(${img});
+  `}
   width: 100vw;
   height: 100vh;
   background-size: cover;
   background-position: center;
+  background-color: var(--brand-color);
 `
 
-export default function FullScreenVideo({ src }: { src: string }){
+export default function FullScreenVideo({ src, imgSrc }: { src: string, imgSrc: string }){
   const isDesktop = useDesktop()
   const id = getIdFromVimeoUrl(src)
 
   return <div className="w-screen h-screen flex items-center justify-center bg-black">
   <div className="vimeo-wrapper">
       { !isDesktop ? 
-        <BackgroundDiv /> : 
+        // @ts-ignore
+        <BackgroundDiv img={imgSrc}/> : 
         <iframe src={`https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&byline=0&title=0`}
           frameBorder="0" allowFullScreen></iframe>
       }

@@ -32,7 +32,7 @@ export const WithPointer = ({ children, className = '', onClick, pointerTitle, w
     setTop(`${top}`);
   };
   const pos = useSpring({ left, top });
-  return <div ref={wrapper} onMouseMove={onMouseMove} className={`group relative ${within && 'overflow-hidden'} ${className}`}>
+  return <div ref={wrapper} onClick={onClick} onMouseMove={onMouseMove} className={`group relative ${within && 'overflow-hidden'} ${className}`}>
     {React.useMemo(() => children, [children])}
     <Pointer
       ref={ref}
@@ -40,7 +40,6 @@ export const WithPointer = ({ children, className = '', onClick, pointerTitle, w
       within={within}
       // @ts-ignore
       style={{ '--left': pos.left, '--top': pos.top } as any}
-      onClick={onClick}
       className={`${within ? 'text-3xl font-bold' : ' duration-[400ms]'} delay-[100ms] group-hover:opacity-100  opacity-0 tr${onClick ? ' cursor-pointer' : ' pointer-events-none'} w-xs`}
     >
       {pointerTitle}
