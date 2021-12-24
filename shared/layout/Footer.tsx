@@ -14,10 +14,10 @@ const Footer = ({ }) => {
     <div className="flex justify-between items-center md:block">
       FUTUR PROCHE
       <div className="flex gap-4 flex-row mt-0 md:mt-2">
-        <a className="hover:text-brand" href="https://facebook.com" rel="noreferrer" target="_blank">
+        {/* <a className="hover:text-brand" href="https://facebook.com" rel="noreferrer" target="_blank">
           <Fb />
-        </a>
-        <a className="hover:text-brand" href="https://instagram.com" rel="noreferrer" target="_blank">
+        </a> */}
+        <a className="hover:text-brand" href="https://www.instagram.com/futurprocheprod/" rel="noreferrer" target="_blank">
           <Ig />
         </a>
         <SendEmail />
@@ -30,7 +30,7 @@ const Footer = ({ }) => {
       <br />
       <a className="hover:text-brand" href="mailto:info@futurproche.ch">info@futurproche.ch</a>
       <br />
-      <a className="hover:text-brand" href="tel:+393287312924">+39 3287312924</a>
+      <a className="hover:text-brand" href="tel:+41766792298">+41 (76) 679 22 98</a>
     </div>
   </div>
 }
