@@ -6,7 +6,7 @@ import { WithPointer } from '../home/WithPointer';
 
 const Item = ({ project }: { project: IProject}) => {
   return <WithPointer pointerTitle="Entrer">
-    <Link href={`/projects/${project.fields.slug}`}>
+    <Link href={`/${project.fields.slug}`}>
       <a className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center hover:text-brand">
         <div className="md:col-span-2">
           <Image src={"https:" + project.fields.headerImage.fields.file.url} alt={project.fields.headerImage.fields.title} layout="responsive" width={500} height={300}/>
