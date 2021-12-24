@@ -1,3 +1,4 @@
+// @ts-ignore
 import { IProject } from "../../types/contentful";
 import Image from 'next/image';
 import Link from 'next/link';
