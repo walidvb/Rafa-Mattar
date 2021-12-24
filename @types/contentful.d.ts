@@ -65,7 +65,7 @@ export interface IProject extends Entry<IProjectFields> {
 }
 
 export interface ISiteSettingsFields {
-  /** Couple Image */
+  /** About Image */
   biographyImage: Asset;
 
   /** Intro Text */
@@ -82,6 +82,12 @@ export interface ISiteSettingsFields {
 
   /** Home Video */
   homeVideo?: string | undefined;
+
+  /** Antoine Image */
+  antoineImage: Asset;
+
+  /** Valeria Image */
+  valeriaImage: Asset;
 }
 
 /** Container for all non-project related copy and assets */
