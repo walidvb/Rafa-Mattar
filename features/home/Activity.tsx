@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { WithPointer } from './WithPointer';
+import { Ig } from '../../shared/layout/Footer';
 
 export const Activity = () => {
   const [images, setImages] = useState([]);
@@ -22,7 +24,7 @@ export const Activity = () => {
   return <div id="actualite" className="mx-auto container  pt-12 md:mt-32 px-2 md:px-0" style={{ scrollMarginTop: "var(--header-height)" }}>
     <h2 className="text-3xl md:text-6xl font-bold mb-8 md:mb-16">Actualité</h2>
     {err ? <p>Une erreur est survenue...</p> : (
-      <div className="grid grid-cols-3 gap-2 md:gap-8 max-w-[1000px] mx-auto">
+      <WithPointer pointerTitle={<Ig className="h-12 w-12 opacity-50 hover:text-brand"/>} className="grid grid-cols-3 gap-2 md:gap-8 max-w-[1000px] mx-auto">
         {images.map((feed: IGFeed) => (
           <a className="hover:opacity-75" href={feed.permalink} target="_blank" rel="noreferrer" key={feed.id} title={feed.caption}>
             {(feed.media_type === 'IMAGE' || feed.media_type === 'CAROUSEL_ALBUM')
@@ -30,7 +32,7 @@ export const Activity = () => {
               : <video key={feed.id} src={feed.media_url} />}
           </a>
         ))}
-      </div>
+      </WithPointer>
     )}
   </div>;
 };
