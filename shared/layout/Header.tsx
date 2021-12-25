@@ -14,7 +14,7 @@ const menuItems = [
   },
   {
     label: 'À Propos',
-    href: '/about',
+    href: '/a-propos',
   },
   {
     label: 'Actualité',
