@@ -14,15 +14,20 @@ const Title = styled.h2`
 export const FullWidth = ({ image, title, shortDescription }: IProps) => {
   const [opacity, setOpacity] = useState(0);
   const onRatioChange = useCallback((percentage, isBelowFold) => {
-    if (isBelowFold && percentage > .6) {
-      setOpacity(Math.min(1, map(percentage, 0.6, .9, 0, 1)));
-      return
-    }
     if (!isBelowFold){
       setOpacity(1);
       return
     }
+
+    if(percentage > .6){
+      // setOpacity(Math.min(1, map(percentage, 0.6, .9, 0, 1)));
+      setOpacity(1);
+      return
+    }
+
+
     setOpacity(0);
+
   }, [setOpacity]);
 
   const ref = useIntersection({ callback: onRatioChange });
