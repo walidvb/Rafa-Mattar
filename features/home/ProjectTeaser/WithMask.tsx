@@ -10,6 +10,7 @@ import { useSpring, animated } from 'react-spring'
 
 export const OpacityDiv = styled.div`
   opacity: var(--x);
+  transition: all .8s ease-in-out;
   @media (min-width: 768px){
   }
   p{
@@ -83,10 +84,9 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
         </div>
       </TImage>
     <TTextWrapper style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
-      <TText className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2">
-        <div className="text-4xl font-bold mb-4">{title}</div>
-        <RichText data={shortDescription} />
-      </TText>
+      <div className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2">
+        <div className="text-4xl font-bold text-center">{title}</div>
+      </div>
     </TTextWrapper>
   </animated.article>;
 };

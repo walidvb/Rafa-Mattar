@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { useState, useCallback } from 'react';
 import { useIntersection } from './IntersectionObserver';
-import RichText from '@shared/ui/RichText';
 import { IProps } from './index';
 import { map } from '../../../shared/helpers/map';
 import styled from 'styled-components';
@@ -9,18 +8,17 @@ import { BWImage } from '../ui/BWImage';
 
 const Fader = styled.div`
   opacity: var(--opacity);
-  @media (min-width: 768px){
-    :nth-child(2n + 1){
-      opacity: calc(1 - var(--opacity));
-    }
-  }
+  transform: translateY(calc(5px * var(--opacity)));
+  transition: all .8s ease-in-out;
 `
 
 export const TwoCol = ({ image, title, shortDescription }: IProps) => {
   const [opacity, setOpacity] = useState(0);
   const onRatioChange = useCallback((percentage: number) => {
     const thresholds = window.innerWidth > 768 ? [.8, .9] : [.4, .7]
-    setOpacity(map(percentage, thresholds[0], thresholds[1], 0, 1));
+    // setOpacity(map(percentage, thresholds[0], thresholds[1], 0, 1));
+    setOpacity(percentage > .7 ? 1 : 0);
+
   }, [setOpacity]);
 
   const ref = useIntersection({ callback: onRatioChange });
@@ -30,9 +28,6 @@ export const TwoCol = ({ image, title, shortDescription }: IProps) => {
     <div className="grid place-content-center text-4xl relative order-1 mt-4 md:mt-0">
       <Fader className="md:absolute md:-translate-y-1/2 top-1/2 left-0 right-0 text-center font-bold">
         {title}
-      </Fader>
-      <Fader>
-        <RichText data={shortDescription} className="px-8 mt-4 md:mt-0"/>
       </Fader>
     </div>
     <BWImage className="relative min-h-banner w-auto">
