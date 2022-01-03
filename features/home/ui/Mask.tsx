@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Shaders, Node, GLSL } from "gl-react";
 // @ts-ignore
 import { Surface } from "gl-react-dom";
@@ -6,7 +6,7 @@ import { Surface } from "gl-react-dom";
 import { Motion, spring } from "react-motion";
 
 const shaders = Shaders.create({
-  helloBlue: {
+  dots: {
     frag: GLSL`
   precision highp float;
   varying vec2 uv;
@@ -51,8 +51,14 @@ const Mask = ({
   height: number;
 }) => {
   const [scale, setScale] = React.useState(1.0);
+
   return (
-    <Surface width={width} height={height} onMouseEnter={() => setScale(3.0)} onMouseLeave={() => setScale(1.0)}>
+    <Surface
+      width={width}
+      height={height}
+      onMouseEnter={useCallback(() => setScale(3.0), [setScale])}
+      onMouseLeave={useCallback(() => setScale(1.0), [setScale])}
+    >
       <Motion
         defaultStyle={{ scale }}
         style={{
@@ -61,7 +67,7 @@ const Mask = ({
       >
         {({ scale }: { scale: number }) => (
           <Node
-            shader={shaders.helloBlue}
+            shader={shaders.dots}
             uniforms={{
               t: src,
               scale
