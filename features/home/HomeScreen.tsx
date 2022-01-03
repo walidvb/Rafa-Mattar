@@ -24,7 +24,7 @@ export const Slide = styled.div`
 
 const Intro = ({ textData }: { textData: Document}) => {
   return <Slide className="grid place-content-center mt-4 lg:grid-cols-[70ch] px-4 min-h-screen-header">
-      <div className="hover:text-brand text-3xl md:text-6xl font-bold md:leading-[1.2em]">
+      <div className="hover:text-brand text-3xl md:text-6xl font-bold md:leading-[1.2em] sticky top-[40%] md:py-20">
         {documentToReactComponents(textData)}
       </div>
   </Slide>

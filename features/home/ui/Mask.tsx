@@ -1,5 +1,4 @@
 import React from "react";
-// @ts-ignore
 import { Shaders, Node, GLSL } from "gl-react";
 // @ts-ignore
 import { Surface } from "gl-react-dom";
@@ -28,13 +27,13 @@ const shaders = Shaders.create({
     circle_size = min(0.5, circle_size);
     circle_size *= scale;
     
-    bool is_in_circle = bool(length(loop) - circle_size <= 0.);
+    float is_in_circle = smoothstep(circle_size - 0.05, circle_size + 0.05, length(loop));
 
 
     gl_FragColor = mix(
       texture2D(t, uv),
       vec4(0.0),
-      is_in_circle ? 0.0 : 1.0
+      is_in_circle
     );
   }
   `
@@ -53,26 +52,24 @@ const Mask = ({
 }) => {
   const [scale, setScale] = React.useState(1.0);
   return (
-    <div onMouseEnter={() => setScale(3.0)} onMouseLeave={() => setScale(1.0)}>
-      <Surface width={width} height={height}>
-        <Motion
-          defaultStyle={{ scale }}
-          style={{
-            scale: spring(scale, [5, 1])
-          }}
-        >
-          {({ scale }: { scale: number }) => (
-            <Node
-              shader={shaders.helloBlue}
-              uniforms={{
-                t: src,
-                scale
-              }}
-            />
-          )}
-        </Motion>
-      </Surface>
-    </div>
+    <Surface width={width} height={height} onMouseEnter={() => setScale(3.0)} onMouseLeave={() => setScale(1.0)}>
+      <Motion
+        defaultStyle={{ scale }}
+        style={{
+          scale: spring(scale, [5, 1])
+        }}
+      >
+        {({ scale }: { scale: number }) => (
+          <Node
+            shader={shaders.helloBlue}
+            uniforms={{
+              t: src,
+              scale
+            }}
+          />
+        )}
+      </Motion>
+    </Surface>
   );
 };
 

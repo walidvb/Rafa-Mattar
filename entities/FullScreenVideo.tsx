@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-
-import img from '@public/images/coming_soon.jpg'
 import { useDesktop } from '../shared/hooks/useDesktop';
 
 const BackgroundDiv = styled.div`

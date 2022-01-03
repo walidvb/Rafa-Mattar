@@ -1,11 +1,8 @@
-import logoSmall from '@public/images/logo_small.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from './Logo';
 
 import logo_full from '@public/images/logo_full_light.png'
-import styled from 'styled-components';
-import { WithPointer } from '../../features/home/WithPointer';
 
 const menuItems = [
   {

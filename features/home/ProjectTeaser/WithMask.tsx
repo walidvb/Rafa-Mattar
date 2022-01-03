@@ -29,6 +29,12 @@ const TImage = styled.div`
     ${TRANSLATE_STYLES}
     position: static;
   }
+  /* used to center the canvas */
+  span{
+    max-width: 100%;
+    display: flex!important;
+    align-items: center;
+  }
 `
   
 const TTextWrapper = styled.div`
@@ -69,22 +75,22 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
     '--x': width,
    })
 
+  const W = 800, H = 800;
   const img = <MaskedImage
-    src={'https:' + image.fields.file.url} alt={image.fields.title}
+    src={'https:' + image.fields.file.url + `?w=${W}&h=${H}`}
+    // @ts-ignore
+    alt={image.fields.title}
     width={800}
     height={800}
-
   />
 
   // @ts-ignore
-  return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 min-h-banner-lg md:min-h-quasi-screen relative">
-      <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center h-full will-change bg-white p-8">
-        <div>
-          {img}
-        </div>
+  return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 min-h-banner md:min-h-quasi-screen relative place-content-center">
+      <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center justify-center h-full will-change bg-white p-8">
+        {img}
       </TImage>
-    <TTextWrapper style={{'--translateTo': '50'} as React.CSSProperties} className="relative bg-bgGray text-white will-change ">
-      <div className="md:w-[50vw] py-8 px-12 overflow-visible md:absolute top-1/2">
+    <TTextWrapper style={{ '--translateTo': '50' } as React.CSSProperties} className="relative bg-bgGray text-white will-change grid place-content-center">
+      <div className="md:w-[50vw] py-8 px-12 ">
         <div className="text-4xl font-bold text-center">{title}</div>
       </div>
     </TTextWrapper>

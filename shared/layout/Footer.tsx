@@ -24,9 +24,11 @@ const Footer = ({ }) => {
       </div>
     </div>
     <div>
-      28 boulevard du pont d&apos;arve 
-      <br />
-      1205 Genève
+      <a className="hover:text-brand" href="https://goo.gl/maps/nsQwbxe5GPkHHnEUA9" target="_blank" rel="noreferrer">
+        28 boulevard du pont d&apos;arve 
+        <br />
+        1205 Genève
+      </a>
       <br />
       <a className="hover:text-brand" href="mailto:info@futurproche.ch">info@futurproche.ch</a>
       <br />

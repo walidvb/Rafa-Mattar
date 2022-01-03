@@ -49,7 +49,7 @@ export const FullWidth = ({ image, title, shortDescription }: IProps) => {
         >
           <Title className="font-bold text-4xl">{title}</Title>
         </OpacityDiv>
-          <Image src={`https:${image.fields.file.url}`} alt={title} layout='fill' objectFit="cover" />
+      <Image src={`https:${image.fields.file.url}?w=1200`} alt={title} layout='fill' objectFit="cover" />
       </div>
       <RichText data={shortDescription} style={{ opacity }} className="max-w-[95vw] mx-auto mt-4"/>
     </article>;
