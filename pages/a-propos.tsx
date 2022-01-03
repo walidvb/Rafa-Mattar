@@ -21,7 +21,7 @@ const Bleeding = styled.div`
 `
 
 const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
-  return <Layout className="items-center flex justify-center md:mt-20">
+  return <Layout className="items-center flex justify-centººxer md:mt-20">
     <Bleeding>
       <div className="container mx-auto flex flex-col md:grid grid-cols-12 gap-4 ">
         <div className="md:col-span-5 min-h-banner md:max-h-[initial] overflow-hidden relative md:aspect-square">
