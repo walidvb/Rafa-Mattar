@@ -1,14 +1,27 @@
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  mode: 'jit',
+  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './entities/**/*.{js,ts,jsx,tsx}', './shared/**/*.{js,ts,jsx,tsx}', './features/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
-    extend: {},
+    fontFamily: {
+      body: ['Helvetica', "Arial", "sans-serif"],
+    },
+    extend: {
+      colors: {
+        brand: 'var(--brand-color)',
+        bgGray: '#C3C3C3',
+      },
+      minHeight: {
+        "quasi-screen": '70vh',
+        'banner': '300px',
+        'project': '600px',
+      }
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [
     require('@tailwindcss/typography'),
-
   ],
 }
