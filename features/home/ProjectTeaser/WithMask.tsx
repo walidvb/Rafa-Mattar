@@ -1,12 +1,9 @@
-import Image from 'next/image';
-import RichText from '@shared/ui/RichText';
-import { IProps } from './index';
-import styled, { css } from 'styled-components';
-import { useIntersection } from './IntersectionObserver';
-import { useCallback, useState } from 'react';
-import { map } from '@shared/helpers';;
 import MaskedImage from '@features/home/ui/Mask';
-import { useSpring, animated } from 'react-spring'
+import { useCallback, useState } from 'react';
+import { animated, useSpring } from 'react-spring';
+import styled from 'styled-components';
+import { IProps } from './index';
+import { useIntersection } from './IntersectionObserver';
 
 export const OpacityDiv = styled.div`
   opacity: var(--x);
@@ -47,7 +44,7 @@ const TTextWrapper = styled.div`
   }
 `
 
-export const WithMask = ({ image, title, shortDescription }: IProps) => {
+export const WithMask = ({ image, title }: IProps) => {
   const [width, setWidth] = useState<number>(0)
   
   const onRatioChange = useCallback((percentage: number, isBelowFold: boolean) => {
