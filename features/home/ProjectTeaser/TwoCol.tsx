@@ -12,7 +12,7 @@ const Fader = styled.div`
   transition: all .8s ease-in-out;
 `
 
-export const TwoCol = ({ image, title, shortDescription }: IProps) => {
+export const TwoCol = ({ image, title }: IProps) => {
   const [opacity, setOpacity] = useState(0);
   const onRatioChange = useCallback((percentage: number) => {
     const thresholds = window.innerWidth > 768 ? [.8, .9] : [.4, .7]
