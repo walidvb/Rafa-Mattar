@@ -5,11 +5,15 @@ import HomeScreen from '../features/home/HomeScreen';
 import { getSiteSettings } from '@shared/api';
 import cookie from "cookie"
 import { NextPageContext } from 'next';
+import OGTags from '@shared/layout/OGTags';
 
 
 
 const Home = (props: { projects: IProject[], settings: ISiteSettings, isFirstVisit: boolean }) => {
-  return <HomeScreen {...props} />
+  return <>
+    <OGTags />
+    <HomeScreen {...props} />
+  </>
 }
 
 export default Home

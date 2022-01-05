@@ -10,23 +10,20 @@ export interface IProjectFields {
   /** slug */
   slug: string;
 
-  /** Home Layout */
-  homeLayout?: "two columns" | "full width" | "with mask" | undefined;
-
-  /** Short Description */
-  shortDescription?: Document | undefined;
-
-  /** video url */
-  videoUrl?: string | undefined;
+  /** header image */
+  headerImage: Asset;
 
   /** Home Image */
   homeImage: Asset;
 
-  /** header image */
-  headerImage: Asset;
+  /** Home Layout */
+  homeLayout?: "two columns" | "full width" | "with mask" | undefined;
 
   /** Body */
   body?: Document | undefined;
+
+  /** video url */
+  videoUrl?: string | undefined;
 
   /** production */
   production?: string | undefined;
@@ -45,6 +42,9 @@ export interface IProjectFields {
 
   /** Festival */
   festival?: Document | undefined;
+
+  /** Social Media Description */
+  ogDescription: string;
 }
 
 export interface IProject extends Entry<IProjectFields> {
@@ -65,8 +65,11 @@ export interface IProject extends Entry<IProjectFields> {
 }
 
 export interface ISiteSettingsFields {
-  /** About Image */
-  biographyImage: Asset;
+  /** Home Image */
+  homeImage: Asset;
+
+  /** Home Video */
+  homeVideo?: string | undefined;
 
   /** Intro Text */
   introText: Document;
@@ -74,23 +77,20 @@ export interface ISiteSettingsFields {
   /** About */
   about: Document;
 
-  /** Valeria Bio */
-  valeriaBio: Document;
-
-  /** Antoine Bio */
-  antoineBio: Document;
-
-  /** Home Video */
-  homeVideo?: string | undefined;
-
-  /** Antoine Image */
-  antoineImage: Asset;
+  /** About Image */
+  biographyImage: Asset;
 
   /** Valeria Image */
   valeriaImage: Asset;
 
-  /** Home Image */
-  homeImage: Asset;
+  /** Valeria Bio */
+  valeriaBio: Document;
+
+  /** Antoine Image */
+  antoineImage: Asset;
+
+  /** Antoine Bio */
+  antoineBio: Document;
 }
 
 /** Container for all non-project related copy and assets */

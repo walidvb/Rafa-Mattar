@@ -2,11 +2,19 @@
 import { IProject } from '../types/contentful';
 import ProjectPage from '../features/Project/ProjectPage';
 import { getProjects } from '../shared/api';
+import OGTags from '../shared/layout/OGTags';
 
 
 
 const Project = (props: { project: IProject, related: IProject[] }) => {
-  return <ProjectPage {...props} />
+  return <>
+    <OGTags
+      image={props.project.headerImage.fields.file.url}
+      description={props.project.ogDescription}
+      path={props.project.slug}
+    />
+    <ProjectPage {...props} />
+  </>
 }
 
 export default Project
