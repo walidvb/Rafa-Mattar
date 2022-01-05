@@ -10,6 +10,7 @@ const Project = (props: { project: IProject, related: IProject[] }) => {
   return <>
     <OGTags
       image={props.project.fields.headerImage.fields.file.url}
+      title={`Futur Proche - ${props.project.fields.title}`}
       description={props.project.fields.ogDescription}
       path={props.project.slug}
     />
