@@ -32,6 +32,7 @@ const TImage = styled.div`
   /* used to center the canvas */
   span{
     max-width: 100%;
+    height: auto!important;
     display: flex!important;
     align-items: center;
   }
@@ -40,14 +41,6 @@ const TImage = styled.div`
 const TTextWrapper = styled.div`
   @media(min-width: 768px){
     ${TRANSLATE_STYLES}
-  }
-`
-
-const TText = styled(OpacityDiv)`
-  
-transform: translateX(calc(-20px * (1 - var(--x)))) ;
-  @media(min-width: 768px){
-    transform: translateX(calc(400px * (1 - var(--x)))) translateY(-50%);
   }
 `
 

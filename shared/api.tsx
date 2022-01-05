@@ -1,4 +1,4 @@
-import { createClient, EntryCollection } from 'contentful'
+import { createClient } from 'contentful'
 import { IProject, ISiteSettings } from '../@types/contentful.d';
 
 const SITE_SETTINGS_ID = '3x1XAGynLaSjkDDBSaBFrl'
