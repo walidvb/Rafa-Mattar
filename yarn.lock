@@ -162,12 +162,25 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@contentful/rich-text-html-renderer@^15.11.1":
+  version "15.11.1"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-html-renderer/-/rich-text-html-renderer-15.11.1.tgz#aff08f8bd1a6a8a767e3bf3e6f5d16a52f6959fe"
+  integrity sha512-DkvApk+spkxECmosGoA8Rmznv59Kmu633Ngm4QnIAt3yTF/Q6nox6/+v4Gv9YAwjYpw/01rXGFIUaP2p7m1fJA==
+  dependencies:
+    "@contentful/rich-text-types" "^15.11.1"
+    escape-html "^1.0.3"
+
 "@contentful/rich-text-react-renderer@^15.4.0":
   version "15.4.0"
   resolved "https://registry.yarnpkg.com/@contentful/rich-text-react-renderer/-/rich-text-react-renderer-15.4.0.tgz#43a5283aa5dcc59e6ba7542d7a668431eb182ce6"
   integrity sha512-Pn4vrGdhdk76r/dSd+ctWXmAoAC3aIFpIlLA/9zt+crJ+mNKMKCtxONsAFCRuZ47norbUhKzXVaIzbhanATteA==
   dependencies:
     "@contentful/rich-text-types" "^15.3.6"
+
+"@contentful/rich-text-types@^15.11.1":
+  version "15.11.1"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-15.11.1.tgz#755e3efd5e0ac277d554e6f731ba9fdc1c45f6fe"
+  integrity sha512-seO8Nl9cp894v7an6R8isX+HqYwVUesviGULTh/rIj2DCv2tXUU1GCqzSkt84XN6c6nbFYow9+Wzezkxx/IdIA==
 
 "@contentful/rich-text-types@^15.3.6":
   version "15.3.6"
@@ -1634,6 +1647,11 @@ escalade@^3.1.1:
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
   integrity sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==
 
+escape-html@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
+  integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
+
 escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
@@ -2270,6 +2288,11 @@ hosted-git-info@^4.0.1:
   integrity sha512-c9OGXbZ3guC/xOlCg1Ci/VgWlwsqDv1yMQL1CWqXDL0hDjXuNcq0zuR4xqPSuasI3kqFDhqSyTjREz5gzq0fXg==
   dependencies:
     lru-cache "^6.0.0"
+
+html-entities@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.3.2.tgz#760b404685cb1d794e4f4b744332e3b00dcfe488"
+  integrity sha512-c3Ab/url5ksaT0WyleslpBEthOzWhrjQbg75y7XUsfSzi3Dgzt0l8w5e7DylRn15MTlMMD58dTfzddNS2kcAjQ==
 
 http-errors@1.7.3:
   version "1.7.3"

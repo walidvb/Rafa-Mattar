@@ -3,19 +3,21 @@ import Image from 'next/image';
 import { WithPointer } from './WithPointer';
 import { Ig } from '../../shared/layout/Footer';
 
+const url = `https://graph.instagram.com/me/media?fields=media_count,media_type,permalink,media_url,caption&&access_token=${process.env.NEXT_PUBLIC_INSTAGRAM_API_TOKEN}`;
+
 export const Activity = () => {
   const [images, setImages] = useState([]);
   const [err, setErr] = useState(false);
   
   useEffect(() => {
-    const url = `https://graph.instagram.com/me/media?fields=media_count,media_type,permalink,media_url,caption&&access_token=${process.env.NEXT_PUBLIC_INSTAGRAM_API_TOKEN}`;
     (async () => {
       try{
         const response = await fetch(url);
         const { data } = await response.json();
-        console.log(data);
         setImages(data);
+        setErr(false)
       } catch(err){
+        setErr(true)
         console.log(err);
       }
     })();

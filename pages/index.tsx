@@ -5,13 +5,17 @@ import HomeScreen from '../features/home/HomeScreen';
 import { getSiteSettings } from '@shared/api';
 import cookie from "cookie"
 import { NextPageContext } from 'next';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import OGTags from '@shared/layout/OGTags';
+import { decode } from 'html-entities';
 
 
 
 const Home = (props: { projects: IProject[], settings: ISiteSettings, isFirstVisit: boolean }) => {
+  const descAsString = documentToHtmlString(props.settings.fields.introText).replace(/(<([^>]+)>)/gi, "")
+  console.log(decode(descAsString))
   return <>
-    <OGTags />
+    <OGTags description={decode(descAsString)} />
     <HomeScreen {...props} />
   </>
 }
