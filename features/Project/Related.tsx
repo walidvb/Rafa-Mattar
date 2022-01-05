@@ -5,16 +5,14 @@ import Link from 'next/link';
 import { WithPointer } from '../home/WithPointer';
 
 const Item = ({ project }: { project: IProject}) => {
-  return <WithPointer pointerTitle="Entrer">
-    <Link href={`/${project.fields.slug}`}>
-      <a className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center hover:text-brand">
-        <div className="md:col-span-2">
+  return <Link href={`/${project.fields.slug}`}>
+      <a className="grid grid-cols-2 md:grid-cols-3 gap-4 items-center ">
+        <WithPointer className="md:col-span-2" pointerTitle="Entrer">
           <Image src={"https:" + project.fields.headerImage.fields.file.url} alt={project.fields.headerImage.fields.title} layout="responsive" width={500} height={300}/>
-        </div>
-        <h3 className="md:cols-span-1 text-2xl font-bold ">{project.fields.title}</h3>
+        </WithPointer>
+        <h3 className="md:cols-span-1 text-2xl font-bold hover:text-brand flex items-center h-full">{project.fields.title}</h3>
       </a>
     </Link>
-  </WithPointer>
 }
 
 export const Related = ({ projects }: { projects: IProject[]}) => {
