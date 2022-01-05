@@ -24,6 +24,9 @@ const TImage = styled.div`
   z-index: 5;
   position: absolute;
   top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   transform: translateX(calc(100% * var(--x)));
   @media(min-width: 768px){
     ${TRANSLATE_STYLES}
@@ -78,7 +81,7 @@ export const WithMask = ({ image, title, shortDescription }: IProps) => {
   />
 
   // @ts-ignore
-  return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 min-h-banner md:min-h-quasi-screen relative place-content-center">
+  return <animated.article ref={ref} style={wrapperStyles} className="grid md:grid-cols-2 min-h-banner md:min-h-quasi-screen relative md:place-content-center">
       <TImage style={{ '--translateTo': '25' } as React.CSSProperties} className="flex place-content-center md:items-center justify-center h-full will-change bg-white p-8">
         {img}
       </TImage>
