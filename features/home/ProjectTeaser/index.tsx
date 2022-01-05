@@ -8,7 +8,7 @@ import { WithMask } from './WithMask';
 import { FullWidth } from './FullWidth';
 
 
-export type IProps = { image: Asset, title: string, shortDescription: Document | undefined };
+export type IProps = { image: Asset, title: string };
 
 const ProjectTeaser = ({ layout, slug, ...props }: IProps & { slug: string, layout?: IProjectFields['homeLayout'] }) => {
   const teaser = (() => {
