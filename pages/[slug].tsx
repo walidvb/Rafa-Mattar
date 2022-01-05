@@ -9,8 +9,8 @@ import OGTags from '../shared/layout/OGTags';
 const Project = (props: { project: IProject, related: IProject[] }) => {
   return <>
     <OGTags
-      image={props.project.headerImage.fields.file.url}
-      description={props.project.ogDescription}
+      image={props.project.fields.headerImage.fields.file.url}
+      description={props.project.fields.ogDescription}
       path={props.project.slug}
     />
     <ProjectPage {...props} />
