@@ -21,6 +21,12 @@ export default function OGTags({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta
+        property="keywords"
+        content={
+          'société de production,genève,film,antoine harari,valeria mazzucchi,documentaire,suisse romande'
+        }
+      />
     </Head>
   );
 }
