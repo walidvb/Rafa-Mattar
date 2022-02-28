@@ -3,7 +3,7 @@ import Head from 'next/head';
 const host = process.env.NEXT_PUBLIC_VERCEL_URL
 
 export default function OGTags({
-  title = 'Futur Proche',
+  title = 'Futur Proche | ',
   description = 'Une société de production',
   image = `https://${host}/images/og.jpg`,
   path = '/',

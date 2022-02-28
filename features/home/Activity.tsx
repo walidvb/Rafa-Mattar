@@ -11,18 +11,21 @@ export const Activity = () => {
   
   useEffect(() => {
     (async () => {
-      try{
+      try {
         const response = await fetch(url);
-        const { data } = await response.json();
-        setImages(data);
-        setErr(false)
-      } catch(err){
-        setErr(true)
+        const { data, status } = await response.json();
+        if (response.status >= 200 && response.status < 300) {
+          setImages(data);
+          setErr(false);
+        }
+        setErr(true);
+      } catch (err) {
+        setErr(true);
         console.log(err);
       }
     })();
   }, [setImages]);
-
+  
   return <div id="actualite" className="mx-auto container  pt-12 md:mt-32 px-2 md:px-0" style={{ scrollMarginTop: "var(--header-height)" }}>
     <h2 className="text-3xl md:text-6xl font-bold mb-8 md:mb-16">Actualité</h2>
     {err ? <p>Une erreur est survenue...</p> : (
