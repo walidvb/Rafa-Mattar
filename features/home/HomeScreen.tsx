@@ -1,5 +1,5 @@
 import Layout from '@shared/layout/Layout';
-// @ts-ignore
+// @ts-expect-error
 import { IProject, ISiteSettings } from '../..types/contentful';
 import Head from 'next/head';
 import styled from 'styled-components';
