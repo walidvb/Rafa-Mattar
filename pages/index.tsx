@@ -12,8 +12,9 @@ import { decode } from 'html-entities';
 
 
 const Home = (props: { projects: IProject[], settings: ISiteSettings, isFirstVisit: boolean }) => {
-  const descAsString = documentToHtmlString(props.settings.fields.introText).replace(/(<([^>]+)>)/gi, "")
-  console.log(decode(descAsString))
+  const descAsString = documentToHtmlString(
+    props.settings.fields.introText
+  ).replace(/(<([^>]+)>)/gi, '');
   return <>
     <OGTags description={decode(descAsString)} />
     <HomeScreen {...props} />
