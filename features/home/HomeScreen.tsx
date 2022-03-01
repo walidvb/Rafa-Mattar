@@ -43,24 +43,32 @@ const HomeScreen = ({ projects, settings, isFirstVisit }: { projects: IProject[]
     })
   }, [setCookie])
 
-  if(isVisible){
-    return <WithPointer onClick={() => setIsVisible(false)} pointerTitle="Entrer">
-      <FullScreenVideo src={settings.fields.homeVideo} imgSrc={settings.fields.homeImage?.fields.file.url}/>  
-    </WithPointer>
-  }
-
   return (
-    <Layout fullLogo>
-      <Head>
-        <title>Futur Proche</title>
-        <meta name="description" content="Futur Proche Productions" />
-        <link rel="icon" href="/favicon.png" />
-      </Head>
-        <Intro textData={settings.fields.introText}/>
+    <div className={`${isVisible ? 'h-screen overflow-hidden' : ''}`}>
+      {isVisible && (
+        <WithPointer
+          className="z-1000"
+          onClick={() => setIsVisible(false)}
+          pointerTitle="Entrer"
+        >
+          <FullScreenVideo
+            src={settings.fields.homeVideo}
+            imgSrc={settings.fields.homeImage?.fields.file.url}
+          />
+        </WithPointer>
+      )}
+      <Layout fullLogo>
+        <Head>
+          <title>Futur Proche</title>
+          <meta name="description" content="Futur Proche Productions" />
+          <link rel="icon" href="/favicon.png" />
+        </Head>
+        <Intro textData={settings.fields.introText} />
         <ProjectList projects={projects} />
         <Activity />
-    </Layout>
-  )
+      </Layout>
+    </div>
+  );
 }
 
 export default HomeScreen
