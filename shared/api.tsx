@@ -12,10 +12,10 @@ const client = createClient({
 export const getProjects = async (search = {}) => {
   const res = await client.getEntries({
     content_type: 'project',
-    ...search
-  })
-  const { items: projects } = res as { items: IProject[]}
-  return projects
+    ...search,
+  });
+  const { items: projects } = res;
+  return projects as unknown as IProject[];
 }
 
 
