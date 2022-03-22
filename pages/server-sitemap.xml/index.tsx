@@ -7,7 +7,7 @@ const siteUrl = process.env.SITE_URL || 'https://futurproche.ch';
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const projects = await getProjects();
   const list = projects.map(({ fields: { slug } }) => ({
-    loc: `${siteUrl}/projects/${slug}`,
+    loc: `${siteUrl}/documentaires/${slug}`,
     changefreq: 'weekly',
   }));
   // @ts-expect-error on changefreq not being a ChangeFreq
