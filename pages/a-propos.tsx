@@ -49,9 +49,10 @@ const TeamPage = ({ settings }: { settings: ISiteSettings}) => {
 export default TeamPage;
 
 
-export const getServerSideProps = async () => {
-  const settings = await getSiteSettings()
+export const getStaticProps = async () => {
+  const settings = await getSiteSettings();
   return {
     props: { settings },
-  }
-}
+    revalidate: 60,
+  };
+};

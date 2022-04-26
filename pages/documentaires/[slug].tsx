@@ -20,13 +20,15 @@ const Project = (props: { project: IProject; related: IProject[] }) => {
 
 export default Project;
 
-// export const getStaticPaths = async () => {
-//   const projects = await getProjects()
-//   const paths = projects.map(project => '/' + project.fields.slug)
-//   return { paths, fallback: false }
-// }
+export const getStaticPaths = async () => {
+  const projects = await getProjects();
+  const paths = projects.map(
+    (project) => '/documentaires/' + project.fields.slug
+  );
+  return { paths, fallback: false };
+};
 
-export const getServerSideProps = async ({ params }: { params: any }) => {
+export const getStaticProps = async ({ params }: { params: any }) => {
   const projects = await getProjects();
   const project: IProject = projects.find(
     (project) => project.fields.slug === params.slug
@@ -36,5 +38,6 @@ export const getServerSideProps = async ({ params }: { params: any }) => {
   );
   return {
     props: { project, related, projects },
+    revalidate: 60,
   };
 };
