@@ -1,12 +1,12 @@
 import { getServerSideSitemap, ISitemapField } from 'next-sitemap';
 import { GetServerSideProps } from 'next';
-import { getProjects } from '@shared/api';
+import { getMedias } from '@shared/api';
 
 const siteUrl = process.env.SITE_URL || 'https://futurproche.ch';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const projects = await getProjects();
-  const list = projects.map(({ fields: { slug } }) => ({
+  const medias = await getMedias();
+  const list = medias.map(({ fields: { slug } }) => ({
     loc: `${siteUrl}/documentaires/${slug}`,
     changefreq: 'weekly',
   }));

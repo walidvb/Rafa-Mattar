@@ -11,10 +11,10 @@ module.exports = {
         brand: 'var(--brand-color)',
         bgGray: '#C3C3C3',
       },
-      minHeight: {
+      height: {
         "quasi-screen": '70vh',
-        'banner': '300px',
-        'project': '600px',
+        'row': '300px',
+        'media': '600px',
       }
     },
   },
