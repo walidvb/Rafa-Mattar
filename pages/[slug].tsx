@@ -14,6 +14,8 @@ interface HomePageProps {
   medias: Entry<IPhoto | IVideo>[];
 }
 
+
+
 export const getServerSideProps: GetServerSideProps<HomePageProps> = async (
   context: GetServerSidePropsContext
 ) => {
@@ -42,9 +44,8 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async (
     props: {
       books,
       book,
-      medias: [],
-      mm: medias,
-      res,
+      medias
+
     },
   };
 };
@@ -71,20 +72,16 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res, mm }) => 
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {medias.map((media: Entry<IPhoto | IVideo>, index) => (
+        {medias.map((fields: (IPhoto | IVideo)['fields'], index) => (
           <div key={index} style={{ height: '500px' }}>
-            {'photo' in media.fields ? (
+            {'file' in fields ? (
               <img
-                src={media.fields.photo?.fields.file.url}
-                alt={media.fields.name}
+                src={'https:' + fields.file.url}
+                alt={fields.title}
                 className="object-cover h-full w-full"
               />
             ) : (
-              <ReactPlayer
-                url={media.fields.vimeoUrl}
-                width="100%"
-                height="100%"
-              />
+              <ReactPlayer url={fields.vimeoUrl} width="100%" height="100%" />
             )}
           </div>
         ))}
