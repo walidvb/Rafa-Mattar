@@ -3,8 +3,8 @@ import Head from 'next/head';
 const host = process.env.NEXT_PUBLIC_VERCEL_URL
 
 export default function OGTags({
-  title = 'Futur Proche | Société de production documentaire',
-  description = 'Une société de production',
+  title = 'Rafael Mattar',
+  description = 'Diretor de Fotografia',
   image = `https://${host}/images/og.jpg`,
   path = '/',
 }: {
@@ -25,7 +25,7 @@ export default function OGTags({
       <meta
         property="keywords"
         content={
-          'société de production,genève,film,antoine harari,valeria mazzucchi,documentaire,suisse romande'
+          'fotografia'
         }
       />
     </Head>
