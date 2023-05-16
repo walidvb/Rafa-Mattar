@@ -4,10 +4,7 @@ import { Asset, Entry } from "contentful";
 
 export interface IPhotoFields {
   /** photo */
-  photo?: Asset | undefined;
-
-  /** nome */
-  name?: string | undefined;
+  photo: Asset;
 }
 
 export interface IPhoto extends Entry<IPhotoFields> {

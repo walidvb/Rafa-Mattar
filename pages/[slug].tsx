@@ -2,11 +2,13 @@
 
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
-import { createClient, Entry } from 'contentful';
-import { ISession, IPhoto, IVideo } from '../@types/generated/contentful';
+import { Entry } from 'contentful';
+
 import ReactPlayer from 'react-player';
 import { client } from '@shared/api';
-import { ISessionFields } from '@types/contentful';
+import { IPhoto, ISession, ISessionFields, IVideo } from '@types/contentful';
+import OGTags from '@shared/layout/OGTags';
+import { Masonry } from 'react-plock';
 
 interface HomePageProps {
   books: Entry<ISession>[];
@@ -14,18 +16,14 @@ interface HomePageProps {
   medias: Entry<IPhoto | IVideo>[];
 }
 
-
-
-export const getServerSideProps: GetServerSideProps<HomePageProps> = async (
+export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { items: books } = await client.getEntries<ISession>({
     content_type: 'session',
     include: 3,
   });
-  const book = books.find(
-    (book) => book.fields.slug === context.params?.slug
-  ) as Entry<ISessionFields>;
+  const book = books.find((book) => book.fields.slug === context.params?.slug);
 
   const res = (await client.getEntry(book.sys.id, {
     include: 3,
@@ -35,28 +33,78 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async (
     };
   };
 
-  const medias = res.fields.medias.map((media) =>
-    media.sys.contentType.sys.id === 'photo'
-      ? media.fields.photo.fields
-      : media.fields
-  );
+  const medias = res.fields.medias
+    .map((media) => {
+      if (!media.sys.contentType) {
+        return;
+      }
+      return media.sys.contentType.sys.id === 'photo'
+        ? media.fields.photo?.fields
+        : media.fields;
+    })
+    .filter(Boolean);
+
   return {
     props: {
       books,
       book,
-      medias
-
+      medias,
+      res,
     },
   };
 };
 
-const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res, mm }) => {
-  console.log({ res, medias, mm });
+const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
+  console.log({ res });
   return (
-    <div className="container mx-auto px-4">
-      <header className="flex flex-wrap items-center justify-between py-4 mb-8">
+    <div className=" mx-auto px-4">
+      <OGTags description={book.fields.title} />
+      <Header books={books} />
+
+      <Masonry
+        items={medias}
+        config={{
+          columns: [1, 2, 3],
+          gap: [24, 12, 6],
+          media: [640, 768, 1024],
+        }}
+        render={(fields: any, index) => (
+          <div key={index}>
+            {'file' in fields ? (
+              <img
+                src={'https:' + fields.file.url}
+                alt={fields.title}
+                loading="lazy"
+                className="object-cover h-full w-full"
+              />
+            ) : (
+              <ReactPlayer
+                showPreview
+                controls
+                url={fields.vimeoUrl}
+                width="100%"
+                height="100%"
+                className="aspect-video"
+              />
+            )}
+          </div>
+        )}
+      />
+    </div>
+  );
+};
+export default HomePage;
+
+const Header = ({ books }: { books: Entry<ISession>[] }) => (
+  <header className="flex flex-wrap items-center justify-between py-4 mb-8 container">
+    <h1 className="font-title uppercase text-3xl">Rafael Mattar</h1>
+    <ul className="flex gap-8 grow justify-center">
+      <li>
+        <Link href="/">Works</Link>
+      </li>
+      <li>
         <div className="relative group">
-          <button className="px-4 py-2 bg-gray-200 rounded">Books</button>
+          <button className="">Autorais</button>
           <div className="absolute left-0 mt-0 w-48 rounded-md shadow-lg bg-white z-10 hidden group-hover:block">
             {books.map((book) => (
               <Link
@@ -69,24 +117,8 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res, mm }) => 
             ))}
           </div>
         </div>
-      </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {medias.map((fields: (IPhoto | IVideo)['fields'], index) => (
-          <div key={index} style={{ height: '500px' }}>
-            {'file' in fields ? (
-              <img
-                src={'https:' + fields.file.url}
-                alt={fields.title}
-                className="object-cover h-full w-full"
-              />
-            ) : (
-              <ReactPlayer url={fields.vimeoUrl} width="100%" height="100%" />
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-export default HomePage;
+      </li>
+    </ul>
+    <ul>Socials</ul>
+  </header>
+);

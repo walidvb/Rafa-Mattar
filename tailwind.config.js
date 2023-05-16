@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     fontFamily: {
       body: ['Helvetica', "Arial", "sans-serif"],
+      title: ["Rubik Pixels", "cursive"]
     },
     extend: {
       colors: {
