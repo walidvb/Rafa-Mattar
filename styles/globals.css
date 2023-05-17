@@ -26,6 +26,9 @@ h1{
   text-transform: uppercase;
 }
 
+.fancybox__toolbar__column, .fancybox__footer{
+  display:none!important;
+}
 body, body .prose{
 }
 canvas{

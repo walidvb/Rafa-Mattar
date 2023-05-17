@@ -117,6 +117,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fancyapps/ui@^5.0.17":
+  version "5.0.17"
+  resolved "https://registry.yarnpkg.com/@fancyapps/ui/-/ui-5.0.17.tgz#bfa11293f72ffbb5550c6ae194c608c1fe35da90"
+  integrity sha512-NWxllyuFjNNs0CXnAnK4l2GbwUXqak0RAUNicH1AtbyNkI3pVsH+OuWMPE6aEdE7LVap91go8dPAZ840u/8K0Q==
+
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -3212,3 +3217,8 @@ yargs-parser@^20.2.3:
   version "20.2.9"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.9.tgz#2eb7dc3b0289718fc295f362753845c41a0c94ee"
   integrity sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==
+
+yet-another-react-lightbox@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/yet-another-react-lightbox/-/yet-another-react-lightbox-3.8.2.tgz#3b77944f0c75a00707821c2144f3b09cf97e876b"
+  integrity sha512-k/LaOzwYw0hNC3MJJdmlWVFyDYKIu3bCQ1u7dUpnxL713uBtOPRlLGlT4lCMAkhC/Cpd551p3hzoVResQpIL+g==
