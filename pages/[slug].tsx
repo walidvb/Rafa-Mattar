@@ -77,7 +77,7 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
           items={medias}
           config={{
             columns: [1, 2, 3, 4],
-            gap: [8, 8, 8, 8],
+            gap: [20, 20, 20, 20],
             media: [640, 1200, 2000, 2400],
           }}
           render={(fields: any, index) =>
