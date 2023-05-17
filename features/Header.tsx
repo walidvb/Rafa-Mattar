@@ -8,7 +8,7 @@ import { useState } from 'react';
 export const Header = ({ books }: { books: Entry<ISession>[] }) => {
   const [hovered, setHovered] = useState(false)
   const router = useRouter()
-  const active = router.query.slug?.[0]
+  const active = router.query.slug
 
   const showBooks = active !== "works" || hovered
   return (
