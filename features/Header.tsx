@@ -11,12 +11,14 @@ export const Header = ({ books }: { books: Entry<ISession>[] }) => {
   const active = router.query.slug || 'work';
 
   const showBooks = active !== 'work' || hovered;
-  const timer = useRef(null)
+  const timer = useRef(null);
   return (
     <header className="mx-auto uppercase py-4 px-2 tracking-wider">
       <div className="mb-4 flex flex-col lg:grid lg:grid-cols-3 lg:items-center justify-between  gap-4 ">
-        <h1 className="font-title uppercase text-3xl grow text-amber-400 ">
-          Rafael Mattar
+        <h1 className="font-title uppercase text-3xl grow">
+          {'Rafael Mattar'.split('').map((letter, i) => (
+            <span className="inline-block hover:-translate-y-1 transition-all" key={i}>{letter === " " ? <>&nbsp;</> : letter}</span>
+          ))}
         </h1>
         <ul className="flex gap-8 grow lg:justify-center order-last lg:order-none">
           <li>
@@ -34,17 +36,17 @@ export const Header = ({ books }: { books: Entry<ISession>[] }) => {
               <button
                 className={`uppercase ${showBooks ? 'line-through' : ''}`}
                 onMouseEnter={() => {
-                  clearTimeout(timer.current)
+                  clearTimeout(timer.current);
                   setHovered(true);
                 }}
                 onMouseLeave={() => {
-                  clearTimeout(timer.current)
+                  clearTimeout(timer.current);
                   timer.current = setTimeout(() => {
                     setHovered(false);
                   }, 800);
                 }}
                 onFocus={() => {
-                  clearTimeout(timer.current)
+                  clearTimeout(timer.current);
                   setHovered(true);
                 }}
                 onBlur={() => {
@@ -111,10 +113,11 @@ export const Header = ({ books }: { books: Entry<ISession>[] }) => {
                 transitionDelay: `${i * 50}ms`,
               }}
               onMouseEnter={() => clearTimeout(timer.current)}
-              onMouseLeave={() => timer.current = setTimeout(() => {
-                setHovered(false);
-
-              }, 800)}
+              onMouseLeave={() =>
+                (timer.current = setTimeout(() => {
+                  setHovered(false);
+                }, 800))
+              }
             >
               {book.fields.name}
             </Link>
