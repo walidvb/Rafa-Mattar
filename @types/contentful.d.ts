@@ -5,6 +5,9 @@ import { Asset, Entry } from "contentful";
 export interface IPhotoFields {
   /** photo */
   photo: Asset;
+
+  /** Size */
+  size: "L" | "S";
 }
 
 export interface IPhoto extends Entry<IPhotoFields> {
