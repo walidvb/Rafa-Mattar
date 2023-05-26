@@ -14,6 +14,7 @@ import Fancybox from '@features/shared/FancyBox';
 import { Header } from '../features/Header';
 import { useEffect, useRef } from 'react';
 import clsx from "clsx"
+import { useInRows } from './Masonry';
 
 
 interface HomePageProps {
@@ -76,8 +77,54 @@ export const getServerSideProps: GetServerSideProps = async (
   };
 };
 
+const Media = ({ book, title, file, vimeoUrl, height, width, url }) => {
+  let body;
+  if (vimeoUrl) {
+    body = (
+      <ReactPlayer
+        light
+        showPreview
+        controls
+        url={vimeoUrl}
+        width="100%"
+        height="100%"
+        className="aspect-video h-full w-full"
+      />
+    );
+  } else {
+    const { url } =
+    body = (
+      <a
+        data-fancybox={book.fields.slug}
+        href={'https:' + url}
+        className=" image-container contents"
+      >
+        <img
+          src={'https:' + url}
+          alt={title}
+          loading="lazy"
+          width={width}
+          height={height}
+          className=" image"
+        />
+      </a>
+    );
+  }
+  return (
+    <div key={title} className={clsx(``)} style={{
+      width: width,
+      height: height,
+    }}>
+      {body}
+    </div>
+  );
+};
+
+
+
 const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
-  console.log({ res, medias })
+  // console.log({ res, medias })
+  const rows = useInRows(medias)
   return (
     <div className="mx-auto">
       <OGTags description={book.fields.title} />
@@ -90,51 +137,20 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
           mousePanning: true,
         }}
       >
-        <div className="flex flex-wrap"
-        >
-          {medias.map(({ title, file, vimeoUrl, size, ...all }, index) => {
-            let body
-            if (vimeoUrl){
-              body = <ReactPlayer
-              light
+        <div className="flex flex-wrap">
+          {rows.map((row, index) => (
+            <div
               key={index}
-              showPreview
-              controls
-              url={vimeoUrl}
-              width="100%"
-              height="100%"
-              className="aspect-video h-full w-full"
-              />
-            } else{
-              console.log({ file, size, index });
-              if(!file.details.image){
-                console.log(file)
-                return null
-              }
-              const vert = file.details.image.width < file.details.image.height;
-              if(vert){
-              }
-              body = (
-                <a data-fancybox={book.fields.slug} href={'https:' + file.url}>
-                  <Image
-                    width={(size === 's' ? '800' : '1200')}
-                    height="800"
-                    src={'https:' + file.url}
-                    alt={title}
-                    loading="lazy"
-                    className="object-cover h-full w-full"
-                  />
-                </a>
-              );
-            }
-              return (
-                <div
-                  key={title}
-                  className={clsx(`grow shrink h-[450px] p-1`)}
-                >
-                {body}
-                </div>
-              );})}
+              className="flex flex-wrap w-full"
+              style={{
+                height: row[0].height,
+              }}
+            >
+              {row.map(({ height, width, url }, index) => (
+                <Media book={book} {...{ height, width, url }} key={index} />
+              ))}
+            </div>
+          ))}
         </div>
       </Fancybox>
     </div>
