@@ -15,12 +15,12 @@ export const Header = ({ books }: { books: Entry<ISession>[] }) => {
   return (
     <header className="mx-auto uppercase py-4 px-2 tracking-wider">
       <div className="mb-4 flex flex-col lg:grid lg:grid-cols-3 lg:items-center justify-between  gap-4 ">
-        <h1 className="font-title uppercase text-3xl grow">
+        <h1 className="font-title uppercase text-4xl grow">
           {'Rafael Mattar'.split('').map((letter, i) => (
             <span className="inline-block hover:-translate-y-1 transition-all" key={i}>{letter === " " ? <>&nbsp;</> : letter}</span>
           ))}
         </h1>
-        <ul className="flex gap-8 grow lg:justify-center order-last lg:order-none">
+        <ul className="flex gap-8 grow lg:justify-center order-last lg:order-none ">
           <li>
             <Link
               href="/"
@@ -35,6 +35,7 @@ export const Header = ({ books }: { books: Entry<ISession>[] }) => {
             <div className="relative group">
               <button
                 className={`uppercase ${showBooks ? 'line-through' : ''}`}
+                onClick={() => setHovered(!hovered)}
                 onMouseEnter={() => {
                   clearTimeout(timer.current);
                   setHovered(true);
@@ -98,7 +99,7 @@ export const Header = ({ books }: { books: Entry<ISession>[] }) => {
           .filter(({ fields: { slug } }) => slug !== 'work')
           .map((book, i) => (
             <Link
-              className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1 text-xs last:border-r-0 border-r transition hover:line-through ${
+              className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1 last:border-r-0 border-r transition hover:line-through ${
                 book.fields.slug === active ? 'line-through' : ''
               }
             ${'delay-[1s] group-hover:delay-0 hover:opacity-1 hover:translate-y-0 '}

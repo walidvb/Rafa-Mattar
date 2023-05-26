@@ -12,7 +12,7 @@ body {
 
   --header-height: 90px;
   max-width: 100vw;
-  font-size: 28px;
+  font-size: 20px;
 }
 html{
   overflow-x: hidden;
@@ -29,12 +29,7 @@ h1{
 .fancybox__toolbar__column, .fancybox__footer{
   display:none!important;
 }
-body, body .prose{
-}
-canvas{
-  max-width: 100%;
-  height: auto!important;
-}
+
 @media (min-width: 768px){
   body, body .prose{
     font-size: 20px;
@@ -76,4 +71,19 @@ a:hover{
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%);
+}
+.image-container {
+
+  width: 100%;
+
+  >div {
+    position: unset !important;
+  }
+
+  .image {
+    object-fit: contain;
+    width: unset !important;
+    position: relative !important;
+    height: 100% !important;
+  }
 }
