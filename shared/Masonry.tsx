@@ -47,7 +47,7 @@ export const Masonry = ({ children, className = "" }) => {
           if (
             (currentWidth + widthNormalized <= fullWidth * 1.3 ||
               currentRow.length < minItems) &&
-            currentRow.length <= maxItems
+            currentRow.length < maxItems
           ) {
             currentWidth += widthNormalized;
             currentRow.push(node);
