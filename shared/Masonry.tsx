@@ -79,7 +79,7 @@ export const Masonry = ({ children, className = "" }) => {
           i++;
         }
         ref.current.style.height = `${y}px`;
-
+        ref.current.style.visibility = 'visible';
       } catch (err) {
         console.error(err);
       }
@@ -93,6 +93,7 @@ export const Masonry = ({ children, className = "" }) => {
       ref={ref}
       className={clsx('flex flex-wrap relative', className)}
       style={{
+        visibility: 'hidden',
         // marginLeft: -xMargin/2,
         // marginRight: -xMargin/2,
       }}
