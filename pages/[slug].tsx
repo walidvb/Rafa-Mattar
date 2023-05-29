@@ -10,7 +10,7 @@ import { IPhoto, ISession, IVideo } from '@types/contentful';
 import clsx from "clsx";
 import dynamic from 'next/dynamic';
 import { Header } from '../features/Header';
-import { Masonry } from './Masonry';
+import { Masonry } from '../shared/Masonry';
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 
