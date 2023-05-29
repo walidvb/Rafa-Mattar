@@ -101,7 +101,7 @@ export const Header = ({ books }: { books: Entry<ISession>[] }) => {
              ${
                showBooks
                  ? 'opacity-1 translate-y-0'
-                 : 'opacity-0 -translate-y-[4px]'
+                 : 'md:opacity-0 md:-translate-y-[4px]'
              }`}
               key={book.sys.id}
               href={`/${book.fields.slug}`}
