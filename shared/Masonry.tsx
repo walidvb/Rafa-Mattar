@@ -39,7 +39,7 @@ export const Masonry = ({ children, className = "" }) => {
           }
 
           const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
-          const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 4 : 3;
+          const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
           const widthNormalized = parseFloat(node.dataset.width);
           // I feel like it would be better to reduce the height
           // until a threshold where it will be too small to be displayed
