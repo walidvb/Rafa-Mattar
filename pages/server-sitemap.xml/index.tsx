@@ -1,17 +1,27 @@
 import { getServerSideSitemap, ISitemapField } from 'next-sitemap';
 import { GetServerSideProps } from 'next';
-import { getMedias } from '@shared/api';
+import { client } from '@shared/api';
+import { ISession } from '@types/contentful';
+
 
 const siteUrl = process.env.SITE_URL || 'https://futurproche.ch';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const medias = await getMedias();
-  const list = medias.map(({ fields: { slug } }) => ({
-    loc: `${siteUrl}/documentaires/${slug}`,
-    changefreq: 'weekly',
-  }));
-  // @ts-expect-error on changefreq not being a ChangeFreq
-  return getServerSideSitemap(ctx, list);
+  let { items: books } = await client.getEntries<ISession>({
+    content_type: 'session',
+    include: 0,
+  });
+  const list = books
+    .filter(({ fields: { slug } }) => slug !== 'work')
+    .map(({ fields: { slug } }) => ({
+      loc: `${siteUrl}/${slug}`,
+      changefreq: 'weekly',
+    }));
+    return getServerSideSitemap(ctx, [{
+      loc: `${siteUrl}/`,
+      changefreq: 'weekly',
+      // @ts-expect-error
+    }, ...list]);
 };
 
 // Default export to prevent next.js errors
