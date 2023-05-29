@@ -11,6 +11,7 @@ import clsx from "clsx";
 import dynamic from 'next/dynamic';
 import { Header } from '../features/Header';
 import { Masonry } from '../shared/Masonry';
+import Image from 'next/image';
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 
@@ -95,18 +96,21 @@ const Media = ({ book, media }: {
       const {
         width, height ,
       } = image;
+    const okWidth = 800
+    const newWidth = width * (okWidth / width);
+    const newHeight = height * okWidth / width
     body = (
       <a
         data-fancybox={book.fields.slug}
         href={'https:' + url}
         className="image-container contents"
       >
-        <img
+        <Image
           src={'https:' + url}
           alt={title}
           loading="lazy"
-          width={width}
-          height={height}
+          width={newWidth}
+          height={newHeight}
           className=" image"
         />
       </a>
@@ -127,9 +131,9 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
   console.log({ res, medias })
 
   return (
-    <div className="mx-auto px-2 max-w-[1921px]">
+    <div className="mx-auto max-w-[1921px]">
       <OGTags description={book.fields.title} />
-      <Header books={books} />
+      <Header books={books} className="px-2" />
 
       <Fancybox
         options={{
