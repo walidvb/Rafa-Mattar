@@ -1,26 +1,23 @@
 // pages/[slug].tsx
 
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { Entry } from 'contentful';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
-import dynamic from 'next/dynamic';
-const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
-import { client } from '@shared/api';
-import { IPhoto, ISession, ISessionFields, IVideo } from '@types/contentful';
-import OGTags from '@shared/layout/OGTags';
-import Image from 'next/image';
-import { FaVimeo } from 'react-icons/fa';
 import Fancybox from '@features/shared/FancyBox';
+import { client } from '@shared/api';
+import OGTags from '@shared/layout/OGTags';
+import { IPhoto, ISession, IVideo } from '@types/contentful';
+import clsx from "clsx";
+import dynamic from 'next/dynamic';
 import { Header } from '../features/Header';
-import { useEffect, useRef } from 'react';
-import clsx from "clsx"
-import { useInRows } from './Masonry';
+import { Masonry } from './Masonry';
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 
 interface HomePageProps {
   books: Entry<ISession>[];
-  book: Entry<ISession>;
-  medias: Entry<IPhoto | IVideo>[];
+  book: ISession;
+  medias: (IPhoto | IVideo)[];
 }
 
 
@@ -52,16 +49,10 @@ export const getServerSideProps: GetServerSideProps = async (
         if (!media.fields.photo?.fields){
           return
         }
-          return {
-            ...media.fields.photo?.fields,
-            size: media.fields.size || null,
-          };
+        return media;
       }
 
-      return{
-        ...media.fields,
-        size: media.fields.size || null,
-      };
+      return media;
     })
     .filter(Boolean);
 
@@ -77,27 +68,38 @@ export const getServerSideProps: GetServerSideProps = async (
   };
 };
 
-const Media = ({ book, title, file, vimeoUrl, height, width, url }) => {
+const Media = ({ book, media }: {
+  book: ISession
+  media: IPhoto | IVideo
+}) => {
   let body;
-  if (vimeoUrl) {
+
+  if (media.fields.vimeoUrl) {
+    console.log(media.fields);
     body = (
       <ReactPlayer
         light
         showPreview
         controls
-        url={vimeoUrl}
+        url={media.fields.vimeoUrl}
         width="100%"
         height="100%"
         className="aspect-video h-full w-full"
       />
     );
   } else {
-    const { url } =
+    const {  title, file: { details: {image}, url } } = media.fields.photo.fields
+    if (!image) {
+      return null;
+    }
+      const {
+        width, height ,
+      } = image;
     body = (
       <a
         data-fancybox={book.fields.slug}
         href={'https:' + url}
-        className=" image-container contents"
+        className="image-container contents"
       >
         <img
           src={'https:' + url}
@@ -111,9 +113,8 @@ const Media = ({ book, title, file, vimeoUrl, height, width, url }) => {
     );
   }
   return (
-    <div key={title} className={clsx(``)} style={{
-      width: width,
-      height: height,
+    <div className={clsx(`p-1`)} style={{
+      height: 350,
     }}>
       {body}
     </div>
@@ -123,10 +124,10 @@ const Media = ({ book, title, file, vimeoUrl, height, width, url }) => {
 
 
 const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
-  // console.log({ res, medias })
-  const rows = useInRows(medias)
+  console.log({ res, medias })
+
   return (
-    <div className="mx-auto">
+    <div className="mx-auto px-2 max-w-[1921px]">
       <OGTags description={book.fields.title} />
       <Header books={books} />
 
@@ -137,21 +138,11 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
           mousePanning: true,
         }}
       >
-        <div className="flex flex-wrap">
-          {rows.map((row, index) => (
-            <div
-              key={index}
-              className="flex flex-wrap w-full"
-              style={{
-                height: row[0].height,
-              }}
-            >
-              {row.map(({ height, width, url }, index) => (
-                <Media book={book} {...{ height, width, url }} key={index} />
-              ))}
-            </div>
+        <Masonry className="flex flex-wrap">
+          {medias.map((media) => (
+            <Media media={media} book={book} key={media.sys.id} />
           ))}
-        </div>
+        </Masonry>
       </Fancybox>
     </div>
   );

@@ -1,116 +1,95 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import debounce from "debounce"
+import debounce from 'debounce';
+import clsx from 'clsx';
 
 const BASE_HEIGHT = 350;
+const xMargin = 40;
 
-export const useInRows = (medias) => {
+export const Masonry = ({ children, className }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const [exposedRows, setRows] = useState([]);
 
   useLayoutEffect(() => {
+
+    // consider a base height of 350px
+    // add up each child to the row until you reach
+    // 1.3* the width of the container
+    // then compute the height to set so that the row matches
+    // exactly the container. voilà!
     const compute = debounce(() => {
+      if (!ref.current) {
+        return;
+      }
       try {
-        const fullWidth = window.innerWidth - 40;
-        const medias_ = [...medias].reverse();
-        const sizes = Array.from(medias_).map((media) => {
-          const w = media.file.details.image.width;
-          const h = media.file.details.image.height;
-          const widthResized = (w * BASE_HEIGHT) / h;
-          return {
-            width: widthResized,
-            height: BASE_HEIGHT,
-            url: media.file.url,
-          };
-        });
-        let rows_ = [];
-        let currentRow = [];
+        const fullWidth = ref.current.getBoundingClientRect().width - xMargin;
+
+        const nodes = [...Array.from(ref.current.childNodes)] as HTMLElement[];
+        let currentRow: HTMLElement[] = [];
         let currentWidth = 0;
         let i = 0;
-        console.log('====================');
-        while (true) {
-          const size = sizes.pop();
-          console.log('before:', { ...size });
-          if (!size) {
-            break;
+        // console.log('====================');
+        // const algo = [];
+        for (let j = 0; j < nodes.length; j++) {
+          const node = nodes[j];
+
+          const { width } = node.getBoundingClientRect();
+          if (!node.dataset['width']) {
+            node.dataset['width'] = width.toFixed(2);
           }
 
-          const potentialHeight =
-            (fullWidth / (currentWidth + size.width)) * size.height;
-
-          // console.log({ potentialHeight, currentWidth });
-          // if our height is big enoguh, add it
+          const widthNormalized = parseInt(node.dataset.width);
+          // I feel like it would be better to reduce the height
+          // until a threshold where it will be too small to be displayed
           // if (potentialHeight > 350) {
-          if (currentWidth <= fullWidth) {
-            currentWidth += size.width;
-            currentRow.push(size);
-            continue;
+          if (
+            (currentWidth + widthNormalized <= fullWidth*1.3 &&
+              currentRow.length < 3) ||
+            currentRow.length < 2
+          ) {
+            currentWidth += widthNormalized;
+            currentRow.push(node);
+            // algo.push({
+            //   row: i,
+            //   nW: widthNormalized,
+            //   nH: widthNormalized,
+            //   currentWidth,
+            // });
+            if (j !== nodes.length - 1) {
+              continue;
+            }
           }
           // else compute the height all should have
-          const ratio = currentWidth / fullWidth;
-          const resizedRow = currentRow.map((size) => ({
-            ...size,
-            width: size.width / ratio,
-            height: size.height / ratio,
-          }));
-          console.log(
-            'finished row',
-            i,
-            currentWidth,
-            ratio,
-            resizedRow,
-            currentRow
-          );
-          rows_.push(resizedRow);
+          const newHeight = BASE_HEIGHT * fullWidth / currentWidth;
+          for (let node of currentRow) {
+            node.style.height = `${newHeight}px`;
+          }
 
           // and instantiate the next row
-          currentRow = [];
-          currentWidth = 0;
+          currentRow = [node];
+          currentWidth = parseInt(node.dataset.width);
           i++;
-
-          // if (currentWidth < fullWidth && rows_[i].length < 3) {
-          //   rows_[i].push({
-          //     ...size,
-          //     src: medias_[i].file.url,
-          //     media: medias_[i]
-          //   });
-          //   continue
-          // }
-          // rows_[i].map((size) => {
-
-          //   const ratio = currentWidth / fullWidth;
-          //   sizes.forEach(( size ) => {
-          //     console.log({ size })
-          //     size.width = size.width * ratio
-          //     size.height = size.height * ratio
-          //     console.log({ size })
-          //   })
-
-          // })
-          // currentWidth = 0
         }
 
-        // rows_.forEach((row) => {
-        //   row.test = []
-        //   const tentativeWidth = row.medias.reduce((acc, media) => acc + media.width, 0)
-        //   row.medias.forEach((media) => {
-        //     const realWidth = media.width
-        //     const finalWidth = tentativeWidth / fullWidth * realWidth
-        //     const finalHeight = finalWidth / realWidth * media.height
-        //     media.width = finalWidth;
-        //     media.height = finalHeight;
-        //     row.height= finalHeight
-        //     row.test.push(finalHeight)
-        //   })
-        // })
-        console.log('====================');
-        console.log('Setting rows', rows_);
-        setRows(rows_);
+        // console.table(algo);
+        // console.log('====================');
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
-    }, 200);
+    }, 0);
     compute();
     window.addEventListener('resize', compute);
     return () => window.removeEventListener('resize', compute);
-  }, [medias]);
-  return exposedRows;
+  }, [children]);
+  return (
+    <div
+      ref={ref}
+      className={clsx('flex flex-wrap justify-center', className)}
+      style={{
+        // marginLeft: -xMargin/2,
+        // marginRight: -xMargin/2,
+      }}
+    >
+      {children}
+    </div>
+  );
 };

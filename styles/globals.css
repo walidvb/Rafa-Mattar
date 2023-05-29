@@ -87,3 +87,33 @@ a:hover{
     height: 100% !important;
   }
 }
+
+/* .row{
+  position: relative;
+}
+
+.row::after{
+  content: attr(data-row);
+  font-size: 16px;
+  font-family: 'Arial', Courier, monospace;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  word-wrap: break-word;
+  background-color: white;
+  padding: .5rem;
+}
+.row::before{
+  z-index: 10;
+  content: attr(data-width);
+  font-size: 16px;
+  font-family: 'Arial', Courier, monospace;
+  position: absolute;
+  bottom : 1rem;
+  left: 1rem;
+  right: 1rem;
+  word-wrap: break-word;
+  background-color: white;
+  padding: .5rem;
+} */
