@@ -3,7 +3,7 @@ import debounce from 'debounce';
 import clsx from 'clsx';
 
 const BASE_HEIGHT = 350;
-const xMargin = 40;
+const xMargin = 0;
 
 export const Masonry = ({ children, className }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -37,14 +37,14 @@ export const Masonry = ({ children, className }) => {
             node.dataset['width'] = width.toFixed(2);
           }
 
+          const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
           const widthNormalized = parseInt(node.dataset.width);
           // I feel like it would be better to reduce the height
           // until a threshold where it will be too small to be displayed
           // if (potentialHeight > 350) {
           if (
-            (currentWidth + widthNormalized <= fullWidth*1.3 &&
-              currentRow.length < 3) ||
-            currentRow.length < 2
+            (currentWidth + widthNormalized <= fullWidth * 1.3) ||
+            currentRow.length < minItems
           ) {
             currentWidth += widthNormalized;
             currentRow.push(node);
@@ -59,7 +59,7 @@ export const Masonry = ({ children, className }) => {
             }
           }
           // else compute the height all should have
-          const newHeight = BASE_HEIGHT * fullWidth / currentWidth;
+          const newHeight = Math.floor(BASE_HEIGHT * fullWidth / currentWidth) - 2;
           for (let node of currentRow) {
             node.style.height = `${newHeight}px`;
           }
