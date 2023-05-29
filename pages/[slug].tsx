@@ -138,7 +138,7 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
           mousePanning: true,
         }}
       >
-        <Masonry className="flex flex-wrap">
+        <Masonry>
           {medias.map((media) => (
             <Media media={media} book={book} key={media.sys.id} />
           ))}
