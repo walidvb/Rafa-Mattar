@@ -64,9 +64,13 @@ export const Masonry = ({ children, className = "" }) => {
           // else compute the height all should have
           const newHeight = Math.ceil(BASE_HEIGHT * fullWidth / currentWidth);
           let x = 0
+
           for (let node of currentRow) {
+            const baseWidth = parseFloat(node.dataset.width);
+            const newWidth = Math.ceil(baseWidth * newHeight / BASE_HEIGHT);
             node.style.position = `absolute`;
             node.style.height = `${newHeight}px`;
+            node.style.width = `${newWidth}px`;
             node.style.left = `${x}px`;
             node.style.top = `${y}px`;
             x += node.getBoundingClientRect().width;
