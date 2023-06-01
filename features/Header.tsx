@@ -23,8 +23,8 @@ export const Header = ({
     <header
       className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
     >
-      <div className="mb-4 flex flex-col lg:grid lg:grid-cols-3 lg:items-center justify-between  gap-4 ">
-        <h1 className="font-title uppercase text-4xl grow">
+      <div className="mb-4 flex flex-col lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4 ">
+        <h1 className="font-title uppercase text-3xl grow">
           {'Rafael Mattar'.split('').map((letter, i) => (
             <span
               className="inline-block hover:-translate-y-1 transition-all"
@@ -83,7 +83,7 @@ export const Header = ({
               rel="noopener noreferrer"
               className={`text-neutral-700 group`}
             >
-              <FaInstagram className="h-6 w-6 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <FaInstagram className="h-5 w-5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
           <li>
@@ -93,7 +93,7 @@ export const Header = ({
               rel="noopener noreferrer"
               className="text-neutral-700 group "
             >
-              <VimeoIcon className="h-6 w-6 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <VimeoIcon className="h-5 w-5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
         </ul>

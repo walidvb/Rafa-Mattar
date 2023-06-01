@@ -88,32 +88,27 @@ a:hover{
   }
 }
 
-/* .row{
-  position: relative;
+:not(.is-closing) :is(.fancybox__content,
+.fancybox-ghost){
+  padding: 1rem 0!important;
+}
+.is-closing .fancybox__content,
+    .is-closing .fancybox-ghost{
+      padding: 0!important;
+    }
+
+.fancybox__backdrop{
+  background-color: rgba(255,255,255,0.95)!important;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease-in-out;
+  /* animation: fade-in 0.3s ease-in-out; */
 }
 
-.row::after{
-  content: attr(data-row);
-  font-size: 16px;
-  font-family: 'Arial', Courier, monospace;
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  right: 1rem;
-  word-wrap: break-word;
-  background-color: white;
-  padding: .5rem;
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-.row::before{
-  z-index: 10;
-  content: attr(data-width);
-  font-size: 16px;
-  font-family: 'Arial', Courier, monospace;
-  position: absolute;
-  bottom : 1rem;
-  left: 1rem;
-  right: 1rem;
-  word-wrap: break-word;
-  background-color: white;
-  padding: .5rem;
-} */

@@ -76,17 +76,24 @@ const Media = ({ book, media }: {
   let body;
 
   if (media.fields.vimeoUrl) {
-    console.log(media.fields);
     body = (
-      <ReactPlayer
-        light
-        showPreview
-        controls
-        url={media.fields.vimeoUrl}
-        width="100%"
-        height="100%"
-        className="aspect-video h-full w-full"
-      />
+      <div
+        className="aspect-video max-w-full max-h-full min-w-full min-h-full"
+        style={{
+          height: "calc(350px - 1rem)",
+          width: 1600*(350 - 16)/900,
+        }}
+      >
+        <ReactPlayer
+          light
+          showPreview
+          controls
+          url={media.fields.vimeoUrl}
+          width="100%"
+          height="100%"
+          className="h-full w-full"
+        />
+      </div>
     );
   } else {
     const {  title, file: { details: {image}, url } } = media.fields.photo.fields
@@ -117,7 +124,7 @@ const Media = ({ book, media }: {
     );
   }
   return (
-    <div className={clsx(`p-1`)} style={{
+    <div className={clsx(`p-1 hover:brightness-[0.7]`)} style={{
       height: 350,
     }}>
       {body}
@@ -131,7 +138,7 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
   console.log({ res, medias })
 
   return (
-    <div className="mx-auto max-w-[1921px]">
+    <div className="mx-auto max-w-[1921px] px-2">
       <OGTags description={book.fields.title} />
       <Header books={books} className="px-2" />
 
