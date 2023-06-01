@@ -138,7 +138,7 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
   console.log({ res, medias })
 
   return (
-    <div className="mx-auto max-w-[1921px] px-2">
+    <div className="mx-auto max-w-[1921px] px-4">
       <OGTags description={book.fields.title} />
       <Header books={books} className="px-2" />
 

@@ -78,7 +78,7 @@ export const Header = ({
         <ul className={`grow text-right inline-flex lg:justify-end gap-4`}>
           <li>
             <a
-              href="https://instagram.com/rafaelmattar"
+              href="https://instagram.com/rafaelmattar.jpg"
               target="_blank"
               rel="noopener noreferrer"
               className={`text-neutral-700 group`}
@@ -88,7 +88,7 @@ export const Header = ({
           </li>
           <li>
             <a
-              href="#"
+              href="https://vimeo.com/rafaelmattar"
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-700 group "

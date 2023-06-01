@@ -5,12 +5,10 @@ import clsx from 'clsx';
 const BASE_HEIGHT = 350;
 const xMargin = 0;
 
-export const Masonry = ({ children, className = "" }) => {
+export const Masonry = ({ children, className = '' }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-
   useLayoutEffect(() => {
-
     // consider a base height of 350px
     // add up each child to the row until you reach
     // 1.3* the width of the container
@@ -27,7 +25,7 @@ export const Masonry = ({ children, className = "" }) => {
         let currentRow: HTMLElement[] = [];
         let currentWidth = 0;
         let i = 0;
-        let y = 0
+        let y = 0;
         // console.log('====================');
         // const algo = [];
         for (let j = 0; j < nodes.length; j++) {
@@ -41,46 +39,49 @@ export const Masonry = ({ children, className = "" }) => {
           const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
           const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
           const widthNormalized = parseFloat(node.dataset.width);
+          let fitsInRow =
+            (currentWidth + widthNormalized <= fullWidth * 1.3 ||
+              currentRow.length < minItems) &&
+            currentRow.length < maxItems;
           // I feel like it would be better to reduce the height
           // until a threshold where it will be too small to be displayed
           // if (potentialHeight > 350) {
-          if (
-            (currentWidth + widthNormalized <= fullWidth * 1.3 ||
-              currentRow.length < minItems) &&
-            currentRow.length < maxItems
-          ) {
+          if(!fitsInRow){
+            computeRow();
+            fitsInRow = true;
+          }
+          if (fitsInRow) {
             currentWidth += widthNormalized;
             currentRow.push(node);
-            // algo.push({
-            //   row: i,
-            //   nW: widthNormalized,
-            //   nH: widthNormalized,
-            //   currentWidth,
-            // });
             if (j !== nodes.length - 1) {
               continue;
             }
           }
-          // else compute the height all should have
-          const newHeight = Math.ceil(BASE_HEIGHT * fullWidth / currentWidth);
-          let x = 0
+          computeRow();
+          function computeRow() {
+            // else compute the height all should have
+            const newHeight = Math.ceil(
+              (BASE_HEIGHT * fullWidth) / currentWidth
+            );
+            let x = 0;
 
-          for (let node of currentRow) {
-            const baseWidth = parseFloat(node.dataset.width);
-            const newWidth = Math.ceil(baseWidth * newHeight / BASE_HEIGHT);
-            node.style.position = `absolute`;
-            node.style.height = `${newHeight}px`;
-            node.style.width = `${newWidth}px`;
-            node.style.left = `${x}px`;
-            node.style.top = `${y}px`;
-            x += node.getBoundingClientRect().width;
+            for (let node of currentRow) {
+              const baseWidth = parseFloat(node.dataset.width);
+              const newWidth = Math.ceil((baseWidth * newHeight) / BASE_HEIGHT);
+              node.style.position = `absolute`;
+              node.style.height = `${newHeight}px`;
+              node.style.width = `${newWidth}px`;
+              node.style.left = `${x}px`;
+              node.style.top = `${y}px`;
+              x += node.getBoundingClientRect().width;
+            }
+            y += newHeight;
+
+            // and instantiate the next row
+            currentRow = [];
+            currentWidth = 0;
+            i++;
           }
-          y += newHeight
-
-          // and instantiate the next row
-          currentRow = [node];
-          currentWidth = parseInt(node.dataset.width);
-          i++;
         }
         ref.current.style.height = `${y}px`;
         ref.current.style.visibility = 'visible';

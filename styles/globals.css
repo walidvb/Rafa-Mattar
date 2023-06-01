@@ -104,6 +104,18 @@ a:hover{
   /* animation: fade-in 0.3s ease-in-out; */
 }
 
+.fancybox__nav{
+  --f-button-color: #111;
+  --f-button-svg-stroke-width: 5px;
+  --f-button-svg-filter: none;
+
+}
+
+.f-button svg{
+  filter: none!important;
+  stroke-width: 5px!important;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
