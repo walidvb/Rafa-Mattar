@@ -15,25 +15,32 @@ export const Header = ({
 }) => {
   const [hovered, setHovered] = useState(false);
   const router = useRouter();
-  const active = router.query.slug || 'work';
+  const active =
+  router.query.slug || (router.pathname.includes('contato')
+  ? 'contato'
+  : 'work');
+  console.log(router.query.slug, active);
 
-  const showBooks = active !== 'work' || hovered;
+
+  const showBooks = (active !== 'work' && router.query.slug) || hovered;
   const timer = useRef(null);
   return (
     <header
       className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
     >
-      <div className="mb-4 flex flex-col lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4 ">
-        <h1 className="font-title uppercase text-3xl grow">
-          {'Rafael Mattar'.split('').map((letter, i) => (
-            <span
-              className="inline-block hover:-translate-y-1 transition-all"
-              key={i}
-            >
-              {letter === ' ' ? <>&nbsp;</> : letter}
-            </span>
-          ))}
-        </h1>
+      <div className="md:mb-4 flex flex-col lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4">
+        <Link passHref href="/">
+          <h1 className="font-title uppercase text-3xl grow">
+            {'Rafael Mattar'.split('').map((letter, i) => (
+              <span
+                className="inline-block hover:-translate-y-1 transition-all"
+                key={i}
+              >
+                {letter === ' ' ? <>&nbsp;</> : letter}
+              </span>
+            ))}
+          </h1>
+        </Link>
         <ul className="flex gap-8 grow lg:justify-center order-last lg:order-none ">
           <li>
             <Link
@@ -46,7 +53,7 @@ export const Header = ({
             </Link>
           </li>
           <li>
-            <div className="relative group">
+            <div className="relative group hidden md:block">
               <button
                 className={`uppercase ${showBooks ? 'line-through' : ''}`}
                 onClick={() => setHovered(!hovered)}
@@ -95,6 +102,16 @@ export const Header = ({
             >
               <VimeoIcon className="h-5 w-5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
+          </li>
+          <li>
+            <Link
+              href="/contato"
+              className={`hover:line-through ml-4 ${
+                'contato' === active ? 'line-through' : ''
+              }`}
+            >
+              Contato
+            </Link>
           </li>
         </ul>
       </div>
