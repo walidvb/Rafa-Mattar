@@ -39,7 +39,7 @@ export const Masonry = ({ children, className = '' }) => {
           const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
           const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
           const factor = node.dataset.size === "lg" ? 2 : 1;
-          const widthNormalized = parseFloat(node.dataset.width);
+          const widthNormalized = parseFloat(node.dataset.width) * factor;
           let fitsInRow =
             (currentWidth + widthNormalized <= fullWidth * 1.3 ||
               currentRow.length < minItems) &&
@@ -47,11 +47,11 @@ export const Masonry = ({ children, className = '' }) => {
           // I feel like it would be better to reduce the height
           // until a threshold where it will be too small to be displayed
           // if (potentialHeight > 350) {
-          if(!fitsInRow){
+          if(!fitsInRow && j !== nodes.length - 1){
             computeRow();
             fitsInRow = true;
           }
-          if (fitsInRow) {
+          if (fitsInRow || j === nodes.length - 1) {
             currentWidth += widthNormalized;
             currentRow.push(node);
             if (j !== nodes.length - 1) {

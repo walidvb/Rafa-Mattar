@@ -19,17 +19,11 @@ export default function Home({ books, book }) {
           body{
             background: url(/images/rafael-mattar.jpeg);
             background-size: cover;
-            background-position-x: 20%;
-            background-position-y: 0;
-          }
-
-          @media (min-width: 1200px){
-
-            background-position-y: 0;
+            background-position: center;
           }
         `}
       </style>
-      <div className="container pt-[13vw] mx-auto flex flex-col md:flex-row justify-around  max-w-7xl md:px-8 lg:px-12 xl:px-20">
+      <div className="container pt-[calc(50vh-350px)] mx-auto flex flex-col md:flex-row justify-around  max-w-7xl md:px-8 lg:px-12 xl:px-20">
         {/* <div className="p-2 md:w-1/2">
           <Image
             src="/images/rafael-mattar.jpeg"
@@ -39,7 +33,7 @@ export default function Home({ books, book }) {
             height={500}
           />
         </div> */}
-        <div className="p-0 md:w-1/2">
+        <div className="p-2 md:w-1/2">
           <h1 className="text-3xl mb-4">Direção de Fotografia</h1>
           <p className="text-xl mb-2">
             <a

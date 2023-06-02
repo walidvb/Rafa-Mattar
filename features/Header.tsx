@@ -16,8 +16,8 @@ export const Header = ({
   const [hovered, setHovered] = useState(false);
   const router = useRouter();
   const active =
-  router.query.slug || (router.pathname.includes('contato')
-  ? 'contato'
+  router.query.slug || (router.pathname.includes('contact')
+  ? 'contact'
   : 'work');
   console.log(router.query.slug, active);
 
@@ -28,7 +28,7 @@ export const Header = ({
     <header
       className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
     >
-      <div className="md:mb-4 flex flex-col lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4">
+      <div className="md:mb-4 flex flex-wrap lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4">
         <Link passHref href="/">
           <h1 className="font-title uppercase text-3xl grow">
             {'Rafael Mattar'.split('').map((letter, i) => (
@@ -56,7 +56,6 @@ export const Header = ({
             <div className="relative group hidden md:block">
               <button
                 className={`uppercase ${showBooks ? 'line-through' : ''}`}
-                onClick={() => setHovered(!hovered)}
                 onMouseEnter={() => {
                   clearTimeout(timer.current);
                   setHovered(true);
@@ -105,45 +104,58 @@ export const Header = ({
           </li>
           <li>
             <Link
-              href="/contato"
+              href="/contact"
               className={`hover:line-through ml-4 ${
-                'contato' === active ? 'line-through' : ''
+                'contact' === active ? 'line-through' : ''
               }`}
             >
-              Contato
+              Contact
             </Link>
           </li>
         </ul>
       </div>
-      <div className="flex lg:justify-center lg:text-center">
-        {books
-          .filter(({ fields: { slug } }) => slug !== 'work')
-          .map((book, i) => (
-            <Link
-              className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1 last:border-r-0 border-r transition hover:line-through ${
-                book.fields.slug === active ? 'line-through' : ''
-              }
-            ${'delay-[1s] group-hover:delay-0 hover:opacity-1 hover:translate-y-0 '}
-             ${
-               showBooks
-                 ? 'opacity-1 translate-y-0'
-                 : 'md:opacity-0 md:-translate-y-[4px]'
-             }`}
-              key={book.sys.id}
-              href={`/${book.fields.slug}`}
-              style={{
-                transitionDelay: `${i * 50}ms`,
-              }}
-              onMouseEnter={() => clearTimeout(timer.current)}
-              onMouseLeave={() =>
-                (timer.current = setTimeout(() => {
-                  setHovered(false);
-                }, 800))
-              }
-            >
-              {book.fields.name}
-            </Link>
-          ))}
+      <div className="grid grid-cols-3">
+        <div />
+        <div className="flex grow lg:justify-center lg:text-center">
+          {books
+            .filter(({ fields: { slug } }) => slug !== 'work')
+            .map((book, i) => (
+              <Link
+                className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1 last:border-r-0 border-r transition hover:line-through ${
+                  book.fields.slug === active ? 'line-through' : ''
+                }
+              ${'delay-[1s] group-hover:delay-0 md:hover:opacity-1 md:hover:translate-y-0 '}
+              ${
+                showBooks
+                  ? 'opacity-1 translate-y-0'
+                  : 'md:opacity-0 md:-translate-y-[4px]'
+              }`}
+                key={book.sys.id}
+                href={`/${book.fields.slug}`}
+                style={{
+                  transitionDelay: `${i * 50}ms`,
+                }}
+                onMouseEnter={() => clearTimeout(timer.current)}
+                onMouseLeave={() =>
+                  (timer.current = setTimeout(() => {
+                    setHovered(false);
+                  }, 800))
+                }
+              >
+                {book.fields.name}
+              </Link>
+            ))}
+        </div>
+        <a
+          className={`py-2 mt-1 block text-right ${
+            showBooks
+              ? 'opacity-1 translate-y-0'
+              : 'md:opacity-0 md:-translate-y-[4px]'
+          }`}
+          href="#"
+        >
+          Prints
+        </a>
       </div>
     </header>
   );
