@@ -13,7 +13,7 @@ export default function Home({ books, book }) {
         <title>Rafael Mattar - Diretor de Fotografia</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header books={books} className="shrink w-full px-4" />
+      <Header books={books} className="shrink w-full px-2 md:px-4" />
       <style>
         {`
           body{
