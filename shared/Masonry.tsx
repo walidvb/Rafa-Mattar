@@ -88,7 +88,7 @@ export const Masonry = ({ children, className = '' }) => {
       } catch (err) {
         console.error(err);
       }
-    }, 50);
+    }, 0);
     compute();
     window.addEventListener('resize', compute);
     return () => window.removeEventListener('resize', compute);
