@@ -17,7 +17,7 @@ export default function OGTags({
     <Head>
       <title>{title}</title>
       <meta property="og:url" content={`https://${host}/${path}`} />
-      <meta property="og:type" content={'article'} />
+      <meta property="og:type" content={'person'} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta name="description" content={description} />
