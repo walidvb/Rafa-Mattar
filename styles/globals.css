@@ -97,6 +97,9 @@ a:hover {
   }
 }
 
+ .fancybox__content{
+  max-width: calc(100vw - 5rem)!important;
+ }
 :not(.is-closing) :is(.fancybox__content,
   .fancybox-ghost) {
   padding: 1rem 0 !important;
@@ -138,6 +141,10 @@ a:hover {
 .f-button.is-next:hover:before {
   background-color: transparent !important;
   left: -15px!important;
+}
+.f-button.is-next:active:before {
+  background-color: transparent !important;
+  left: -10px!important;
 }
 
 .f-button:before {

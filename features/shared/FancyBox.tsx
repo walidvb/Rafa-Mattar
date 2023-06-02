@@ -22,7 +22,7 @@ function Fancybox(props) {
   return (
     <div ref={containerRef}>
       <div
-        className="z-[1051] fixed top-4 right-6 cursor-pointer closer"
+        className="z-[1051] fixed top-2 right-4 cursor-pointer closer text-"
         onClick={() => NativeFancybox.close()}
       >
         <style jsx>
@@ -38,7 +38,7 @@ function Fancybox(props) {
             }
           `}
         </style>
-        fechar
+        ╳
       </div>
       {props.children}
     </div>
