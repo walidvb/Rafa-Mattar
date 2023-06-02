@@ -123,8 +123,11 @@ const Media = ({ book, media }: {
       </a>
     );
   }
+
   return (
-    <div className={clsx(`p-1 hover:brightness-[0.7]`)} style={{
+    <div
+      data-size={2}
+    className={clsx(`p-1 hover:brightness-[0.7]`)} style={{
       height: 350,
     }}>
       {body}
