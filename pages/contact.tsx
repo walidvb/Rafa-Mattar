@@ -19,11 +19,14 @@ export default function Home({ books, book }) {
           body{
             background: url(/images/rafael-mattar.jpeg);
             background-size: cover;
+            background-position: 35% center;
+          }
+          @media (min-width: 768px) {
             background-position: center;
           }
         `}
       </style>
-      <div className="container pt-[calc(50vh-350px)] mx-auto flex flex-col md:flex-row justify-around  max-w-7xl md:px-8 lg:px-12 xl:px-20">
+      <div className="grow relative">
         {/* <div className="p-2 md:w-1/2">
           <Image
             src="/images/rafael-mattar.jpeg"
@@ -33,7 +36,7 @@ export default function Home({ books, book }) {
             height={500}
           />
         </div> */}
-        <div className="p-2 md:w-1/2">
+        <div className="p-2 md:absolute md:top-[40%] left-1/2 pt-12 md:pt-0 md:-translate-y-full md:-translate-x-[120%]">
           <h1 className="text-3xl mb-4">Direção de Fotografia</h1>
           <p className="text-xl mb-2">
             <a

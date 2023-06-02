@@ -89,7 +89,7 @@ export const Header = ({
               rel="noopener noreferrer"
               className={`text-neutral-700 group`}
             >
-              <FaInstagram className="h-5 w-5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <FaInstagram className="h-4 w-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
           <li>
@@ -99,7 +99,7 @@ export const Header = ({
               rel="noopener noreferrer"
               className="text-neutral-700 group "
             >
-              <VimeoIcon className="h-5 w-5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <VimeoIcon className="h-4 w-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
           <li>
@@ -114,14 +114,14 @@ export const Header = ({
           </li>
         </ul>
       </div>
-      <div className="grid grid-cols-3">
-        <div />
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3">
+        <div className='hidden lg:block'/>
         <div className="flex grow lg:justify-center lg:text-center">
           {books
             .filter(({ fields: { slug } }) => slug !== 'work')
             .map((book, i) => (
               <Link
-                className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1 last:border-r-0 border-r transition hover:line-through ${
+                className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1  transition hover:line-through ${
                   book.fields.slug === active ? 'line-through' : ''
                 }
               ${'delay-[1s] group-hover:delay-0 md:hover:opacity-1 md:hover:translate-y-0 '}
