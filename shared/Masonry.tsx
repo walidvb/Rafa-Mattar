@@ -35,7 +35,7 @@ export const Masonry = ({ children, className = '' }) => {
           if (!node.dataset['width']) {
             node.dataset['width'] = width.toFixed(2);
           }
-
+          const isMobile = window.innerWidth < 767;
           const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
           const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
           const factor = node.dataset.size === "lg" ? 2 : 1;
@@ -67,7 +67,11 @@ export const Masonry = ({ children, className = '' }) => {
             let x = 0;
 
             for (let node of currentRow) {
-              const baseWidth = parseFloat(node.dataset.width);
+              if (isMobile)
+              {
+                node.style.position = `relative`;
+              }
+                const baseWidth = parseFloat(node.dataset.width);
               const newWidth = Math.ceil((baseWidth * newHeight) / BASE_HEIGHT);
               node.style.position = `absolute`;
               node.style.height = `${newHeight}px`;
