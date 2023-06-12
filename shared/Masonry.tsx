@@ -20,6 +20,9 @@ export const Masonry = ({ children, className = '' }) => {
       }
       try {
         const fullWidth = ref.current.getBoundingClientRect().width - xMargin;
+        const isMobile = window.innerWidth < 767;
+        const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
+        const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
 
         const nodes = [...Array.from(ref.current.childNodes)] as HTMLElement[];
         let currentRow: HTMLElement[] = [];
@@ -35,9 +38,6 @@ export const Masonry = ({ children, className = '' }) => {
           if (!node.dataset['width']) {
             node.dataset['width'] = width.toFixed(2);
           }
-          const isMobile = window.innerWidth < 767;
-          const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
-          const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
           const factor = node.dataset.size === 'lg' ? 2 : 1;
           const widthNormalized = parseFloat(node.dataset.width) * factor;
           let fitsInRow =
@@ -90,7 +90,11 @@ export const Masonry = ({ children, className = '' }) => {
             i++;
           }
         }
-        ref.current.style.height = `${y}px`;
+        if(!isMobile){
+          ref.current.style.height = `${y}px`;
+        } else{
+          ref.current.style.height = `initial`;
+        }
         ref.current.style.visibility = 'visible';
       } catch (err) {
         console.error(err);
@@ -103,7 +107,7 @@ export const Masonry = ({ children, className = '' }) => {
   return (
     <div
       ref={ref}
-      className={clsx('flex flex-wrap relative', className)}
+      className={clsx('md:flex flex-wrap relative', className)}
       style={{
         visibility: 'hidden',
         // marginLeft: -xMargin/2,

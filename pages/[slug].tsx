@@ -78,10 +78,9 @@ const Media = ({ book, media }: {
   if (media.fields.vimeoUrl) {
     body = (
       <div
-        className="aspect-video max-w-full max-h-full min-w-full min-h-full"
+        className="aspect-video max-w-full md:max-h-full min-w-full md:min-h-full md:h-[calc(350px - 1rem)]"
         style={{
-          height: "calc(350px - 1rem)",
-          width: 1600*(350 - 16)/900,
+          width: (1600 * (350 - 16)) / 900,
         }}
       >
         <ReactPlayer
@@ -127,9 +126,11 @@ const Media = ({ book, media }: {
   return (
     <div
       data-size={2}
-    className={clsx(`p-1 hover:brightness-[0.7]`)} style={{
-      height: 350,
-    }}>
+      className={clsx(`p-1 hover:brightness-[0.7] max-w-full`, media.fields.vimeoUrl && "aspect-video")}
+      style={{
+        height: 350,
+      }}
+    >
       {body}
     </div>
   );
