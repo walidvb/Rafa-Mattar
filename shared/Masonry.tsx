@@ -38,7 +38,7 @@ export const Masonry = ({ children, className = '' }) => {
           const isMobile = window.innerWidth < 767;
           const minItems = fullWidth < 767 ? 1 : fullWidth > 1600 ? 3 : 2;
           const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
-          const factor = node.dataset.size === "lg" ? 2 : 1;
+          const factor = node.dataset.size === 'lg' ? 2 : 1;
           const widthNormalized = parseFloat(node.dataset.width) * factor;
           let fitsInRow =
             (currentWidth + widthNormalized <= fullWidth * 1.3 ||
@@ -47,7 +47,7 @@ export const Masonry = ({ children, className = '' }) => {
           // I feel like it would be better to reduce the height
           // until a threshold where it will be too small to be displayed
           // if (potentialHeight > 350) {
-          if(!fitsInRow && j !== nodes.length - 1){
+          if (!fitsInRow && j !== nodes.length - 1) {
             computeRow();
             fitsInRow = true;
           }
@@ -67,11 +67,13 @@ export const Masonry = ({ children, className = '' }) => {
             let x = 0;
 
             for (let node of currentRow) {
-              if (isMobile)
-              {
+              if (isMobile) {
                 node.style.position = `relative`;
+                node.style.width = `100%`;
+                node.style.height = 'auto';
+                continue;
               }
-                const baseWidth = parseFloat(node.dataset.width);
+              const baseWidth = parseFloat(node.dataset.width);
               const newWidth = Math.ceil((baseWidth * newHeight) / BASE_HEIGHT);
               node.style.position = `absolute`;
               node.style.height = `${newHeight}px`;
