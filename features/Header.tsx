@@ -114,8 +114,9 @@ export const Header = ({
           </li>
         </ul>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3">
-        <div className='hidden lg:block'/>
+      <div className="flex justify-center">
+      {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3"> */}
+        {/* <div className='hidden lg:block'/> */}
         <div className="flex grow lg:justify-center lg:text-center">
           {books
             .filter(({ fields: { slug } }) => slug !== 'work')
@@ -146,7 +147,7 @@ export const Header = ({
               </Link>
             ))}
         </div>
-        <a
+        {/* <a
           className={`py-2 mt-1 block text-right ${
             showBooks
               ? 'opacity-1 translate-y-0'
@@ -155,7 +156,7 @@ export const Header = ({
           href="#"
         >
           Prints
-        </a>
+        </a> */}
       </div>
     </header>
   );
