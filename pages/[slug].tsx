@@ -79,7 +79,7 @@ const Media = ({ book, media }: {
   if (media.fields.vimeoUrl) {
     body = (
       <div
-        className="aspect-video max-w-full md:max-h-full min-w-full md:min-h-full md:h-[calc(350px - 1rem)]"
+        className="aspect-video max-w-full md:max-h-full min-w-full md:min-h-full md:h-[calc(350px - 1rem)] relative group"
         style={{
           width: (1600 * (350 - 16)) / 900,
         }}
@@ -93,6 +93,9 @@ const Media = ({ book, media }: {
           height="100%"
           className="h-full w-full"
         />
+        <div className="absolute inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/30 invisible group-hover:visible">
+          me myself and i
+        </div>
       </div>
     );
   } else {
@@ -126,8 +129,11 @@ const Media = ({ book, media }: {
 
   return (
     <div
-      data-size={2}
-      className={clsx(`p-1 hover:brightness-[0.7] max-w-full`, media.fields.vimeoUrl && "aspect-video")}
+      data-size={media.fields.vimeoUrl ? 'lg' : 'md'}
+      className={clsx(
+        `p-1 max-w-full`,
+        media.fields.vimeoUrl ? 'aspect-video' : 'hover:brightness-[0.7]'
+      )}
       style={{
         height: 350,
       }}
