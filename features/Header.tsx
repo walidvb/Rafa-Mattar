@@ -5,6 +5,7 @@ import { FaInstagram, FaVimeoSquare, FaWhatsapp } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
+import { MAIN_BOOK_SLUG } from '@pages/[slug]';
 
 export const Header = ({
   books,
@@ -18,11 +19,12 @@ export const Header = ({
   const active =
   router.query.slug || (router.pathname.includes('contact')
   ? 'contact'
-  : 'work');
-  console.log(router.query.slug, active);
+  : MAIN_BOOK_SLUG);
+
+  const main = books.find(({ fields: { slug } }) => slug === MAIN_BOOK_SLUG)
 
 
-  const showBooks = (active !== 'work' && router.query.slug) || hovered;
+  const showBooks = (active !== MAIN_BOOK_SLUG && router.query.slug) || hovered;
   const timer = useRef(null);
   return (
     <header
@@ -30,10 +32,10 @@ export const Header = ({
     >
       <div className="md:mb-4 flex flex-wrap lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4">
         <Link passHref href="/">
-          <h1 className="font-title uppercase text-3xl grow">
+          <h1 className="font-title  grow">
             {'Rafael Mattar'.split('').map((letter, i) => (
               <span
-                className="inline-block hover:-translate-y-1 transition-all"
+                className="inline-block hover:opacity-50 transition-all"
                 key={i}
               >
                 {letter === ' ' ? <>&nbsp;</> : letter}
@@ -46,10 +48,10 @@ export const Header = ({
             <Link
               href="/"
               className={`hover:line-through ${
-                'work' === active ? 'line-through' : ''
+                MAIN_BOOK_SLUG === active ? 'line-through' : ''
               }`}
             >
-              Work
+              {main.fields.name}
             </Link>
           </li>
           <li>
@@ -119,7 +121,7 @@ export const Header = ({
         {/* <div className='hidden lg:block'/> */}
         <div className="flex grow lg:justify-center lg:text-center">
           {books
-            .filter(({ fields: { slug } }) => slug !== 'work')
+            .filter(({ fields: { slug } }) => slug !== MAIN_BOOK_SLUG)
             .map((book, i) => (
               <Link
                 className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1  transition hover:line-through ${

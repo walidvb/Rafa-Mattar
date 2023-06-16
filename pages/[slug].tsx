@@ -21,6 +21,7 @@ interface HomePageProps {
   medias: (IPhoto | IVideo)[];
 }
 
+export const MAIN_BOOK_SLUG = 'nao-me-muda';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -29,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (
     content_type: 'session',
     include: 3,
   });
-  const slug = context.params?.slug || 'work';
+  const slug = context.params?.slug || MAIN_BOOK_SLUG;
   const book = books.find((book) => book.fields.slug === slug);
 
   const res = (await client.getEntry(book.sys.id, {
