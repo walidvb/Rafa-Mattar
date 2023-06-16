@@ -173,3 +173,7 @@ a:hover {
     opacity: 1;
   }
 }
+
+.legends-wrapper .react-player__play-icon{
+  display:none;
+}

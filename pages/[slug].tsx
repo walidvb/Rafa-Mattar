@@ -79,7 +79,7 @@ const Media = ({ book, media }: {
   if (media.fields.vimeoUrl) {
     body = (
       <div
-        className="aspect-video max-w-full md:max-h-full min-w-full md:min-h-full md:h-[calc(350px - 1rem)] relative group"
+        className="aspect-video max-w-full md:max-h-full min-w-full md:min-h-full md:h-[calc(350px - 1rem)] relative group legends-wrapper"
         style={{
           width: (1600 * (350 - 16)) / 900,
         }}
@@ -93,8 +93,8 @@ const Media = ({ book, media }: {
           height="100%"
           className="h-full w-full"
         />
-        <div className="absolute inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/30 invisible group-hover:visible">
-          me myself and i
+        <div className="absolute inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
+          {media.fields.title}
         </div>
       </div>
     );
