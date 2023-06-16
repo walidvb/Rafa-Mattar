@@ -38,8 +38,8 @@ export const Masonry = ({ children, className = '' }) => {
           if (!node.dataset['width']) {
             node.dataset['width'] = width.toFixed(2);
           }
-          const factor = node.dataset.size === 'lg' ? 2 : 1;
-          const widthNormalized = parseFloat(node.dataset.width) * factor;
+
+          const widthNormalized = parseFloat(node.dataset.width);
           let fitsInRow =
             (currentWidth + widthNormalized <= fullWidth * 1.3 ||
               currentRow.length < minItems) &&
