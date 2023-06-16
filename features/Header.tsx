@@ -35,7 +35,7 @@ export const Header = ({
           <h1 className="font-title  grow">
             {'Rafael Mattar'.split('').map((letter, i) => (
               <span
-                className="inline-block hover:opacity-50 transition-all"
+                className="inline-block hover:opacity-10 transition-all"
                 key={i}
               >
                 {letter === ' ' ? <>&nbsp;</> : letter}
