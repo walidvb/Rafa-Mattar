@@ -93,7 +93,7 @@ const Media = ({ book, media }: {
           height="100%"
           className="h-full w-full"
         />
-        <div className="absolute inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
+        <div className="absolute p-4 inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
           {media.fields.title}
         </div>
       </div>
