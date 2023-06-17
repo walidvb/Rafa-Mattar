@@ -21,7 +21,7 @@ interface HomePageProps {
   medias: (IPhoto | IVideo)[];
 }
 
-export const MAIN_BOOK_SLUG = 'nao-me-muda';
+export const MAIN_BOOK_SLUG = 'filmes';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
