@@ -7,6 +7,7 @@ const BackgroundImage = () => {
   return (
     <Link href="/filmes">
       <div
+        id="bg-img"
         className="bg-cover bg-center h-screen relative"
         style={{
           backgroundImage: `url(/images/bg.jpeg)`,

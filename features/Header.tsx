@@ -35,7 +35,7 @@ export const Header = ({
           <h1 className="font-title  grow">
             {'Rafael Mattar'.split('').map((letter, i) => (
               <span
-                className="inline-block hover:opacity-10 transition-all"
+                className="inline-block hover:opacity-0 transition-all hover:transition-none"
                 key={i}
               >
                 {letter === ' ' ? <>&nbsp;</> : letter}
@@ -46,7 +46,7 @@ export const Header = ({
         <ul className="flex gap-8 grow lg:justify-center order-last lg:order-none ">
           <li>
             <Link
-              href="/"
+              href="/filmes"
               className={`hover:line-through ${
                 MAIN_BOOK_SLUG === active ? 'line-through' : ''
               }`}

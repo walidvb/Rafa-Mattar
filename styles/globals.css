@@ -177,3 +177,10 @@ a:hover {
 .legends-wrapper .react-player__play-icon{
   display:none;
 }
+
+@media (max-width:767px){
+
+  #bg-img{
+    background-position: 55%;
+  }
+}
