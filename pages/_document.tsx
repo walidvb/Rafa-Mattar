@@ -10,7 +10,7 @@ class MyDocument extends Document {
           {/* @ts-ignore */}
           {this.props.styleTags}
         </Head>
-        <body className="text-neutral-900 bg-neutral-100 ">
+        <body className="text-neutral-100 bg-black ">
           {/* <body className="text-neutral-900 bg-neutral-100 dark:text-neutral-200 dark:bg-neutral-900"> */}
           <Main />
           <NextScript />

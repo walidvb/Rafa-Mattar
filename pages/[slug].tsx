@@ -146,12 +146,10 @@ const Media = ({ book, media }: {
 
 
 const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
-  console.log({ res, medias })
-
   return (
-    <div className="mx-auto max-w-[1921px] px-2 md:px-4 pb-2">
+    <div className="mx-auto max-w-[1921px] min-h-screen px-2 md:px-4 pb-2 flex flex-col">
       <OGTags description={book.fields.title} />
-      <Header books={books} className="px-2" />
+      <Header books={books} className="px-2 w-full" />
 
       <Fancybox
         options={{
@@ -159,6 +157,7 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
           hash: true,
           mousePanning: true,
         }}
+        className="grow grid items-center"
       >
         <Masonry>
           {medias.map((media) => (
