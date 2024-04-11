@@ -17,12 +17,11 @@ export const Header = ({
   const [hovered, setHovered] = useState(false);
   const router = useRouter();
   const active =
-  router.query.slug || (router.pathname.includes('contact')
-  ? 'contact'
-  : MAIN_BOOK_SLUG);
+    router.query.slug ||
+    (router.pathname.includes('contact') ? 'contact' : MAIN_BOOK_SLUG);
 
-  const main = books.find(({ fields: { slug } }) => slug === MAIN_BOOK_SLUG)
-
+  const main = books.find(({ fields: { slug } }) => slug === MAIN_BOOK_SLUG);
+  console.log(books.map(({ fields: { slug } }) => slug));
 
   const showBooks = (active !== MAIN_BOOK_SLUG && router.query.slug) || hovered;
   const timer = useRef(null);
@@ -44,17 +43,22 @@ export const Header = ({
           </h1>
         </Link>
         <ul className="flex gap-8 grow lg:justify-center order-last lg:order-none ">
-          <li>
-            <Link
-              href="/filmes"
-              className={`hover:line-through ${
-                MAIN_BOOK_SLUG === active ? 'line-through' : ''
-              }`}
-            >
-              {main.fields.name}
-            </Link>
-          </li>
-          <li>
+          {books.map((book) => {
+            return (
+              <li key={book.fields.slug}>
+                <Link
+                  href={`/${book.fields.slug}`}
+                  className={`hover:line-through ${
+                    book.fields.slug === active ? 'line-through' : ''
+                  }`}
+                >
+                  {book.fields.name}
+                </Link>
+              </li>
+            );
+          })}
+
+          {/* <li>
             <div className="relative group hidden md:block">
               <button
                 className={`uppercase ${showBooks ? 'line-through' : ''}`}
@@ -81,7 +85,7 @@ export const Header = ({
                 Autorais
               </button>
             </div>
-          </li>
+          </li> */}
         </ul>
         <ul className={`grow text-right inline-flex lg:justify-end gap-4`}>
           <li>
@@ -115,50 +119,6 @@ export const Header = ({
             </Link>
           </li>
         </ul>
-      </div>
-      <div className="flex justify-center">
-      {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3"> */}
-        {/* <div className='hidden lg:block'/> */}
-        <div className="flex grow lg:justify-center lg:text-center">
-          {books
-            .filter(({ fields: { slug } }) => slug !== MAIN_BOOK_SLUG)
-            .map((book, i) => (
-              <Link
-                className={`block first:pl-0 lg:first:pl-4 px-4 py-1 mt-1  transition hover:line-through ${
-                  book.fields.slug === active ? 'line-through' : ''
-                }
-              ${'delay-[1s] group-hover:delay-0 md:hover:opacity-1 md:hover:translate-y-0 '}
-              ${
-                showBooks
-                  ? 'opacity-1 translate-y-0'
-                  : 'md:opacity-0 md:-translate-y-[4px]'
-              }`}
-                key={book.sys.id}
-                href={`/${book.fields.slug}`}
-                style={{
-                  transitionDelay: `${i * 50}ms`,
-                }}
-                onMouseEnter={() => clearTimeout(timer.current)}
-                onMouseLeave={() =>
-                  (timer.current = setTimeout(() => {
-                    setHovered(false);
-                  }, 800))
-                }
-              >
-                {book.fields.name}
-              </Link>
-            ))}
-        </div>
-        {/* <a
-          className={`py-2 mt-1 block text-right ${
-            showBooks
-              ? 'opacity-1 translate-y-0'
-              : 'md:opacity-0 md:-translate-y-[4px]'
-          }`}
-          href="#"
-        >
-          Prints
-        </a> */}
       </div>
     </header>
   );
