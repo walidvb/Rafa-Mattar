@@ -33,6 +33,9 @@ h1 {
   display: none !important;
 }
 
+.fancybox__content {
+  background: none !important;
+}
 @media (min-width: 768px) {
 
   body,
@@ -112,14 +115,14 @@ a:hover {
 }
 
 .fancybox__backdrop {
-  background-color: rgba(255, 255, 255, 0.95) !important;
+  background-color: rgba(0, 0, 0, 0.95) !important;
   backdrop-filter: blur(4px);
   transition: all 0.3s ease-in-out;
   /* animation: fade-in 0.3s ease-in-out; */
 }
 
 .fancybox__nav {
-  --f-button-color: #111;
+  --f-button-color: #FFF;
   --f-button-svg-stroke-width: 5px;
   --f-button-svg-filter: none;
 
@@ -148,9 +151,13 @@ a:hover {
   left: -10px!important;
 }
 
-.f-button:before {
+.f-button.is-close-btn {
+  visibility: hidden;
+}
+
+.f-button:not(.is-close-button):before {
   content: "←" !important;
-  color: #111;
+  color: #EEE;
   font-size: 1.5rem;
   transform: translateY(1.5rem);
 }

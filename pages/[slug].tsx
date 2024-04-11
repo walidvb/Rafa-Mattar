@@ -84,31 +84,44 @@ const Media = ({ book, media }: {
           width: (1600 * (350 - 16)) / 900,
         }}
       >
-        <ReactPlayer
-          light
-          showPreview
-          controls
-          url={media.fields.vimeoUrl}
-          width="100%"
-          height="100%"
-          className="h-full w-full"
-        />
-        <div className="absolute p-4 inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
-          {media.fields.title}
-        </div>
+        <a
+          data-fancybox={book.fields.slug}
+          href={media.fields.vimeoUrl}
+          className="image-container contents cursor-pointer relative"
+        >
+          <ReactPlayer
+            light
+            showPreview={false}
+            controls
+            url={media.fields.vimeoUrl}
+            width="100%"
+            height="100%"
+            className="h-full w-full"
+          />
+          <div className="absolute inset-0 " />
+          {media.fields.title && (
+            <div className="absolute p-4 inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
+              {media.fields.title}
+            </div>
+          )}
+        </a>
       </div>
     );
   } else {
-    const {  title, file: { details: {image}, url } } = media.fields.photo.fields
+    const {
+      title,
+      file: {
+        details: { image },
+        url,
+      },
+    } = media.fields.photo.fields;
     if (!image) {
       return null;
     }
-      const {
-        width, height ,
-      } = image;
-    const okWidth = 800
+    const { width, height } = image;
+    const okWidth = 800;
     const newWidth = width * (okWidth / width);
-    const newHeight = height * okWidth / width
+    const newHeight = (height * okWidth) / width;
     body = (
       <a
         data-fancybox={book.fields.slug}
@@ -121,7 +134,7 @@ const Media = ({ book, media }: {
           loading="lazy"
           width={newWidth}
           height={newHeight}
-          className=" image"
+          className="image"
         />
       </a>
     );
@@ -132,7 +145,8 @@ const Media = ({ book, media }: {
       data-size={media.fields.vimeoUrl ? 'lg' : 'md'}
       className={clsx(
         `p-1 max-w-full`,
-        media.fields.vimeoUrl ? 'aspect-video' : 'hover:brightness-[0.7]'
+        'hover:brightness-[0.7]',
+        media.fields.vimeoUrl ? 'aspect-video' : ''
       )}
       style={{
         height: 350,
