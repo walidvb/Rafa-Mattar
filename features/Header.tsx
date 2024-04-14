@@ -3,7 +3,7 @@ import { Entry } from 'contentful';
 import { ISession } from '@types/contentful';
 import { FaInstagram, FaVimeoSquare, FaWhatsapp } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { MAIN_BOOK_SLUG } from '@pages/[slug]';
 import { motion } from 'framer-motion';
@@ -36,37 +36,41 @@ export const Header = ({
             ))}
           </h1>
         </Link>
-        <ul className="flex gap-8 grow lg:justify-center items-end self-stretch order-last lg:order-none text-sm ">
-          {books.map((book) => {
+        <ul className="flex grow lg:justify-center items-end self-stretch order-last lg:order-none text-sm ">
+          {books.map((book, i) => {
             return (
-              <li
-                key={book.fields.slug}
-                className="relative"
-                onMouseEnter={() => {
-                  setActive(book.fields.slug);
-                }}
-                onMouseLeave={() => {
-                  setActive(baseActive);
-                }}
-              >
-                <Link href={`/${book.fields.slug}`}>{book.fields.name}</Link>
-                {active === book.fields.slug && (
-                  <motion.div
-                    layoutId="strike"
-                    className="border-[0.5px] top-1/2 absolute w-[calc(100%+6px)] -left-[3px] border-white"
-                    transition={{
-                      duration: 0.15,
-                      // type: 'spring',
-                      ease: 'easeInOut',
-                      damping: 15,
-                      stiffness: 200,
-                    }}
-                  />
+              <React.Fragment key={book.fields.slug}>
+                {i !== 0 && (
+                  // hide the strike btw the links
+                  <li className="w-8 mx-[3px] h-full z-50 bg-[rgba(0,0,0,0.3) backdrop-blur-sm ]"></li>
                 )}
-              </li>
+                <li
+                  className="relative"
+                  onMouseEnter={() => {
+                    setActive(book.fields.slug);
+                  }}
+                  onMouseLeave={() => {
+                    setActive(baseActive);
+                  }}
+                >
+                  <Link href={`/${book.fields.slug}`}>{book.fields.name}</Link>
+                  {active === book.fields.slug && (
+                    <motion.div
+                      layoutId="strike"
+                      className="border-[0.5px] top-1/2 absolute w-[calc(100%+6px)] -left-[3px] border-white/90"
+                      transition={{
+                        duration: 0.15,
+                        // type: 'spring',
+                        ease: 'easeInOut',
+                        damping: 15,
+                        stiffness: 200,
+                      }}
+                    />
+                  )}
+                </li>
+              </React.Fragment>
             );
           })}
-
           {/* <li>
             <div className="relative group hidden md:block">
               <button
@@ -104,7 +108,7 @@ export const Header = ({
               href="https://instagram.com/rafaelmattar.jpg"
               target="_blank"
               rel="noopener noreferrer"
-              className={` group lg:translate-y-0 -translate-y-0.5 inline-block`}
+              className={` group lg:translate-y-[-1px] -translate-y-0.5 inline-block`}
             >
               <FaInstagram className="h-3.5 w-3.5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
@@ -114,19 +118,21 @@ export const Header = ({
               href="https://vimeo.com/rafaelmattar"
               target="_blank"
               rel="noopener noreferrer"
-              className=" group  lg:translate-y-0 -translate-y-0.5 inline-block"
+              className=" group  lg:translate-y-[-1px] -translate-y-0.5 inline-block"
             >
               <VimeoIcon className="h-3.5 w-3.5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
           <li>
-            <Link
-              href="/contact"
-              className={`hover:line-through ${
-                'contact' === active ? 'line-through' : ''
-              }`}
-            >
-              Contact
+            <Link href="/contact">
+              {'Contact'.split('').map((letter, i) => (
+                <span
+                  className="inline-block hover:translate-y-[-1px] transition-all"
+                  key={i}
+                >
+                  {letter === ' ' ? <>&nbsp;</> : letter}
+                </span>
+              ))}
             </Link>
           </li>
         </ul>
