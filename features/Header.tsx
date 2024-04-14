@@ -37,7 +37,7 @@ export const Header = ({
             ))}
           </h1>
         </Link>
-        <ul className="flex gap-8 grow lg:justify-center order-last lg:order-none ">
+        <ul className="flex gap-8 grow lg:justify-center items-end self-stretch order-last lg:order-none text-sm ">
           {books.map((book) => {
             return (
               <li key={book.fields.slug}>
@@ -82,15 +82,17 @@ export const Header = ({
             </div>
           </li> */}
         </ul>
-        <ul className={`grow text-right inline-flex lg:justify-end gap-4`}>
+        <ul
+          className={`grow text-right inline-flex items-end self-stretch text-sm lg:justify-end gap-4`}
+        >
           <li>
             <a
               href="https://instagram.com/rafaelmattar.jpg"
               target="_blank"
               rel="noopener noreferrer"
-              className={` group`}
+              className={` group lg:translate-y-0 -translate-y-0.5 inline-block`}
             >
-              <FaInstagram className="h-4 w-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <FaInstagram className="h-3.5 w-3.5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
           <li>
@@ -98,15 +100,15 @@ export const Header = ({
               href="https://vimeo.com/rafaelmattar"
               target="_blank"
               rel="noopener noreferrer"
-              className=" group "
+              className=" group  lg:translate-y-0 -translate-y-0.5 inline-block"
             >
-              <VimeoIcon className="h-4 w-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <VimeoIcon className="h-3.5 w-3.5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
           <li>
             <Link
               href="/contact"
-              className={`hover:line-through ml-4 ${
+              className={`hover:line-through ${
                 'contact' === active ? 'line-through' : ''
               }`}
             >
