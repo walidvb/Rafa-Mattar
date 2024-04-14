@@ -5,7 +5,7 @@ import React from 'react';
 const BackgroundImage = () => {
 
   return (
-    <Link href="/filmes">
+    <Link href="/films">
       <div
         id="bg-img"
         className="bg-cover bg-center h-screen relative"

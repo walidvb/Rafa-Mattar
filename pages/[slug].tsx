@@ -31,41 +31,41 @@ export const getServerSideProps: GetServerSideProps = async (
     include: 3,
   });
   const slug = context.params?.slug || MAIN_BOOK_SLUG;
-  const book = books.find((book) => book.fields.slug === slug);
+  const book = books.find((book) => book?.fields.slug === slug) || null;
 
-  const res = (await client.getEntry(book.sys.id, {
-    include: 3,
-  })) as {
-    fields: {
-      medias: Entry<IPhoto | IVideo>[];
+  let medias = null;
+  if (book) {
+    const res = (await client.getEntry(book.sys.id, {
+      include: 3,
+    })) as {
+      fields: {
+        medias: Entry<IPhoto | IVideo>[];
+      };
     };
-  };
 
-  const medias = res.fields.medias
-    .map((media) => {
-      if (!media.sys.contentType) {
-        return;
-      }
-      if(media.sys.contentType.sys.id === 'photo')
-      {
-        if (!media.fields.photo?.fields){
-          return
+    medias = res.fields.medias
+      .map((media) => {
+        if (!media.sys.contentType) {
+          return;
         }
+        if (media.sys.contentType.sys.id === 'photo') {
+          if (!media.fields.photo?.fields) {
+            return;
+          }
+          return media;
+        }
+
         return media;
-      }
+      })
+      .filter(Boolean);
+    books = books.filter((book) => book.fields.medias?.length);
+  }
 
-      return media;
-    })
-    .filter(Boolean);
-
-  books = books.filter((book) => book.fields.medias?.length);
   return {
     props: {
       books,
       book,
       medias,
-      res,
-
     },
   };
 };
