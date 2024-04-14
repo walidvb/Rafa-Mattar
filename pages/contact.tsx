@@ -1,10 +1,9 @@
 // pages/index.js
 import { Header } from '@features/Header';
-import { getStaticProps as getSP, getStaticPaths as gSPaths } from './[slug]';
+import { getStaticProps as getSP } from './[slug]';
 import Head from 'next/head';
 
 export const getStaticProps = getSP;
-export const getStaticPaths = gSPaths;
 export default function Home({ books, book }) {
   return (
     <div className="flex flex-col h-screen">
