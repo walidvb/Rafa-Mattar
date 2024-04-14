@@ -19,17 +19,12 @@ export const Header = ({
   const active =
     router.query.slug ||
     (router.pathname.includes('contact') ? 'contact' : MAIN_BOOK_SLUG);
-
-  const main = books.find(({ fields: { slug } }) => slug === MAIN_BOOK_SLUG);
-  console.log(books.map(({ fields: { slug } }) => slug));
-
-  const showBooks = (active !== MAIN_BOOK_SLUG && router.query.slug) || hovered;
   const timer = useRef(null);
   return (
     <header
       className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
     >
-      <div className="md:mb-4 flex flex-wrap lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4">
+      <div className=" flex flex-wrap lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4">
         <Link passHref href="/">
           <h1 className="font-title  grow">
             {'Rafael Mattar'.split('').map((letter, i) => (
@@ -93,7 +88,7 @@ export const Header = ({
               href="https://instagram.com/rafaelmattar.jpg"
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-neutral-700 group`}
+              className={` group`}
             >
               <FaInstagram className="h-4 w-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
@@ -103,7 +98,7 @@ export const Header = ({
               href="https://vimeo.com/rafaelmattar"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-700 group "
+              className=" group "
             >
               <VimeoIcon className="h-4 w-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
