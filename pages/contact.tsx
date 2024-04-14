@@ -1,10 +1,9 @@
 // pages/index.js
 import { Header } from '@features/Header';
-import { getServerSideProps as getSSR } from './[slug]';
+import { getStaticProps as getSP } from './[slug]';
 import Head from 'next/head';
-import Image from 'next/image';
 
-export const getServerSideProps = getSSR;
+export const getStaticProps = getSP;
 
 export default function Home({ books, book }) {
   return (

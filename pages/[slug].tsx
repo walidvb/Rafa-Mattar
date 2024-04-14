@@ -1,7 +1,11 @@
 // pages/[slug].tsx
 
 import { Entry } from 'contentful';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetStaticProps,
+} from 'next';
 
 import Fancybox from '@features/shared/FancyBox';
 import { client } from '@shared/api';
@@ -23,7 +27,7 @@ interface HomePageProps {
 
 export const MAIN_BOOK_SLUG = 'filmes';
 
-export const getServerSideProps: GetServerSideProps = async (
+export const getStaticProps: GetStaticProps = async (
   context: GetServerSidePropsContext
 ) => {
   let { items: books } = await client.getEntries<ISession>({
