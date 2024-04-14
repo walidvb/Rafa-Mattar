@@ -87,18 +87,17 @@ const Media = ({ book, media }: {
         <a
           data-fancybox={book.fields.slug}
           href={media.fields.vimeoUrl}
-          className="image-container contents cursor-pointer relative"
+          className="flex image-container cursor-pointer relative h-full w-full"
         >
           <ReactPlayer
             light
-            showPreview={false}
+            showPreview
             controls
             url={media.fields.vimeoUrl}
             width="100%"
             height="100%"
-            className="h-full w-full"
+            className="h-full w-full z-0 pointer-events-none"
           />
-          <div className="absolute inset-0 " />
           {media.fields.title && (
             <div className="absolute p-4 inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
               {media.fields.title}
