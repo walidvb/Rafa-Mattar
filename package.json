@@ -20,6 +20,7 @@
     "contentful": "^9.0.0",
     "debounce": "^1.2.1",
     "dotenv": "^10.0.0",
+    "framer-motion": "^11.0.28",
     "html-entities": "^2.3.2",
     "next": "13.1.2",
     "postcss": "^8.4.5",

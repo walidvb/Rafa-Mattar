@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import { MAIN_BOOK_SLUG } from '@pages/[slug]';
-
+import { motion } from 'framer-motion';
 export const Header = ({
   books,
   className = '',
@@ -16,10 +16,9 @@ export const Header = ({
 }) => {
   const [hovered, setHovered] = useState(false);
   const router = useRouter();
-  const active =
-    router.query.slug ||
-    (router.pathname.includes('contact') ? 'contact' : MAIN_BOOK_SLUG);
   const timer = useRef(null);
+  const baseActive = router.query.slug;
+  const [active, setActive] = useState(baseActive);
   return (
     <header
       className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
@@ -40,15 +39,30 @@ export const Header = ({
         <ul className="flex gap-8 grow lg:justify-center items-end self-stretch order-last lg:order-none text-sm ">
           {books.map((book) => {
             return (
-              <li key={book.fields.slug}>
-                <Link
-                  href={`/${book.fields.slug}`}
-                  className={`hover:line-through ${
-                    book.fields.slug === active ? 'line-through' : ''
-                  }`}
-                >
-                  {book.fields.name}
-                </Link>
+              <li
+                key={book.fields.slug}
+                className="relative"
+                onMouseEnter={() => {
+                  setActive(book.fields.slug);
+                }}
+                onMouseLeave={() => {
+                  setActive(baseActive);
+                }}
+              >
+                <Link href={`/${book.fields.slug}`}>{book.fields.name}</Link>
+                {active === book.fields.slug && (
+                  <motion.div
+                    layoutId="strike"
+                    className="border-[0.5px] top-1/2 absolute w-[calc(100%+6px)] -left-[3px] border-white"
+                    transition={{
+                      duration: 0.15,
+                      // type: 'spring',
+                      ease: 'easeInOut',
+                      damping: 15,
+                      stiffness: 200,
+                    }}
+                  />
+                )}
               </li>
             );
           })}
