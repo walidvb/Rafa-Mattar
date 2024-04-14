@@ -27,6 +27,22 @@ interface HomePageProps {
 
 export const MAIN_BOOK_SLUG = 'filmes';
 
+export const getStaticPaths = async () => {
+  const { items: books } = await client.getEntries<ISession>({
+    content_type: 'session',
+    include: 3,
+  });
+  const paths = books.map((book) => ({
+    params: {
+      slug: book.fields.slug,
+    },
+  }));
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
 export const getStaticProps: GetStaticProps = async (
   context: GetServerSidePropsContext
 ) => {
