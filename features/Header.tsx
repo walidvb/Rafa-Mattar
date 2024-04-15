@@ -53,11 +53,27 @@ export const Header = ({
                     setActive(baseActive);
                   }}
                 >
-                  <Link href={`/${book.fields.slug}`}>{book.fields.name}</Link>
+                  <Link
+                    href={`/${book.fields.slug}`}
+                    style={{
+                      // no shadow on contact
+                      textShadow: baseActive
+                        ? '0 1px black, 0 -1px black, 1px 0 black, -1px 0 black'
+                        : undefined,
+                    }}
+                    className="relative z-20"
+                  >
+                    {book.fields.name}
+                  </Link>
                   {active === book.fields.slug && (
                     <motion.div
                       layoutId="strike"
-                      className="border-[0.5px] top-1/2 absolute w-[calc(100%+6px)] -left-[3px] border-white/90"
+                      className="border-[0.5px] rounded-sm top-1/2 absolute w-[calc(100%+6px)] -left-[3px] border-white/90"
+                      style={{
+                        height: 1,
+                        background: '#fff',
+                        // border: '0.5px solid #000',
+                      }}
                       transition={{
                         duration: 0.15,
                         // type: 'spring',
