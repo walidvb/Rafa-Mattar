@@ -9,7 +9,7 @@ const BackgroundImage = () => {
   return (
     <>
       <Head>
-        <link url="/films" rel="prefetch" />
+        <link href="/films" rel="prefetch" />
       </Head>
       <div suppressHydrationWarning>
         <video
@@ -25,21 +25,6 @@ const BackgroundImage = () => {
         />
       </div>
     </>
-  );
-  return (
-    <Link href="/films">
-      <div
-        id="bg-img"
-        className="bg-cover bg-center h-screen relative"
-        style={{
-          backgroundImage: `url(/images/bg.jpeg)`,
-        }}
-      >
-        <div className="absolute top-8 right-8">
-          <span className="text-lg text-white">Entrar</span>
-        </div>
-      </div>
-    </Link>
   );
 };
 
