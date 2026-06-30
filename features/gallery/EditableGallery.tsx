@@ -62,6 +62,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [dragHover, setDragHover] = useState<string | null>(null);
   const [editingClientId, setEditingClientId] = useState<string | null>(null);
+  const [newVideoIndex, setNewVideoIndex] = useState<number | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
   const [editVideoUrl, setEditVideoUrl] = useState('')
@@ -96,7 +97,29 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
     setEditVideoUrl(item.videoUrl ?? '')
   }
 
+  function closeEditDialog() {
+    setEditingClientId(null);
+    setNewVideoIndex(null);
+  }
+
   function saveEditDialog() {
+    if (newVideoIndex !== null) {
+      const stamp = Date.now();
+      const newItem: EditableMediaItem = {
+        id: -stamp,
+        clientId: `new-${stamp}`,
+        type: 'video',
+        title: editTitle,
+        description: editDescription,
+        published: true,
+        videoUrl: editVideoUrl,
+      };
+
+      setItems((current) => insertItemsAt(current, newVideoIndex, [newItem]));
+      closeEditDialog();
+      return;
+    }
+
     if (!editingClientId) {
       return;
     }
@@ -113,7 +136,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
           : item,
       ),
     )
-    setEditingClientId(null);
+    closeEditDialog();
   }
 
   function triggerAdd(atIndex: number) {
@@ -122,20 +145,8 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
   }
 
   function addVideoAtIndex(atIndex: number) {
-    const stamp = Date.now()
-    const clientId = `new-${stamp}`
-    const newItem: EditableMediaItem = {
-      id: -stamp,
-      clientId,
-      type: 'video',
-      title: '',
-      description: '',
-      published: true,
-      videoUrl: '',
-    }
-
-    setItems((current) => insertItemsAt(current, atIndex, [newItem]))
-    setEditingClientId(clientId)
+    setNewVideoIndex(atIndex)
+    setEditingClientId(null)
     setEditTitle('')
     setEditDescription('')
     setEditVideoUrl('')
@@ -400,7 +411,14 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
             <Masonry>
               {items.map((item, index) => (
                 <EditableMediaTile
-                  key={item.clientId}
+                  // Remount the tile when a video's URL changes so Masonry
+                  // re-measures a fresh node and react-player picks up the new
+                  // source (its light preview won't refresh on the same mount).
+                  key={
+                    item.type === 'video'
+                      ? `${item.clientId}:${item.videoUrl ?? ''}`
+                      : item.clientId
+                  }
                   page={page}
                   item={item}
                   displayItem={displayItemAt(index)}
@@ -474,13 +492,13 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
       </div>
 
       <Dialog
-        open={Boolean(editingItem)}
+        open={Boolean(editingItem) || newVideoIndex !== null}
         onOpenChange={(open) => {
           if (!open) {
-            setEditingClientId(null)
+            closeEditDialog()
           }
         }}
-        title="Edit media"
+        title={newVideoIndex !== null ? 'Add video' : 'Edit media'}
       >
         <div className="space-y-3">
           <div className="space-y-1">
@@ -503,7 +521,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
             />
           </div>
 
-          {editingItem?.type === 'video' ? (
+          {editingItem?.type === 'video' || newVideoIndex !== null ? (
             <div className="space-y-1">
               <Label htmlFor="media-video-url">Video URL</Label>
               <Input
@@ -531,7 +549,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
               type="button"
               variant="outline"
               className="dialog-btn-outline"
-              onClick={() => setEditingClientId(null)}
+              onClick={closeEditDialog}
             >
               Cancel
             </Button>
