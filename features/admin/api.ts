@@ -14,7 +14,14 @@ async function adminFetch<T>(path: string, init?: RequestInit): Promise<T> {
   if (res.status === 204) {
     return undefined as T;
   }
-
+  try {
+    return res.json()
+  } catch (error) {
+    console.error(error)
+    console.log(await res.text())
+    console.log(path)
+    throw new Error(`Request failed: ${res.status}`)
+  }
   return res.json();
 }
 
