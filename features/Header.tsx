@@ -1,24 +1,22 @@
 import Link from 'next/link';
-import { Entry } from 'contentful';
-import { ISession } from '@types/contentful';
-import { FaInstagram, FaVimeoSquare, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
-import { MAIN_BOOK_SLUG } from '@pages/[slug]';
 import { motion } from 'framer-motion';
+import { Page } from '@shared/strapi-types';
+
 export const Header = ({
-  books,
+  pages,
   className = '',
 }: {
-  books: Entry<ISession>[];
+  pages: Page[];
   className?: string;
 }) => {
-  const [hovered, setHovered] = useState(false);
   const router = useRouter();
-  const timer = useRef(null);
   const baseActive = router.query.slug;
   const [active, setActive] = useState(baseActive);
+
   return (
     <header
       className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
@@ -37,46 +35,42 @@ export const Header = ({
           </h1>
         </Link>
         <ul className="flex grow lg:justify-center items-end self-stretch order-last lg:order-none text-sm ">
-          {books.map((book, i) => {
+          {pages.map((page, i) => {
             return (
-              <React.Fragment key={book.fields.slug}>
+              <React.Fragment key={page.slug}>
                 {i !== 0 && (
-                  // hide the strike btw the links
                   <li className="w-8 mx-[3px] h-full z-50 bg-[rgba(0,0,0,0.3) backdrop-blur-sm ]"></li>
                 )}
                 <li
                   className="relative"
                   onMouseEnter={() => {
-                    setActive(book.fields.slug);
+                    setActive(page.slug);
                   }}
                   onMouseLeave={() => {
                     setActive(baseActive);
                   }}
                 >
                   <Link
-                    href={`/${book.fields.slug}`}
+                    href={`/${page.slug}`}
                     style={{
-                      // no shadow on contact
                       textShadow: baseActive
                         ? '0 1px black, 0 -1px black, 1px 0 black, -1px 0 black'
                         : undefined,
                     }}
                     className="relative z-20"
                   >
-                    {book.fields.name}
+                    {page.name}
                   </Link>
-                  {active === book.fields.slug && (
+                  {active === page.slug && (
                     <motion.div
                       layoutId="strike"
                       className="border-[0.5px] rounded-sm top-1/2 absolute w-[calc(100%+6px)] -left-[3px] border-white/90"
                       style={{
                         height: 1,
                         background: '#fff',
-                        // border: '0.5px solid #000',
                       }}
                       transition={{
                         duration: 0.15,
-                        // type: 'spring',
                         ease: 'easeInOut',
                         damping: 15,
                         stiffness: 200,
@@ -87,34 +81,6 @@ export const Header = ({
               </React.Fragment>
             );
           })}
-          {/* <li>
-            <div className="relative group hidden md:block">
-              <button
-                className={`uppercase ${showBooks ? 'line-through' : ''}`}
-                onMouseEnter={() => {
-                  clearTimeout(timer.current);
-                  setHovered(true);
-                }}
-                onMouseLeave={() => {
-                  clearTimeout(timer.current);
-                  timer.current = setTimeout(() => {
-                    setHovered(false);
-                  }, 800);
-                }}
-                onFocus={() => {
-                  clearTimeout(timer.current);
-                  setHovered(true);
-                }}
-                onBlur={() => {
-                  timer.current = setTimeout(() => {
-                    setHovered(false);
-                  }, 800);
-                }}
-              >
-                Autorais
-              </button>
-            </div>
-          </li> */}
         </ul>
         <ul
           className={`grow text-right inline-flex items-end self-stretch text-sm lg:justify-end gap-4`}

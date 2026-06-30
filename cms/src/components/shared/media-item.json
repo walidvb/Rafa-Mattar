@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_shared_media_items",
+  "info": {
+    "displayName": "Media Item",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": ["image", "video"],
+      "required": true,
+      "default": "image"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "required": true,
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "type" }, "image"]
+        }
+      }
+    },
+    "videoUrl": {
+      "type": "string",
+      "required": true,
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "type" }, "video"]
+        }
+      }
+    }
+  }
+}

@@ -1,103 +1,72 @@
-// pages/[slug].tsx
-
-import { Entry } from 'contentful';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetStaticProps,
-} from 'next';
+import clsx from 'clsx';
+import dynamic from 'next/dynamic';
+import { GetStaticProps } from 'next';
+import Image from 'next/image';
 
 import Fancybox from '@features/shared/FancyBox';
-import { client } from '@shared/api';
-import OGTags from '@shared/layout/OGTags';
-import { IPhoto, ISession, IVideo } from '@types/contentful';
-import clsx from "clsx";
-import dynamic from 'next/dynamic';
 import { Header } from '../features/Header';
+import { getPageBySlug, getPages, strapiMediaUrl } from '@shared/api';
+import OGTags from '@shared/layout/OGTags';
 import { Masonry } from '../shared/Masonry';
-import Image from 'next/image';
+import { MediaItem, Page } from '@shared/strapi-types';
+
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
-
 interface HomePageProps {
-  books: Entry<ISession>[];
-  book: ISession;
-  medias: (IPhoto | IVideo)[];
+  pages: Page[];
+  page: Page;
+  items: MediaItem[];
 }
 
-export const MAIN_BOOK_SLUG = 'filmes';
+export const MAIN_PAGE_SLUG = 'films';
 
 export const getStaticPaths = async () => {
-  const { items: books } = await client.getEntries<ISession>({
-    content_type: 'session',
-    include: 3,
-  });
-  const paths = books.map((book) => ({
+  const pages = await getPages();
+  const paths = pages.map((page) => ({
     params: {
-      slug: book.fields.slug,
+      slug: page.slug,
     },
   }));
+
   return {
     paths,
     fallback: false,
   };
 };
 
-export const getStaticProps: GetStaticProps = async (
-  context: GetServerSidePropsContext
-) => {
-  let { items: books } = await client.getEntries<ISession>({
-    content_type: 'session',
-    include: 3,
-  });
-  const slug = context.params?.slug || MAIN_BOOK_SLUG;
-  const book = books.find((book) => book?.fields.slug === slug) || null;
+export const getStaticProps: GetStaticProps<HomePageProps> = async (context) => {
+  const slug = (context.params?.slug as string) || MAIN_PAGE_SLUG;
+  const pages = await getPages();
+  const page = (await getPageBySlug(slug)) ?? pages.find((p) => p.slug === slug) ?? null;
 
-  let medias = null;
-  if (book) {
-    const res = (await client.getEntry(book.sys.id, {
-      include: 3,
-    })) as {
-      fields: {
-        medias: Entry<IPhoto | IVideo>[];
-      };
-    };
-
-    medias = res.fields.medias
-      .map((media) => {
-        if (!media.sys.contentType) {
-          return;
-        }
-        if (media.sys.contentType.sys.id === 'photo') {
-          if (!media.fields.photo?.fields) {
-            return;
-          }
-          return media;
-        }
-
-        return media;
-      })
-      .filter(Boolean);
-    books = books.filter((book) => book.fields.medias?.length);
+  if (!page && context.params?.slug) {
+    return { notFound: true };
   }
+
+  const items =
+    page?.items
+      ?.filter((item) => {
+        if (item.type === 'image') {
+          return Boolean(item.image?.url);
+        }
+        return Boolean(item.videoUrl);
+      })
+      .map((item) => item) ?? [];
 
   return {
     revalidate: 120,
     props: {
-      books,
-      book,
-      medias,
+      pages,
+      page,
+      items,
     },
   };
 };
 
-const Media = ({ book, media }: {
-  book: ISession
-  media: IPhoto | IVideo
-}) => {
+const Media = ({ page, item }: { page: Page; item: MediaItem }) => {
   let body;
 
-  if (media.fields.vimeoUrl) {
+  if (item.type === 'video' && item.videoUrl) {
     body = (
       <div
         className="aspect-video max-w-full md:max-h-full min-w-full md:min-h-full md:h-[calc(350px - 1rem)] relative group legends-wrapper"
@@ -106,51 +75,48 @@ const Media = ({ book, media }: {
         }}
       >
         <a
-          data-fancybox={book.fields.slug}
-          href={media.fields.vimeoUrl}
+          data-fancybox={page.slug}
+          href={item.videoUrl}
           className="flex image-container cursor-pointer relative h-full w-full"
         >
           <ReactPlayer
             light
             showPreview
             controls
-            url={media.fields.vimeoUrl}
+            url={item.videoUrl}
             width="100%"
             height="100%"
             className="h-full w-full z-0 pointer-events-none"
           />
-          {media.fields.title && (
+          {item.title && (
             <div className="absolute p-4 inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
-              {media.fields.title}
+              {item.title}
             </div>
           )}
         </a>
       </div>
     );
-  } else {
-    const {
-      title,
-      file: {
-        details: { image },
-        url,
-      },
-    } = media.fields.photo.fields;
-    if (!image) {
+  } else if (item.type === 'image' && item.image?.url) {
+    const imageUrl = strapiMediaUrl(item.image.url);
+    const width = item.image.width ?? 800;
+    const height = item.image.height ?? 600;
+    const okWidth = 800;
+    const newWidth = okWidth;
+    const newHeight = (height * okWidth) / width;
+
+    if (!imageUrl) {
       return null;
     }
-    const { width, height } = image;
-    const okWidth = 800;
-    const newWidth = width * (okWidth / width);
-    const newHeight = (height * okWidth) / width;
+
     body = (
       <a
-        data-fancybox={book.fields.slug}
-        href={'https:' + url}
+        data-fancybox={page.slug}
+        href={imageUrl}
         className="image-container contents"
       >
         <Image
-          src={'https:' + url}
-          alt={title}
+          src={imageUrl}
+          alt={item.title}
           loading="lazy"
           width={newWidth}
           height={newHeight}
@@ -158,15 +124,17 @@ const Media = ({ book, media }: {
         />
       </a>
     );
+  } else {
+    return null;
   }
 
   return (
     <div
-      data-size={media.fields.vimeoUrl ? 'lg' : 'md'}
+      data-size={item.type === 'video' ? 'lg' : 'md'}
       className={clsx(
-        `p-1 max-w-full`,
+        'p-1 max-w-full',
         'hover:brightness-[0.7]',
-        media.fields.vimeoUrl ? 'aspect-video' : ''
+        item.type === 'video' ? 'aspect-video' : ''
       )}
       style={{
         height: 350,
@@ -177,13 +145,18 @@ const Media = ({ book, media }: {
   );
 };
 
+const HomePage: React.FC<HomePageProps> = ({ pages, page, items }) => {
+  const ogImage = strapiMediaUrl(page?.og?.image?.url);
 
-
-const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
   return (
     <div className="mx-auto max-w-[1921px] min-h-screen px-2 md:px-4 pb-2 flex flex-col">
-      <OGTags description={book.fields.title} />
-      <Header books={books} className="px-2 w-full" />
+      <OGTags
+        title={page?.og?.title ?? undefined}
+        description={page?.og?.description ?? undefined}
+        image={ogImage}
+        path={page?.slug}
+      />
+      <Header pages={pages} className="px-2 w-full" />
 
       <Fancybox
         options={{
@@ -194,13 +167,13 @@ const HomePage: React.FC<HomePageProps> = ({ books, book, medias, res }) => {
         className="grow grid items-center"
       >
         <Masonry>
-          {medias.map((media) => (
-            <Media media={media} book={book} key={media.sys.id} />
+          {items.map((item) => (
+            <Media item={item} page={page} key={item.id} />
           ))}
         </Masonry>
       </Fancybox>
     </div>
   );
 };
+
 export default HomePage;
-// https://codepen.io/MadeByMike/pen/wqyKyq

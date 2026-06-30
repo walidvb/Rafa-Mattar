@@ -5,6 +5,21 @@ module.exports = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['images.ctfassets.net', 'scontent.cdninstagram.com', "downloads.ctfassets.net"],
-  }
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.strapiapp.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '1337',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'scontent.cdninstagram.com',
+      },
+    ],
+  },
 };
