@@ -46,6 +46,10 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async (context) => 
   const items =
     page?.items
       ?.filter((item) => {
+        if (item.published === false) {
+          return false;
+        }
+
         if (item.type === 'image') {
           return Boolean(item.image?.url);
         }

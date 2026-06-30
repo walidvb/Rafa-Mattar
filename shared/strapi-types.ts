@@ -1,4 +1,5 @@
 export interface StrapiMedia {
+  id?: number;
   url: string;
   width?: number;
   height?: number;
@@ -18,6 +19,7 @@ export interface MediaItem {
   videoUrl?: string | null;
   title: string;
   description?: string | null;
+  published?: boolean;
 }
 
 export interface Page {
@@ -25,6 +27,7 @@ export interface Page {
   documentId: string;
   name: string;
   slug: string;
+  publishedAt?: string | null;
   og?: Og | null;
   items?: MediaItem[] | null;
 }
