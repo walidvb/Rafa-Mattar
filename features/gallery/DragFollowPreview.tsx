@@ -1,5 +1,5 @@
 import { useDndMonitor } from '@dnd-kit/core'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'motion/react'
 import { Play } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -19,11 +19,15 @@ function pointerFromEvent(event: Event | null): { x: number; y: number } | null 
     return null
   }
 
-  if ('clientX' in event && typeof event.clientX === 'number') {
+  if (event instanceof MouseEvent) {
     return { x: event.clientX, y: event.clientY }
   }
 
-  if ('touches' in event && event.touches.length > 0) {
+  if (
+    typeof TouchEvent !== 'undefined' &&
+    event instanceof TouchEvent &&
+    event.touches.length > 0
+  ) {
     return { x: event.touches[0].clientX, y: event.touches[0].clientY }
   }
 

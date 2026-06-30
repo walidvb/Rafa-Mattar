@@ -1,4 +1,4 @@
-import { motion, type MotionProps, type Variants } from 'framer-motion'
+import { motion, type MotionProps, type Variants } from 'motion/react'
 
 import { EditableMediaItem } from '../admin/api'
 import { MediaTile } from './MediaTile'

@@ -79,7 +79,7 @@ export function MediaTile({ page, item, editMode = false }: MediaTileProps) {
         <Image
           src={imageUrl}
           alt={item.title}
-          loading="lazy"
+          loading="eager"
           width={newWidth}
           height={newHeight}
           className="image"

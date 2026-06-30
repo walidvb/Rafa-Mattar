@@ -9,7 +9,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { LayoutGroup } from 'framer-motion';
+import { LayoutGroup } from 'motion/react';
 import { toast } from 'sonner';
 
 import { Button } from '../../components/ui/button';

@@ -1,9 +1,9 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://futurproche.ch',
+  siteUrl: process.env.SITE_URL || 'https://rafaelmattar.com',
   generateRobotsTxt: true, // (optional)
   robotsTxtOptions: {
-    additionalSitemaps: [`https://futurproche.ch/server-sitemap.xml`],
+    additionalSitemaps: [`https://rafaelmattar.com/server-sitemap.xml`],
   },
-};
+}
