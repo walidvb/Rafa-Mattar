@@ -5,6 +5,7 @@ module.exports = {
     ignoreBuildErrors: true,
   },
   images: {
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === 'development',
     remotePatterns: [
       {
         protocol: 'https',

@@ -1,8 +1,8 @@
 import type { GetServerSidePropsContext } from 'next';
 
-import { isAdminAuthenticated } from '../../lib/admin-auth';
+import { isAdminAuthenticated } from './admin-auth';
 
-export async function requireAdmin(context: GetServerSidePropsContext) {
+export function requireAdmin(context: GetServerSidePropsContext) {
   if (!isAdminAuthenticated(context.req)) {
     return {
       redirect: {

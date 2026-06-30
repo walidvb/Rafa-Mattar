@@ -27,7 +27,11 @@ export function adminMediaUrl(url?: string | null): string | undefined {
     return url;
   }
 
-  const base = process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace(/\/$/, '') ?? '';
+  const base =
+    process.env.NEXT_PUBLIC_STRAPI_API_URL?.replace(/\/$/, '') ??
+    (typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      ? 'http://localhost:1337'
+      : '');
   return `${base}${url}`;
 }
 

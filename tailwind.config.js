@@ -1,11 +1,11 @@
 module.exports = {
-  mode: 'jit',
-  purge: [
+  content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './entities/**/*.{js,ts,jsx,tsx}',
     './shared/**/*.{js,ts,jsx,tsx}',
     './features/**/*.{js,ts,jsx,tsx}',
+    './lib/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
@@ -28,5 +28,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate')],
 };

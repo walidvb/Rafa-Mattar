@@ -15,8 +15,6 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import Head from 'next/head';
-import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
@@ -24,7 +22,7 @@ import { useDropzone } from 'react-dropzone';
 import { toast, Toaster } from 'sonner';
 
 import { Button } from '../../../components/ui/button';
-import { Card, CardContent } from '../../../components/ui/card';
+import { AdminLayout } from '../../../components/admin/admin-layout';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
 import { Switch } from '../../../components/ui/switch';
@@ -48,7 +46,7 @@ interface AdminPageEditorProps {
 }
 
 export const getServerSideProps: GetServerSideProps<AdminPageEditorProps> = async (context) => {
-  const redirect = await requireAdmin(context);
+  const redirect = requireAdmin(context);
   if (redirect) {
     return redirect;
   }
@@ -86,18 +84,19 @@ function SortableMediaRow({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex gap-4 rounded-lg border border-neutral-200 bg-white p-4"
+      className="flex gap-3 rounded-lg border border-gray-200 bg-white p-3"
     >
       <button
         type="button"
-        className="cursor-grab self-start rounded border border-neutral-200 px-2 py-1 text-xs text-neutral-500"
+        className="cursor-grab self-start rounded border border-gray-200 px-1.5 py-1 text-xs text-gray-400 hover:text-gray-600"
+        aria-label="Drag to reorder"
         {...attributes}
         {...listeners}
       >
-        Drag
+        ⠿
       </button>
 
-      <div className="h-24 w-32 shrink-0 overflow-hidden rounded bg-neutral-100">
+      <div className="h-16 w-24 shrink-0 overflow-hidden rounded bg-gray-100">
         {item.type === 'image' && previewUrl ? (
           <Image
             src={previewUrl}
@@ -107,36 +106,36 @@ function SortableMediaRow({
             className="h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full items-center justify-center p-2 text-center text-xs text-neutral-500">
+          <div className="flex h-full items-center justify-center p-1 text-center text-xs text-gray-400">
             {item.type === 'video' ? 'Video' : 'No image'}
           </div>
         )}
       </div>
 
-      <div className="grid flex-1 gap-3 md:grid-cols-2">
-        <div className="space-y-2">
-          <Label>Title</Label>
+      <div className="grid flex-1 gap-2.5 md:grid-cols-2">
+        <div className="space-y-1">
+          <Label className="text-xs text-gray-600">Title</Label>
           <Input
             value={item.title}
             onChange={(event) => onChange({ ...item, title: event.target.value })}
           />
         </div>
 
-        <div className="space-y-2">
-          <Label>Published</Label>
-          <div className="flex h-10 items-center gap-2">
+        <div className="space-y-1">
+          <Label className="text-xs text-gray-600">Published</Label>
+          <div className="flex h-9 items-center gap-2">
             <Switch
               checked={item.published !== false}
               onCheckedChange={(checked) => onChange({ ...item, published: checked })}
             />
-            <span className="text-sm text-neutral-600">
+            <span className="text-gray-500">
               {item.published !== false ? 'Visible' : 'Hidden'}
             </span>
           </div>
         </div>
 
-        <div className="space-y-2 md:col-span-2">
-          <Label>Description</Label>
+        <div className="space-y-1 md:col-span-2">
+          <Label className="text-xs text-gray-600">Description</Label>
           <Textarea
             value={item.description ?? ''}
             onChange={(event) => onChange({ ...item, description: event.target.value })}
@@ -144,8 +143,8 @@ function SortableMediaRow({
         </div>
 
         {item.type === 'video' ? (
-          <div className="space-y-2 md:col-span-2">
-            <Label>Video URL</Label>
+          <div className="space-y-1 md:col-span-2">
+            <Label className="text-xs text-gray-600">Video URL</Label>
             <Input
               value={item.videoUrl ?? ''}
               onChange={(event) => onChange({ ...item, videoUrl: event.target.value })}
@@ -336,141 +335,142 @@ export default function AdminPageEditor({ slug }: AdminPageEditorProps) {
   }
 
   if (loading) {
-    return <div className="min-h-screen bg-neutral-50 p-6 font-sans">Loading…</div>;
+    return (
+      <AdminLayout title="Loading…">
+        <p className="text-gray-500">Loading page…</p>
+      </AdminLayout>
+    );
   }
 
   if (error || !page) {
     return (
-      <div className="min-h-screen bg-neutral-50 p-6 font-sans">
+      <AdminLayout title="Error" backHref="/admin" backLabel="Pages">
         <p className="text-red-600">{error || 'Page not found'}</p>
-        <Link href="/admin" className="text-sm underline">
-          Back
-        </Link>
-      </div>
+      </AdminLayout>
     );
   }
 
   return (
     <>
-      <Head>
-        <title>Admin · {page.name}</title>
-      </Head>
       <Toaster richColors position="top-center" />
-      <div className="min-h-screen bg-neutral-50 font-sans text-neutral-900">
-        <div className="mx-auto max-w-5xl space-y-6 p-6">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <Link href="/admin" className="text-sm text-neutral-500 underline">
-                Back to pages
-              </Link>
-              <h1 className="text-2xl font-semibold">{page.name}</h1>
-              <p className="text-sm text-neutral-500">/{page.slug}</p>
+      <AdminLayout
+        title={page.name}
+        subtitle={`/${page.slug}`}
+        backHref="/admin"
+        backLabel="Pages"
+      >
+        <Tabs defaultValue="media">
+          <TabsList className="mb-4">
+            <TabsTrigger value="media">Media</TabsTrigger>
+            <TabsTrigger value="page">Page / OG</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="media" className="space-y-3">
+            <div
+              {...getRootProps()}
+              className={`rounded-lg border border-dashed bg-white p-6 text-center transition-colors ${
+                isDragActive ? 'border-gray-900 bg-gray-50' : 'border-gray-300 hover:border-gray-400'
+              }`}
+            >
+              <input {...getInputProps()} />
+              <p className="text-gray-500">
+                Drop images here, or click to select files
+              </p>
             </div>
-          </div>
 
-          <Tabs defaultValue="media">
-            <TabsList>
-              <TabsTrigger value="media">Media</TabsTrigger>
-              <TabsTrigger value="page">Page / OG</TabsTrigger>
-            </TabsList>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+              <SortableContext items={items.map((item) => item.clientId)} strategy={verticalListSortingStrategy}>
+                <div className="space-y-2">
+                  {items.map((item) => (
+                    <SortableMediaRow
+                      key={item.clientId}
+                      item={item}
+                      onChange={(next) => updateItem(item.clientId, next)}
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
 
-            <TabsContent value="media" className="space-y-4">
-              <Card>
-                <CardContent className="p-6">
-                  <div
-                    {...getRootProps()}
-                    className={`rounded-lg border-2 border-dashed p-8 text-center ${
-                      isDragActive ? 'border-neutral-900 bg-neutral-100' : 'border-neutral-300'
-                    }`}
-                  >
-                    <input {...getInputProps()} />
-                    <p className="text-sm text-neutral-600">
-                      Drop images here, or click to select files
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+            {items.length === 0 ? (
+              <p className="text-gray-500">No media items yet. Upload images above.</p>
+            ) : null}
 
-              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-                <SortableContext items={items.map((item) => item.clientId)} strategy={verticalListSortingStrategy}>
-                  <div className="space-y-3">
-                    {items.map((item) => (
-                      <SortableMediaRow
-                        key={item.clientId}
-                        item={item}
-                        onChange={(next) => updateItem(item.clientId, next)}
-                      />
-                    ))}
-                  </div>
-                </SortableContext>
-              </DndContext>
-
-              <Button onClick={saveMedia} disabled={saving}>
+            <div className="pt-1">
+              <Button onClick={saveMedia} disabled={saving} size="sm">
                 {saving ? 'Saving…' : 'Save media'}
               </Button>
-            </TabsContent>
+            </div>
+          </TabsContent>
 
-            <TabsContent value="page" className="space-y-4">
-              <Card>
-                <CardContent className="space-y-4 p-6">
-                  <div className="space-y-2">
-                    <Label>Name</Label>
-                    <Input value={name} onChange={(event) => setName(event.target.value)} />
+          <TabsContent value="page" className="space-y-3">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <Label className="text-xs text-gray-600">Name</Label>
+                  <Input value={name} onChange={(event) => setName(event.target.value)} />
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-xs text-gray-600">Published</Label>
+                  <div className="flex items-center gap-2">
+                    <Switch checked={pagePublished} onCheckedChange={togglePagePublished} />
+                    <span className="text-gray-500">
+                      {pagePublished ? 'Live on site' : 'Draft only'}
+                    </span>
                   </div>
+                </div>
 
-                  <div className="space-y-2">
-                    <Label>Published</Label>
-                    <div className="flex items-center gap-2">
-                      <Switch checked={pagePublished} onCheckedChange={togglePagePublished} />
-                      <span className="text-sm text-neutral-600">
-                        {pagePublished ? 'Live on site' : 'Draft only'}
-                      </span>
+                <div className="border-t border-gray-100 pt-4">
+                  <p className="mb-3 text-xs font-medium uppercase tracking-wide text-gray-500">
+                    Open Graph
+                  </p>
+                  <div className="space-y-4">
+                    <div className="space-y-1">
+                      <Label className="text-xs text-gray-600">Title</Label>
+                      <Input value={ogTitle} onChange={(event) => setOgTitle(event.target.value)} />
+                    </div>
+
+                    <div className="space-y-1">
+                      <Label className="text-xs text-gray-600">Description</Label>
+                      <Textarea
+                        value={ogDescription}
+                        onChange={(event) => setOgDescription(event.target.value)}
+                        className="min-h-[72px]"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <Label className="text-xs text-gray-600">Image</Label>
+                      <div
+                        {...ogDropzone.getRootProps()}
+                        className="cursor-pointer rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 text-center transition-colors hover:border-gray-400"
+                      >
+                        <input {...ogDropzone.getInputProps()} />
+                        {ogImageUrl ? (
+                          <Image
+                            src={ogImageUrl}
+                            alt="OG"
+                            width={320}
+                            height={180}
+                            className="mx-auto rounded object-cover"
+                          />
+                        ) : (
+                          <p className="text-gray-500">Drop an image or click to upload</p>
+                        )}
+                      </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <div className="space-y-2">
-                    <Label>OG title</Label>
-                    <Input value={ogTitle} onChange={(event) => setOgTitle(event.target.value)} />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>OG description</Label>
-                    <Textarea
-                      value={ogDescription}
-                      onChange={(event) => setOgDescription(event.target.value)}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>OG image</Label>
-                    <div
-                      {...ogDropzone.getRootProps()}
-                      className="rounded-lg border border-dashed border-neutral-300 p-4 text-center"
-                    >
-                      <input {...ogDropzone.getInputProps()} />
-                      {ogImageUrl ? (
-                        <Image
-                          src={ogImageUrl}
-                          alt="OG"
-                          width={320}
-                          height={180}
-                          className="mx-auto rounded object-cover"
-                        />
-                      ) : (
-                        <p className="text-sm text-neutral-500">Drop an image or click to upload</p>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Button onClick={savePageTab} disabled={saving}>
-                {saving ? 'Saving…' : 'Save page'}
-              </Button>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </div>
+            <Button onClick={savePageTab} disabled={saving} size="sm">
+              {saving ? 'Saving…' : 'Save page'}
+            </Button>
+          </TabsContent>
+        </Tabs>
+      </AdminLayout>
     </>
   );
 }

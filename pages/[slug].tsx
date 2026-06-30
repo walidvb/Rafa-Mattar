@@ -39,6 +39,14 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async (context) => 
   const pages = await getPages();
   const page = (await getPageBySlug(slug)) ?? pages.find((p) => p.slug === slug) ?? null;
 
+  console.log(
+    'page',
+    JSON.stringify(
+      page.items.map((item) => item.title),
+      null,
+      2,
+    ),
+  )
   if (!page && context.params?.slug) {
     return { notFound: true };
   }
