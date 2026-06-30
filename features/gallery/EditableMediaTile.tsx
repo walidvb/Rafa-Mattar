@@ -2,13 +2,16 @@ import { useDndContext, useDraggable, useDroppable } from '@dnd-kit/core'
 import clsx from 'clsx'
 import {
   AlertCircle,
+  Camera,
   ChevronLeft,
   ChevronRight,
   Eye,
   EyeOff,
+  type LucideIcon,
   Pencil,
-  PlusCircle,
+  Plus,
   Trash2,
+  Video,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -21,8 +24,10 @@ interface EditableMediaTileProps {
   item: EditableMediaItem
   displayItem?: EditableMediaItem
   swipeDirection?: 'left' | 'right' | null
-  onAddLeft: () => void
-  onAddRight: () => void
+  onAddImageLeft: () => void
+  onAddImageRight: () => void
+  onAddVideoLeft: () => void
+  onAddVideoRight: () => void
   onMoveLeft: () => void
   onMoveRight: () => void
   canMoveLeft: boolean
@@ -37,6 +42,31 @@ interface EditableMediaTileProps {
 const iconButtonClass =
   'rounded bg-white/90 p-1.5 font-sans font-normal text-black shadow hover:bg-white'
 
+function AddMediaButton({
+  icon: Icon,
+  label,
+  onClick,
+}: {
+  icon: LucideIcon
+  label: string
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      className="pointer-events-auto relative"
+      aria-label={label}
+      onClick={onClick}
+    >
+      <Icon className="h-4 w-4" />
+      <Plus
+        className="absolute -right-1.5 -top-1.5 h-2.5 w-2.5"
+        strokeWidth={3}
+      />
+    </button>
+  )
+}
+
 function filesFromDataTransfer(dataTransfer: DataTransfer): File[] {
   return Array.from(dataTransfer.files).filter((file) =>
     file.type.startsWith('image/'),
@@ -48,8 +78,10 @@ export function EditableMediaTile({
   item,
   displayItem = item,
   swipeDirection = null,
-  onAddLeft,
-  onAddRight,
+  onAddImageLeft,
+  onAddImageRight,
+  onAddVideoLeft,
+  onAddVideoRight,
   onMoveLeft,
   onMoveRight,
   canMoveLeft,
@@ -158,14 +190,18 @@ export function EditableMediaTile({
       {!isDraggingAny ? (
         <>
           <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-4 opacity-0 transition-opacity group-hover:opacity-100 text-white">
-            <button
-              type="button"
-              className="pointer-events-auto"
-              aria-label="Add image to the left"
-              onClick={onAddLeft}
-            >
-              <PlusCircle className="h-4 w-4" />
-            </button>
+            <div className="flex flex-col gap-3">
+              <AddMediaButton
+                icon={Camera}
+                label="Add image to the left"
+                onClick={onAddImageLeft}
+              />
+              <AddMediaButton
+                icon={Video}
+                label="Add video to the left"
+                onClick={onAddVideoLeft}
+              />
+            </div>
 
             <div className="flex items-center gap-4">
               <button
@@ -195,14 +231,18 @@ export function EditableMediaTile({
               </button>
             </div>
 
-            <button
-              type="button"
-              className="pointer-events-auto p-2"
-              aria-label="Add image to the right"
-              onClick={onAddRight}
-            >
-              <PlusCircle className="h-4 w-4" />
-            </button>
+            <div className="flex flex-col gap-3">
+              <AddMediaButton
+                icon={Camera}
+                label="Add image to the right"
+                onClick={onAddImageRight}
+              />
+              <AddMediaButton
+                icon={Video}
+                label="Add video to the right"
+                onClick={onAddVideoRight}
+              />
+            </div>
           </div>
 
           <div className="tile-toolbar pointer-events-none absolute bottom-2 z-30 flex w-fit gap-2 rounded bg-black/50 p-2">

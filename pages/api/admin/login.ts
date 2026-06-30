@@ -7,6 +7,10 @@ import {
 } from '../../../lib/admin-auth';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    return res.status(200).json({ admin: isAdminAuthenticated(req) });
+  }
+
   if (req.method === 'POST') {
     const password = typeof req.body?.password === 'string' ? req.body.password : '';
 

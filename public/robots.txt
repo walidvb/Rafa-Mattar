@@ -3,8 +3,8 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://futurproche.ch
+Host: https://rafaelmattar.com
 
 # Sitemaps
-Sitemap: https://futurproche.ch/sitemap.xml
-Sitemap: https://futurproche.ch/server-sitemap.xml
+Sitemap: https://rafaelmattar.com/sitemap.xml
+Sitemap: https://rafaelmattar.com/server-sitemap.xml

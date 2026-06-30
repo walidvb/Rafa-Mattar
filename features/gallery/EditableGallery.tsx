@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic'
 import {
   DndContext,
   DragEndEvent,
@@ -9,6 +10,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+import { Camera, Video } from 'lucide-react'
 import { LayoutGroup } from 'motion/react';
 import { toast } from 'sonner';
 
@@ -33,6 +35,8 @@ import { EditableMediaTile } from './EditableMediaTile';
 import { galleryDragLayoutId } from './gallery-dnd';
 import { arrayMove, insertItemsAt, moveItemByOffset } from './item-order';
 import { Page } from '@shared/strapi-types';
+
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false })
 
 interface EditableGalleryProps {
   slug: string;
@@ -60,6 +64,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
   const [editingClientId, setEditingClientId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
+  const [editVideoUrl, setEditVideoUrl] = useState('')
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [fileDragActive, setFileDragActive] = useState(false);
@@ -88,6 +93,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
     setEditingClientId(clientId);
     setEditTitle(item.title ?? '');
     setEditDescription(item.description ?? '');
+    setEditVideoUrl(item.videoUrl ?? '')
   }
 
   function saveEditDialog() {
@@ -98,16 +104,41 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
     setItems((current) =>
       current.map((item) =>
         item.clientId === editingClientId
-          ? { ...item, title: editTitle, description: editDescription }
-          : item
-      )
-    );
+          ? {
+              ...item,
+              title: editTitle,
+              description: editDescription,
+              ...(item.type === 'video' ? { videoUrl: editVideoUrl } : {}),
+            }
+          : item,
+      ),
+    )
     setEditingClientId(null);
   }
 
   function triggerAdd(atIndex: number) {
     insertIndexRef.current = atIndex;
     fileInputRef.current?.click();
+  }
+
+  function addVideoAtIndex(atIndex: number) {
+    const stamp = Date.now()
+    const clientId = `new-${stamp}`
+    const newItem: EditableMediaItem = {
+      id: -stamp,
+      clientId,
+      type: 'video',
+      title: '',
+      description: '',
+      published: true,
+      videoUrl: '',
+    }
+
+    setItems((current) => insertItemsAt(current, atIndex, [newItem]))
+    setEditingClientId(clientId)
+    setEditTitle('')
+    setEditDescription('')
+    setEditVideoUrl('')
   }
 
   async function addFilesAtIndex(files: File[], atIndex: number) {
@@ -353,7 +384,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
         onDragLeave={handleGalleryDragLeave}
         onDragOver={(event) => {
           if (isFileDrag(event)) {
-            event.preventDefault();
+            event.preventDefault()
           }
         }}
       >
@@ -374,14 +405,18 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
                   item={item}
                   displayItem={displayItemAt(index)}
                   swipeDirection={swipeDirectionAt(index)}
-                  onAddLeft={() => triggerAdd(index)}
-                  onAddRight={() => triggerAdd(index + 1)}
+                  onAddImageLeft={() => triggerAdd(index)}
+                  onAddImageRight={() => triggerAdd(index + 1)}
+                  onAddVideoLeft={() => addVideoAtIndex(index)}
+                  onAddVideoRight={() => addVideoAtIndex(index + 1)}
                   onMoveLeft={() => moveItem(item.clientId, -1)}
                   onMoveRight={() => moveItem(item.clientId, 1)}
                   canMoveLeft={index > 0}
                   canMoveRight={index < items.length - 1}
                   onDropFilesLeft={(files) => addFilesAtIndex(files, index)}
-                  onDropFilesRight={(files) => addFilesAtIndex(files, index + 1)}
+                  onDropFilesRight={(files) =>
+                    addFilesAtIndex(files, index + 1)
+                  }
                   onTogglePublished={(published) =>
                     updateItem(item.clientId, { ...item, published })
                   }
@@ -401,14 +436,36 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
       {items.length === 0 ? (
         <div className="py-16 text-center">
           <p className="mb-4 text-white/70">No images yet.</p>
-          <Button type="button" variant="outline" onClick={() => triggerAdd(0)}>
-            Add first image
-          </Button>
+          <div className="flex items-center justify-center gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              className="gap-2"
+              onClick={() => triggerAdd(0)}
+            >
+              <Camera className="h-4 w-4" />
+              Add image
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="gap-2"
+              onClick={() => addVideoAtIndex(0)}
+            >
+              <Video className="h-4 w-4" />
+              Add video
+            </Button>
+          </div>
         </div>
       ) : null}
 
       <div className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 gap-3">
-        <Button type="button" variant="outline" onClick={saveDraft} disabled={saving || publishing}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={saveDraft}
+          disabled={saving || publishing}
+        >
           {saving ? 'Saving…' : 'Save draft'}
         </Button>
         <Button type="button" onClick={publish} disabled={saving || publishing}>
@@ -420,7 +477,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
         open={Boolean(editingItem)}
         onOpenChange={(open) => {
           if (!open) {
-            setEditingClientId(null);
+            setEditingClientId(null)
           }
         }}
         title="Edit media"
@@ -446,6 +503,29 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
             />
           </div>
 
+          {editingItem?.type === 'video' ? (
+            <div className="space-y-1">
+              <Label htmlFor="media-video-url">Video URL</Label>
+              <Input
+                id="media-video-url"
+                value={editVideoUrl}
+                onChange={(event) => setEditVideoUrl(event.target.value)}
+                placeholder="https://youtube.com/watch?v=…"
+              />
+              {editVideoUrl ? (
+                <div className="aspect-video w-full overflow-hidden rounded bg-black">
+                  <ReactPlayer
+                    url={editVideoUrl}
+                    width="100%"
+                    height="100%"
+                    controls
+                    light
+                  />
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
           <div className="flex justify-end gap-2 pt-1">
             <Button
               type="button"
@@ -455,12 +535,16 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
             >
               Cancel
             </Button>
-            <Button type="button" className="dialog-btn-primary" onClick={saveEditDialog}>
+            <Button
+              type="button"
+              className="dialog-btn-primary"
+              onClick={saveEditDialog}
+            >
               Save
             </Button>
           </div>
         </div>
       </Dialog>
     </>
-  );
+  )
 }

@@ -3099,6 +3099,11 @@ side-channel@^1.1.0:
     side-channel-map "^1.0.1"
     side-channel-weakmap "^1.0.2"
 
+slugify@^1.6.9:
+  version "1.6.9"
+  resolved "https://registry.npmjs.org/slugify/-/slugify-1.6.9.tgz"
+  integrity sha512-vZ7rfeehZui7wQs438JXBckYLkIIdfHOXsaVEUMyS5fHo1483l1bMdo0EDSWYclY0yZKFOipDy4KHuKs6ssvdg==
+
 sonner@^2.0.7:
   version "2.0.7"
   resolved "https://registry.npmjs.org/sonner/-/sonner-2.0.7.tgz"

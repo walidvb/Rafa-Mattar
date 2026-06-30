@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { Cog } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Toaster } from 'sonner';
 
 import { Header } from '../../features/Header';
 import { EditableGallery } from '../../features/gallery/EditableGallery';
@@ -78,7 +77,6 @@ export default function PageEdit({ slug, pages }: PageEditProps) {
 
   return (
     <>
-      <Toaster richColors position="top-center" />
       <div className="mx-auto max-w-[1921px] min-h-screen px-2 md:px-4 pb-24 flex flex-col">
         <OGTags title={`Edit ${page.name}`} path={`${page.slug}/edit`} />
         <Header pages={pages} className="px-2 w-full" />

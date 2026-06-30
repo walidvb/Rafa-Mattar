@@ -1,8 +1,12 @@
 import type { Core } from '@strapi/strapi';
 
-const PAGE_ACTIONS = ['api::page.page.find', 'api::page.page.findOne'] as const;
+const PUBLIC_ACTIONS = [
+  'api::page.page.find',
+  'api::page.page.findOne',
+  'api::site-config.site-config.find',
+] as const;
 
-async function enablePagePublicPermissions(strapi: Core.Strapi) {
+async function enablePublicReadPermissions(strapi: Core.Strapi) {
   const publicRole = await strapi.db.query('plugin::users-permissions.role').findOne({
     where: { type: 'public' },
   });
@@ -11,7 +15,7 @@ async function enablePagePublicPermissions(strapi: Core.Strapi) {
     return;
   }
 
-  for (const action of PAGE_ACTIONS) {
+  for (const action of PUBLIC_ACTIONS) {
     const permission = await strapi.db.query('plugin::users-permissions.permission').findOne({
       where: { action, role: publicRole.id },
     });
@@ -39,11 +43,11 @@ async function enablePagePublicPermissions(strapi: Core.Strapi) {
 export default {
   register({ strapi }: { strapi: Core.Strapi }) {
     strapi.server.httpServer?.once('listening', () => {
-      void enablePagePublicPermissions(strapi);
+      void enablePublicReadPermissions(strapi);
     });
   },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
-    await enablePagePublicPermissions(strapi);
+    await enablePublicReadPermissions(strapi);
   },
 };

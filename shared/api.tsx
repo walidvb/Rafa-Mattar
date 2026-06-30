@@ -1,4 +1,5 @@
-import { Page, StrapiListResponse } from './strapi-types';
+import { applyPageOrder } from './page-order';
+import { Page, SiteConfig, StrapiListResponse, StrapiSingleResponse } from './strapi-types';
 
 const STRAPI_URL = process.env.STRAPI_API_URL?.replace(/\/$/, '') ?? '';
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
@@ -59,7 +60,10 @@ export async function getPages(): Promise<Page[]> {
     `/pages?${PAGE_POPULATE}&sort=createdAt:asc`
   );
 
-  return json.data.filter((page) => page.items?.length);
+  const pages = json.data.filter((page) => page.items?.length);
+  const siteConfig = await getSiteConfig();
+
+  return applyPageOrder(pages, siteConfig?.pageOrder);
 }
 
 export async function getPageBySlug(slug: string): Promise<Page | null> {
@@ -68,6 +72,19 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
   );
 
   return json.data[0] ?? null;
+}
+
+export async function getSiteConfig(): Promise<SiteConfig | null> {
+  try {
+    const json = await fetchStrapi<StrapiSingleResponse<SiteConfig>>(
+      '/site-config?populate[og][populate]=image'
+    );
+
+    return json.data;
+  } catch {
+    // Single type may not be initialized yet; fall back to hardcoded OG defaults.
+    return null;
+  }
 }
 
 export async function getPageSlugs(): Promise<string[]> {

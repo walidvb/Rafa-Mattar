@@ -19,7 +19,7 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 
 import { Button } from '../../../components/ui/button';
 import { AdminLayout } from '../../../components/admin/admin-layout';
@@ -352,7 +352,6 @@ export default function AdminPageEditor({ slug }: AdminPageEditorProps) {
 
   return (
     <>
-      <Toaster richColors position="top-center" />
       <AdminLayout
         title={page.name}
         subtitle={`/${page.slug}`}

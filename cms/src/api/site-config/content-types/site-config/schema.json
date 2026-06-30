@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_config",
+  "info": {
+    "singularName": "site-config",
+    "pluralName": "site-configs",
+    "displayName": "Site Config"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "og": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.og"
+    },
+    "pageOrder": {
+      "type": "json"
+    }
+  }
+}

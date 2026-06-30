@@ -1,7 +1,17 @@
-import { MediaItem, Page, StrapiListResponse, StrapiMedia } from '@shared/strapi-types';
+import { applyPageOrder } from '@shared/page-order';
+import {
+  MediaItem,
+  Page,
+  SiteConfig,
+  StrapiListResponse,
+  StrapiMedia,
+  StrapiSingleResponse,
+} from '@shared/strapi-types';
 
 const PAGE_POPULATE =
   'populate[og][populate]=image&populate[items][populate]=image';
+
+const SITE_CONFIG_POPULATE = 'populate[og][populate]=image';
 
 async function adminFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`/api/strapi/${path}`, init);
@@ -44,7 +54,16 @@ export function adminMediaUrl(url?: string | null): string | undefined {
 
 export async function fetchAdminPages(): Promise<Page[]> {
   const json = await adminFetch<StrapiListResponse<Page>>(`pages?status=draft&${PAGE_POPULATE}`);
-  return json.data;
+
+  let pageOrder: string[] | null = null;
+  try {
+    const config = await fetchSiteConfig();
+    pageOrder = config?.pageOrder ?? null;
+  } catch {
+    // Site config may not be initialized yet; fall back to unsorted pages.
+  }
+
+  return applyPageOrder(json.data, pageOrder);
 }
 
 export async function fetchAdminPageBySlug(slug: string): Promise<Page | null> {
@@ -53,6 +72,47 @@ export async function fetchAdminPageBySlug(slug: string): Promise<Page | null> {
   );
 
   return json.data[0] ?? null;
+}
+
+export async function createPage(data: { name: string; slug: string }): Promise<Page> {
+  const json = await adminFetch<{ data: Page }>(`pages?status=draft`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data }),
+  });
+
+  return json.data;
+}
+
+export async function deletePage(documentId: string) {
+  return adminFetch(`pages/${documentId}`, { method: 'DELETE' });
+}
+
+export async function fetchSiteConfig(): Promise<SiteConfig | null> {
+  const json = await adminFetch<StrapiSingleResponse<SiteConfig>>(
+    `site-config?${SITE_CONFIG_POPULATE}`
+  );
+
+  return json.data;
+}
+
+export async function saveSiteConfig(data: {
+  og?: {
+    title?: string;
+    description?: string;
+    image?: number | null;
+  };
+  pageOrder?: string[];
+}) {
+  return adminFetch(`site-config`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data }),
+  });
+}
+
+export async function savePageOrder(pageOrder: string[]) {
+  return saveSiteConfig({ pageOrder });
 }
 
 export async function uploadFiles(files: File[]): Promise<StrapiMedia[]> {
@@ -133,6 +193,16 @@ export async function setPagePublished(documentId: string, published: boolean) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({}),
   });
+}
+
+export async function fetchAdminSession(): Promise<boolean> {
+  const res = await fetch('/api/admin/login');
+  if (!res.ok) {
+    return false;
+  }
+
+  const json = (await res.json()) as { admin?: boolean };
+  return Boolean(json.admin);
 }
 
 export async function login(password: string) {

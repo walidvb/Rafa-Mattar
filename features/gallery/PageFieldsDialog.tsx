@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Trash2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -23,6 +24,7 @@ interface PageFieldsDialogProps {
   page: Page;
   slug: string;
   onPageChange: (page: Page) => void;
+  onDelete?: () => void;
 }
 
 export function PageFieldsDialog({
@@ -31,6 +33,7 @@ export function PageFieldsDialog({
   page,
   slug,
   onPageChange,
+  onDelete,
 }: PageFieldsDialogProps) {
   const [name, setName] = useState(page.name);
   const [pagePublished, setPagePublishedState] = useState(Boolean(page.publishedAt));
@@ -183,18 +186,32 @@ export function PageFieldsDialog({
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-1">
-            <Button
-              type="button"
-              variant="outline"
-              className="dialog-btn-outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="button" className="dialog-btn-primary" onClick={save} disabled={saving}>
-              {saving ? 'Saving…' : 'Save'}
-            </Button>
+          <div className="flex items-center justify-between gap-2 pt-1">
+            {onDelete ? (
+              <Button
+                type="button"
+                className="bg-red-600 text-white hover:bg-red-500"
+                onClick={onDelete}
+              >
+                <Trash2 className="mr-1.5 h-4 w-4" />
+                Delete
+              </Button>
+            ) : (
+              <span />
+            )}
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                className="dialog-btn-outline"
+                onClick={() => onOpenChange(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="button" className="dialog-btn-primary" onClick={save} disabled={saving}>
+                {saving ? 'Saving…' : 'Save'}
+              </Button>
+            </div>
           </div>
         </div>
       </Dialog>

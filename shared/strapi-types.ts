@@ -33,10 +33,17 @@ export interface Page {
   items?: MediaItem[] | null;
 }
 
+export interface SiteConfig {
+  id?: number;
+  documentId?: string;
+  og?: Og | null;
+  pageOrder?: string[] | null;
+}
+
 export interface StrapiListResponse<T> {
   data: T[];
 }
 
 export interface StrapiSingleResponse<T> {
-  data: T[];
+  data: T | null;
 }
