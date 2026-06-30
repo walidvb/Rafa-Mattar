@@ -1,9 +1,11 @@
 import { GetServerSideProps } from 'next';
+import { Cog } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
 
 import { Header } from '../../features/Header';
 import { EditableGallery } from '../../features/gallery/EditableGallery';
+import { PageFieldsDialog } from '../../features/gallery/PageFieldsDialog';
 import {
   EditableMediaItem,
   fetchAdminPageBySlug,
@@ -41,6 +43,7 @@ export default function PageEdit({ slug, pages }: PageEditProps) {
   const [items, setItems] = useState<EditableMediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [pageFieldsOpen, setPageFieldsOpen] = useState(false);
 
   useEffect(() => {
     fetchAdminPageBySlug(slug)
@@ -80,9 +83,28 @@ export default function PageEdit({ slug, pages }: PageEditProps) {
         <OGTags title={`Edit ${page.name}`} path={`${page.slug}/edit`} />
         <Header pages={pages} className="px-2 w-full" />
 
-        <div className="mb-2 text-center text-xs uppercase tracking-widest text-white/60">
-          Editing /{page.slug}
+        <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-widest text-white/60">
+          <span>Editing /{page.slug}</span>
+          <button
+            type="button"
+            onClick={() => setPageFieldsOpen(true)}
+            className="rounded p-1 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+            aria-label="Page settings"
+          >
+            <Cog className="h-4 w-4" />
+          </button>
         </div>
+
+        <PageFieldsDialog
+          open={pageFieldsOpen}
+          onOpenChange={setPageFieldsOpen}
+          page={page}
+          slug={slug}
+          onPageChange={(nextPage) => {
+            setPage(nextPage);
+            setItems(toEditableItems(nextPage.items ?? []));
+          }}
+        />
 
         <EditableGallery
           slug={slug}

@@ -52,6 +52,14 @@ export function DragFollowPreview({ item, layoutId }: DragFollowPreviewProps) {
 
   useDndMonitor({
     onDragStart(event) {
+      const rect =
+        event.active.rect.current.translated ?? event.active.rect.current.initial
+      if (rect) {
+        cursorX.set(rect.left + rect.width / 2 - half)
+        cursorY.set(rect.top + rect.height / 2 - half)
+        return
+      }
+
       const pointer = pointerFromEvent(event.activatorEvent)
       if (pointer) {
         cursorX.set(pointer.x - half)
@@ -78,10 +86,6 @@ export function DragFollowPreview({ item, layoutId }: DragFollowPreviewProps) {
     <motion.div
       className="pointer-events-none fixed left-0 top-0 z-[200]"
       style={{ x, y, width: DRAG_PREVIEW_PX, height: DRAG_PREVIEW_PX }}
-      initial={{ scale: 0.92, rotate: -1.5 }}
-      animate={{ scale: 1.04, rotate: 1.5 }}
-      exit={{ scale: 0.92, opacity: 0 }}
-      transition={{ type: 'spring', stiffness: 420, damping: 28 }}
     >
       <motion.div
         layoutId={layoutId}

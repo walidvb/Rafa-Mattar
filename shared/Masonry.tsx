@@ -35,8 +35,9 @@ export const Masonry = ({ children, className = '' }) => {
           const node = nodes[j];
 
           const { width } = node.getBoundingClientRect();
-          if (!node.dataset['width']) {
-            node.dataset['width'] = width.toFixed(2);
+          const cached = parseFloat(node.dataset.width ?? '0');
+          if (!cached || width > cached) {
+            node.dataset.width = width.toFixed(2);
           }
 
           const widthNormalized = parseFloat(node.dataset.width);

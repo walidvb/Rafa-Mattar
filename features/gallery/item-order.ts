@@ -1,35 +1,29 @@
 import { EditableMediaItem } from '../admin/api';
 
-export function moveItemRelative(
+export function moveItemByOffset(
   items: EditableMediaItem[],
-  movingClientId: string,
-  targetClientId: string,
-  side: 'left' | 'right'
+  clientId: string,
+  offset: -1 | 1,
 ): EditableMediaItem[] {
-  if (movingClientId === targetClientId) {
+  const index = items.findIndex((item) => item.clientId === clientId);
+  if (index < 0) {
     return items;
   }
 
-  const movingIndex = items.findIndex((item) => item.clientId === movingClientId);
-  const targetIndex = items.findIndex((item) => item.clientId === targetClientId);
-
-  if (movingIndex < 0 || targetIndex < 0) {
+  const newIndex = index + offset;
+  if (newIndex < 0 || newIndex >= items.length) {
     return items;
   }
 
   const next = [...items];
-  const [moving] = next.splice(movingIndex, 1);
+  [next[index], next[newIndex]] = [next[newIndex], next[index]];
+  return next;
+}
 
-  let insertIndex = targetIndex;
-  if (movingIndex < targetIndex) {
-    insertIndex = targetIndex - 1;
-  }
-
-  if (side === 'right') {
-    insertIndex += 1;
-  }
-
-  next.splice(insertIndex, 0, moving);
+export function arrayMove<T>(items: T[], from: number, to: number): T[] {
+  const next = items.slice();
+  const [moved] = next.splice(from, 1);
+  next.splice(to, 0, moved);
   return next;
 }
 

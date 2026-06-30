@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   DndContext,
   DragEndEvent,
+  DragOverEvent,
   DragStartEvent,
   PointerSensor,
   pointerWithin,
@@ -29,8 +30,8 @@ import {
 } from '../admin/api';
 import { DragFollowPreview } from './DragFollowPreview';
 import { EditableMediaTile } from './EditableMediaTile';
-import { galleryDragLayoutId, parseGalleryDropZone } from './gallery-dnd';
-import { insertItemsAt, moveItemRelative } from './item-order';
+import { galleryDragLayoutId } from './gallery-dnd';
+import { arrayMove, insertItemsAt, moveItemByOffset } from './item-order';
 import { Page } from '@shared/strapi-types';
 
 interface EditableGalleryProps {
@@ -40,10 +41,22 @@ interface EditableGalleryProps {
   onPageChange: (page: Page) => void;
 }
 
+function resolveDragTarget(
+  event: DragOverEvent | DragEndEvent,
+  activeDragId: string | null,
+): string | null {
+  if (!event.over || !activeDragId) {
+    return null;
+  }
+
+  const overId = String(event.over.id);
+  return overId === activeDragId ? null : overId;
+}
+
 export function EditableGallery({ slug, page, initialItems, onPageChange }: EditableGalleryProps) {
   const [items, setItems] = useState(initialItems);
-  const [movingClientId, setMovingClientId] = useState<string | null>(null);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
+  const [dragHover, setDragHover] = useState<string | null>(null);
   const [editingClientId, setEditingClientId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
@@ -186,10 +199,6 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
 
       setItems((current) => current.filter((entry) => entry.clientId !== clientId));
 
-      if (movingClientId === clientId) {
-        setMovingClientId(null);
-      }
-
       if (activeDragId === clientId) {
         setActiveDragId(null);
       }
@@ -200,42 +209,41 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
     }
   }
 
-  function toggleMove(clientId: string) {
-    setMovingClientId((current) => (current === clientId ? null : clientId));
-  }
-
-  function placeItem(
-    targetClientId: string,
-    side: 'left' | 'right',
-    sourceId = movingClientId,
-  ) {
-    if (!sourceId) {
-      return;
-    }
-
-    setItems((current) => moveItemRelative(current, sourceId, targetClientId, side));
-    setMovingClientId(null);
+  function moveItem(clientId: string, offset: -1 | 1) {
+    setItems((current) => moveItemByOffset(current, clientId, offset));
   }
 
   function handleDragStart(event: DragStartEvent) {
     setActiveDragId(String(event.active.id));
+    setDragHover(null);
+  }
+
+  function handleDragOver(event: DragOverEvent) {
+    setDragHover(resolveDragTarget(event, activeDragId));
   }
 
   function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
+    const { active } = event;
+    setDragHover(null);
     setActiveDragId(null);
 
-    if (!over) {
+    const targetClientId = resolveDragTarget(event, String(active.id));
+    if (!targetClientId) {
       return;
     }
 
-    const zone = parseGalleryDropZone(String(over.id));
-    if (zone) {
-      placeItem(zone.clientId, zone.side, String(active.id));
-    }
+    setItems((current) => {
+      const from = current.findIndex((item) => item.clientId === String(active.id));
+      const to = current.findIndex((item) => item.clientId === targetClientId);
+      if (from < 0 || to < 0 || from === to) {
+        return current;
+      }
+      return arrayMove(current, from, to);
+    });
   }
 
   function handleDragCancel() {
+    setDragHover(null);
     setActiveDragId(null);
   }
 
@@ -283,6 +291,40 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
   const activeDragItem =
     items.find((item) => item.clientId === activeDragId) ?? null;
 
+  const dragFromIndex = activeDragId
+    ? items.findIndex((item) => item.clientId === activeDragId)
+    : -1;
+
+  const dragToIndex = dragHover
+    ? items.findIndex((item) => item.clientId === dragHover)
+    : -1;
+
+  // Live reorder preview: the hovered tile is always the destination, so the
+  // dragged image previews in that tile regardless of which side is hovered.
+  const previewItems =
+    dragFromIndex >= 0 && dragToIndex >= 0
+      ? arrayMove(items, dragFromIndex, dragToIndex)
+      : items;
+
+  function displayItemAt(index: number): EditableMediaItem {
+    return previewItems[index] ?? items[index];
+  }
+
+  function swipeDirectionAt(index: number): 'left' | 'right' | null {
+    if (dragFromIndex < 0 || dragToIndex < 0) {
+      return null;
+    }
+    const shown = previewItems[index];
+    if (!shown) {
+      return null;
+    }
+    const origIndex = items.findIndex((item) => item.clientId === shown.clientId);
+    if (origIndex === index) {
+      return null;
+    }
+    return origIndex > index ? 'left' : 'right';
+  }
+
   return (
     <>
       <input
@@ -294,28 +336,15 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
         onChange={onFilesSelected}
       />
 
-      {movingClientId ? (
-        <div className="mb-3 flex items-center justify-center gap-3 font-sans text-sm font-normal text-black">
-          <span>Click a side on another image to place it</span>
-          <button
-            type="button"
-            className="rounded border border-black/30 px-2 py-0.5 font-sans text-sm font-normal text-black hover:bg-black/5"
-            onClick={() => setMovingClientId(null)}
-          >
-            Cancel
-          </button>
+      {fileDragActive && !activeDragId ? (
+        <div className="mb-3 text-center font-sans text-sm font-normal text-black">
+          Drop on an image to add it there
         </div>
       ) : null}
 
-      {fileDragActive && !movingClientId && !activeDragId ? (
+      {activeDragId ? (
         <div className="mb-3 text-center font-sans text-sm font-normal text-black">
-          Drop on a red or green zone to add images
-        </div>
-      ) : null}
-
-      {activeDragId && !movingClientId ? (
-        <div className="mb-3 text-center font-sans text-sm font-normal text-black">
-          Drop on a zone to reorder
+          Drag onto another image to reorder
         </div>
       ) : null}
 
@@ -333,6 +362,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
             sensors={sensors}
             collisionDetection={pointerWithin}
             onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
             onDragCancel={handleDragCancel}
           >
@@ -342,15 +372,14 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
                   key={item.clientId}
                   page={page}
                   item={item}
-                  movingClientId={movingClientId}
-                  showPositionZones={
-                    fileDragActive || movingClientId !== null || activeDragId !== null
-                  }
+                  displayItem={displayItemAt(index)}
+                  swipeDirection={swipeDirectionAt(index)}
                   onAddLeft={() => triggerAdd(index)}
                   onAddRight={() => triggerAdd(index + 1)}
-                  onStartMove={() => toggleMove(item.clientId)}
-                  onPlaceLeft={() => placeItem(item.clientId, 'left')}
-                  onPlaceRight={() => placeItem(item.clientId, 'right')}
+                  onMoveLeft={() => moveItem(item.clientId, -1)}
+                  onMoveRight={() => moveItem(item.clientId, 1)}
+                  canMoveLeft={index > 0}
+                  canMoveRight={index < items.length - 1}
                   onDropFilesLeft={(files) => addFilesAtIndex(files, index)}
                   onDropFilesRight={(files) => addFilesAtIndex(files, index + 1)}
                   onTogglePublished={(published) =>
@@ -418,10 +447,15 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
           </div>
 
           <div className="flex justify-end gap-2 pt-1">
-            <Button type="button" variant="outline" onClick={() => setEditingClientId(null)}>
+            <Button
+              type="button"
+              variant="outline"
+              className="dialog-btn-outline"
+              onClick={() => setEditingClientId(null)}
+            >
               Cancel
             </Button>
-            <Button type="button" onClick={saveEditDialog}>
+            <Button type="button" className="dialog-btn-primary" onClick={saveEditDialog}>
               Save
             </Button>
           </div>
