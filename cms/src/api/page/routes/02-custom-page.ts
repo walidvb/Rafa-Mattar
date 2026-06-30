@@ -2,7 +2,7 @@ export default {
   routes: [
     {
       method: 'POST',
-      path: '/pages/:documentId/publish',
+      path: '/pages/:documentId/actions/publish',
       handler: 'page.publish',
       config: {
         policies: [],
@@ -11,7 +11,7 @@ export default {
     },
     {
       method: 'POST',
-      path: '/pages/:documentId/unpublish',
+      path: '/pages/:documentId/actions/unpublish',
       handler: 'page.unpublish',
       config: {
         policies: [],

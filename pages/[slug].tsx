@@ -1,16 +1,12 @@
-import clsx from 'clsx';
-import dynamic from 'next/dynamic';
 import { GetStaticProps } from 'next';
-import Image from 'next/image';
 
 import Fancybox from '@features/shared/FancyBox';
 import { Header } from '../features/Header';
+import { MediaTile } from '../features/gallery/MediaTile';
 import { getPageBySlug, getPages, strapiMediaUrl } from '@shared/api';
 import OGTags from '@shared/layout/OGTags';
 import { Masonry } from '../shared/Masonry';
 import { MediaItem, Page } from '@shared/strapi-types';
-
-const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 interface HomePageProps {
   pages: Page[];
@@ -39,14 +35,6 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async (context) => 
   const pages = await getPages();
   const page = (await getPageBySlug(slug)) ?? pages.find((p) => p.slug === slug) ?? null;
 
-  console.log(
-    'page',
-    JSON.stringify(
-      page.items.map((item) => item.title),
-      null,
-      2,
-    ),
-  )
   if (!page && context.params?.slug) {
     return { notFound: true };
   }
@@ -75,88 +63,6 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async (context) => 
   };
 };
 
-const Media = ({ page, item }: { page: Page; item: MediaItem }) => {
-  let body;
-
-  if (item.type === 'video' && item.videoUrl) {
-    body = (
-      <div
-        className="aspect-video max-w-full md:max-h-full min-w-full md:min-h-full md:h-[calc(350px - 1rem)] relative group legends-wrapper"
-        style={{
-          width: (1600 * (350 - 16)) / 900,
-        }}
-      >
-        <a
-          data-fancybox={page.slug}
-          href={item.videoUrl}
-          className="flex image-container cursor-pointer relative h-full w-full"
-        >
-          <ReactPlayer
-            light
-            showPreview
-            controls
-            url={item.videoUrl}
-            width="100%"
-            height="100%"
-            className="h-full w-full z-0 pointer-events-none"
-          />
-          {item.title && (
-            <div className="absolute p-4 inset-0 flex items-center place-content-center font-body text-neutral-50 bg-neutral-900/40 invisible group-hover:visible pointer-events-none uppercase text-xs">
-              {item.title}
-            </div>
-          )}
-        </a>
-      </div>
-    );
-  } else if (item.type === 'image' && item.image?.url) {
-    const imageUrl = strapiMediaUrl(item.image.url);
-    const width = item.image.width ?? 800;
-    const height = item.image.height ?? 600;
-    const okWidth = 800;
-    const newWidth = okWidth;
-    const newHeight = (height * okWidth) / width;
-
-    if (!imageUrl) {
-      return null;
-    }
-
-    body = (
-      <a
-        data-fancybox={page.slug}
-        href={imageUrl}
-        className="image-container contents"
-      >
-        <Image
-          src={imageUrl}
-          alt={item.title}
-          loading="lazy"
-          width={newWidth}
-          height={newHeight}
-          className="image"
-        />
-      </a>
-    );
-  } else {
-    return null;
-  }
-
-  return (
-    <div
-      data-size={item.type === 'video' ? 'lg' : 'md'}
-      className={clsx(
-        'p-1 max-w-full',
-        'hover:brightness-[0.7]',
-        item.type === 'video' ? 'aspect-video' : ''
-      )}
-      style={{
-        height: 350,
-      }}
-    >
-      {body}
-    </div>
-  );
-};
-
 const HomePage: React.FC<HomePageProps> = ({ pages, page, items }) => {
   const ogImage = strapiMediaUrl(page?.og?.image?.url);
 
@@ -180,7 +86,9 @@ const HomePage: React.FC<HomePageProps> = ({ pages, page, items }) => {
       >
         <Masonry>
           {items.map((item) => (
-            <Media item={item} page={page} key={item.id} />
+            <div key={item.id} className="max-w-full overflow-hidden" style={{ height: 350 }}>
+              <MediaTile item={item} page={page} />
+            </div>
           ))}
         </Masonry>
       </Fancybox>

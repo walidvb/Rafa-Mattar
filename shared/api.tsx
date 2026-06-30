@@ -43,7 +43,15 @@ export function strapiMediaUrl(url?: string | null): string | undefined {
     return url;
   }
 
-  return `${STRAPI_URL}${url}`;
+  const base =
+    (typeof window !== 'undefined'
+      ? process.env.NEXT_PUBLIC_STRAPI_API_URL
+      : process.env.STRAPI_API_URL)?.replace(/\/$/, '') ??
+    (typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      ? 'http://localhost:1337'
+      : '');
+
+  return `${base}${url}`;
 }
 
 export async function getPages(): Promise<Page[]> {

@@ -120,8 +120,12 @@ export async function savePageDraft(
 }
 
 export async function setPagePublished(documentId: string, published: boolean) {
-  const action = published ? 'publish' : 'unpublish';
-  return adminFetch(`pages/${documentId}/${action}`, { method: 'POST' });
+  const action = published ? 'actions/publish' : 'actions/unpublish';
+  return adminFetch(`pages/${documentId}/${action}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({}),
+  });
 }
 
 export async function login(password: string) {
@@ -138,4 +142,8 @@ export async function login(password: string) {
 
 export async function logout() {
   await fetch('/api/admin/login', { method: 'DELETE' });
+}
+
+export async function deleteUploadFile(fileId: number) {
+  return adminFetch(`upload/files/${fileId}`, { method: 'DELETE' });
 }
