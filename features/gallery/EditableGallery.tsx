@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import debounce from 'debounce';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic'
 import {
   DndContext,
@@ -10,7 +11,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { Camera, Video } from 'lucide-react'
+import { Camera, Save, Video } from 'lucide-react'
 import { LayoutGroup } from 'motion/react';
 import { toast } from 'sonner';
 
@@ -72,6 +73,9 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
   const fileInputRef = useRef<HTMLInputElement>(null);
   const insertIndexRef = useRef(0);
   const fileDragDepthRef = useRef(0);
+  const lastSavedRef = useRef<string | null>(null);
+  const pageDocumentIdRef = useRef(page.documentId);
+  pageDocumentIdRef.current = page.documentId;
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -157,22 +161,60 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
       return;
     }
 
+    const stamp = Date.now();
+    const placeholders: EditableMediaItem[] = files.map((file, index) => ({
+      id: -stamp - index,
+      clientId: `upload-${stamp}-${index}`,
+      type: 'image' as const,
+      title: '',
+      description: '',
+      published: true,
+      uploading: true,
+      localPreviewUrl: URL.createObjectURL(file),
+    }));
+
+    setItems((current) => insertItemsAt(current, atIndex, placeholders));
+
     try {
       const uploaded = await uploadFiles(files);
-      const stamp = Date.now();
-      const newItems: EditableMediaItem[] = uploaded.map((file, index) => ({
-        id: -stamp - index,
-        clientId: `new-${stamp}-${index}`,
-        type: 'image' as const,
-        title: '',
-        description: '',
-        published: true,
-        image: file,
-      }));
 
-      setItems((current) => insertItemsAt(current, atIndex, newItems));
+      setItems((current) => {
+        const next = [...current];
+        placeholders.forEach((placeholder, index) => {
+          const itemIndex = next.findIndex(
+            (item) => item.clientId === placeholder.clientId,
+          );
+          if (itemIndex < 0) {
+            return;
+          }
+
+          if (placeholder.localPreviewUrl) {
+            URL.revokeObjectURL(placeholder.localPreviewUrl);
+          }
+
+          next[itemIndex] = {
+            ...next[itemIndex],
+            uploading: false,
+            localPreviewUrl: undefined,
+            image: uploaded[index],
+          };
+        });
+        return next;
+      });
+
       toast.success(`Added ${uploaded.length} image(s)`);
     } catch (err) {
+      const placeholderIds = new Set(
+        placeholders.map((placeholder) => placeholder.clientId),
+      );
+      placeholders.forEach((placeholder) => {
+        if (placeholder.localPreviewUrl) {
+          URL.revokeObjectURL(placeholder.localPreviewUrl);
+        }
+      });
+      setItems((current) =>
+        current.filter((item) => !placeholderIds.has(item.clientId)),
+      );
       toast.error(err instanceof Error ? err.message : 'Upload failed');
     }
   }
@@ -235,7 +277,11 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
     }
 
     try {
-      if (item.type === 'image' && item.image?.id) {
+      if (item.uploading) {
+        if (item.localPreviewUrl) {
+          URL.revokeObjectURL(item.localPreviewUrl);
+        }
+      } else if (item.type === 'image' && item.image?.id) {
         await deleteUploadFile(item.image.id);
       }
 
@@ -289,37 +335,76 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
     setActiveDragId(null);
   }
 
-  async function saveDraft() {
-    setSaving(true);
+  const persistDraft = useCallback(
+    async (itemsToSave: EditableMediaItem[], options?: { silent?: boolean }) => {
+      setSaving(true);
 
-    try {
-      await savePageDraft(page.documentId, { items: serializeItems(items) });
-      const refreshed = await fetchAdminPageBySlug(slug);
+      try {
+        await savePageDraft(pageDocumentIdRef.current, {
+          items: serializeItems(itemsToSave),
+        });
+        const refreshed = await fetchAdminPageBySlug(slug);
 
-      if (refreshed) {
-        onPageChange(refreshed);
-        setItems(toEditableItems(refreshed.items ?? []));
+        if (refreshed) {
+          onPageChange(refreshed);
+          const nextItems = toEditableItems(refreshed.items ?? []);
+          lastSavedRef.current = JSON.stringify(serializeItems(nextItems));
+          setItems(nextItems);
+        }
+
+        if (!options?.silent) {
+          toast.success('Draft saved');
+        }
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Save failed');
+      } finally {
+        setSaving(false);
       }
+    },
+    [slug, onPageChange],
+  );
 
-      toast.success('Draft saved');
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Save failed');
-    } finally {
-      setSaving(false);
+  const persistDraftRef = useRef(persistDraft);
+  persistDraftRef.current = persistDraft;
+
+  const scheduleAutoSave = useMemo(
+    () =>
+      debounce((itemsToSave: EditableMediaItem[]) => {
+        persistDraftRef.current(itemsToSave, { silent: true });
+      }, 800),
+    [],
+  );
+
+  useEffect(() => {
+    return () => scheduleAutoSave.clear();
+  }, [scheduleAutoSave]);
+
+  useEffect(() => {
+    const serialized = JSON.stringify(serializeItems(items));
+    if (lastSavedRef.current === null) {
+      lastSavedRef.current = serialized;
+      return;
     }
-  }
+    if (lastSavedRef.current === serialized) {
+      return;
+    }
+    scheduleAutoSave(items);
+  }, [items, scheduleAutoSave]);
 
   async function publish() {
+    scheduleAutoSave.clear();
     setPublishing(true);
 
     try {
-      await savePageDraft(page.documentId, { items: serializeItems(items) });
-      await setPagePublished(page.documentId, true);
+      await savePageDraft(pageDocumentIdRef.current, { items: serializeItems(items) });
+      await setPagePublished(pageDocumentIdRef.current, true);
       const refreshed = await fetchAdminPageBySlug(slug);
 
       if (refreshed) {
         onPageChange(refreshed);
-        setItems(toEditableItems(refreshed.items ?? []));
+        const nextItems = toEditableItems(refreshed.items ?? []);
+        lastSavedRef.current = JSON.stringify(serializeItems(nextItems));
+        setItems(nextItems);
       }
 
       toast.success('Page published');
@@ -477,18 +562,17 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
         </div>
       ) : null}
 
-      <div className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 gap-3">
-        <Button
+      <div className="fixed bottom-14 left-3 z-[90]">
+        <button
           type="button"
-          variant="outline"
-          onClick={saveDraft}
+          onClick={publish}
           disabled={saving || publishing}
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-neutral-900/80 text-white/80 backdrop-blur transition-colors hover:bg-neutral-800 hover:text-white disabled:opacity-50"
+          aria-label="Publish page"
+          title={publishing ? 'Publishing…' : 'Publish page'}
         >
-          {saving ? 'Saving…' : 'Save draft'}
-        </Button>
-        <Button type="button" onClick={publish} disabled={saving || publishing}>
-          {publishing ? 'Publishing…' : 'Publish'}
-        </Button>
+          <Save className="h-4 w-4" />
+        </button>
       </div>
 
       <Dialog

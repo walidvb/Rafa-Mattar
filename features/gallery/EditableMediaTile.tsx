@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Eye,
   EyeOff,
+  Loader2,
   type LucideIcon,
   Pencil,
   Plus,
@@ -96,13 +97,14 @@ export function EditableMediaTile({
   const shownItem = displayItem ?? item
   const hasTitle = Boolean(item.title?.trim())
   const isPublished = item.published !== false
+  const isUploading = Boolean(item.uploading)
   const isDraggingAny = Boolean(active)
   const {
     attributes,
     listeners,
     setNodeRef: setDragRef,
     isDragging,
-  } = useDraggable({ id: item.clientId })
+  } = useDraggable({ id: item.clientId, disabled: isUploading })
   const { setNodeRef: setDropRef } = useDroppable({ id: item.clientId })
   const isDragSource = isDragging || active?.id === item.clientId
   const contentSwipe = swipeDirection
@@ -169,11 +171,18 @@ export function EditableMediaTile({
           <div
             className={clsx(
               'pointer-events-none absolute inset-0 z-10 transition-colors duration-200',
-              fileHover
-                ? 'bg-black/50'
-                : clsx('bg-black/15', !isDraggingAny && 'group-hover:bg-black/50'),
+              isUploading
+                ? 'bg-black/40'
+                : fileHover
+                  ? 'bg-black/50'
+                  : clsx('bg-black/15', !isDraggingAny && 'group-hover:bg-black/50'),
             )}
           />
+          {isUploading ? (
+            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-white" aria-hidden />
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -187,7 +196,7 @@ export function EditableMediaTile({
         </div>
       ) : null}
 
-      {!isDraggingAny ? (
+      {!isDraggingAny && !isUploading ? (
         <>
           <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-4 opacity-0 transition-opacity group-hover:opacity-100 text-white">
             <div className="flex flex-col gap-3">

@@ -38,7 +38,12 @@ export function TileSwipeContent({
 
   return (
     <motion.div key={displayItem.clientId} className="h-full w-full" {...motionProps}>
-      <MediaTile page={page} item={displayItem} editMode />
+      <MediaTile
+        page={page}
+        item={displayItem}
+        editMode
+        localPreviewUrl={displayItem.localPreviewUrl}
+      />
     </motion.div>
   )
 }

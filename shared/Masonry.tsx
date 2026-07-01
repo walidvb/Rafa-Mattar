@@ -25,6 +25,20 @@ export const Masonry = ({ children, className = '' }) => {
         const maxItems = fullWidth < 767 ? 2 : fullWidth > 1600 ? 3 : 3;
 
         const nodes = [...Array.from(ref.current.childNodes)] as HTMLElement[];
+
+        // Reset any layout from a previous pass so each node is measured at its
+        // natural width (at BASE_HEIGHT). Without this, a recompute reads the
+        // stretched row-fill width we set below and the ratio drifts wider each
+        // time — which happens on the edit page because it re-renders often.
+        for (const node of nodes) {
+          node.style.position = 'static';
+          node.style.width = 'auto';
+          node.style.height = `${BASE_HEIGHT}px`;
+          node.style.left = '';
+          node.style.top = '';
+          delete node.dataset.width;
+        }
+
         let currentRow: HTMLElement[] = [];
         let currentWidth = 0;
         let i = 0;

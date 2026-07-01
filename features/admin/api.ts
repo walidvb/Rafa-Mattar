@@ -133,7 +133,11 @@ export async function uploadFiles(files: File[]): Promise<StrapiMedia[]> {
   return Array.isArray(json) ? json : json.data ?? [];
 }
 
-export type EditableMediaItem = MediaItem & { clientId: string };
+export type EditableMediaItem = MediaItem & {
+  clientId: string;
+  uploading?: boolean;
+  localPreviewUrl?: string;
+};
 
 export function toEditableItems(items: MediaItem[] = []): EditableMediaItem[] {
   return items.map((item) => ({
@@ -143,7 +147,7 @@ export function toEditableItems(items: MediaItem[] = []): EditableMediaItem[] {
 }
 
 export function serializeItems(items: EditableMediaItem[]) {
-  return items.map((item) => {
+  return items.filter((item) => !item.uploading).map((item) => {
     const payload: Record<string, unknown> = {
       type: item.type,
       title: item.title,

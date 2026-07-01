@@ -111,27 +111,42 @@ export function SiteMenuDrawer() {
     return null;
   }
 
+  const isSlugPage = router.pathname === '/[slug]';
+  const slug = router.query.slug as string | undefined;
+
   return (
     <>
-      <div className="fixed right-3 top-3 z-[90] flex flex-col items-end font-body">
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-neutral-900/80 text-white/80 backdrop-blur transition-colors hover:bg-neutral-800 hover:text-white"
-          aria-label="Site menu"
-        >
-          {open ? <X className="h-4 w-4" /> : <Settings2 className="h-4 w-4" />}
-        </button>
+      <div className="fixed bottom-3 left-3 z-[90] flex flex-col items-start gap-2 font-body">
+        {isSlugPage && slug ? (
+          <Link
+            href={`/${slug}/edit`}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-neutral-900/80 text-white/80 backdrop-blur transition-colors hover:bg-neutral-800 hover:text-white"
+            aria-label="Edit page"
+            title="Edit page"
+          >
+            <Pencil className="h-4 w-4" />
+          </Link>
+        ) : null}
 
-        <AnimatePresence>
-          {open ? (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.15, ease: 'easeOut' }}
-              className="mt-2 w-[320px] overflow-hidden rounded-lg border border-white/15 bg-neutral-900/95 text-neutral-200 shadow-xl backdrop-blur"
-            >
+        <div className="flex flex-col-reverse items-start">
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-neutral-900/80 text-white/80 backdrop-blur transition-colors hover:bg-neutral-800 hover:text-white"
+            aria-label="Site menu"
+          >
+            {open ? <X className="h-4 w-4" /> : <Settings2 className="h-4 w-4" />}
+          </button>
+
+          <AnimatePresence>
+            {open ? (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
+                className="mb-2 w-[320px] overflow-hidden rounded-lg border border-white/15 bg-neutral-900/95 text-neutral-200 shadow-xl backdrop-blur"
+              >
               <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
                 <span className="text-xs font-medium uppercase tracking-widest text-white/50">
                   Pages
@@ -184,8 +199,9 @@ export function SiteMenuDrawer() {
                 </DndContext>
               )}
             </motion.div>
-          ) : null}
-        </AnimatePresence>
+            ) : null}
+          </AnimatePresence>
+        </div>
       </div>
 
       <NewPageDialog

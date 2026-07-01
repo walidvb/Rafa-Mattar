@@ -11,9 +11,15 @@ interface MediaTileProps {
   page: Page;
   item: MediaItem;
   editMode?: boolean;
+  localPreviewUrl?: string;
 }
 
-export function MediaTile({ page, item, editMode = false }: MediaTileProps) {
+export function MediaTile({
+  page,
+  item,
+  editMode = false,
+  localPreviewUrl,
+}: MediaTileProps) {
   let body: React.ReactNode = null;
 
   if (item.type === 'video' && item.videoUrl) {
@@ -62,41 +68,49 @@ export function MediaTile({ page, item, editMode = false }: MediaTileProps) {
         )}
       </div>
     );
-  } else if (item.type === 'image' && item.image?.url) {
-    const imageUrl = strapiMediaUrl(item.image.url);
-    const width = item.image.width ?? 800;
-    const height = item.image.height ?? 600;
-    const okWidth = 800;
-    const newWidth = okWidth;
-    const newHeight = (height * okWidth) / width;
+  } else if (item.type === 'image' && (localPreviewUrl || item.image?.url)) {
+    if (localPreviewUrl) {
+      body = (
+        <div className="image-container">
+          <img src={localPreviewUrl} alt="" className="image" />
+        </div>
+      );
+    } else if (item.image?.url) {
+      const imageUrl = strapiMediaUrl(item.image.url);
+      const width = item.image.width ?? 800;
+      const height = item.image.height ?? 600;
+      const okWidth = 800;
+      const newWidth = okWidth;
+      const newHeight = (height * okWidth) / width;
 
-    if (!imageUrl) {
-      return null;
+      if (!imageUrl) {
+        return null;
+      }
+
+      body = editMode ? (
+        <div className="image-container">
+          <Image
+            src={imageUrl}
+            alt={item.title}
+            loading="eager"
+            width={newWidth}
+            height={newHeight}
+            className="image"
+          />
+        </div>
+      ) : (
+        <a data-fancybox={page.slug} href={imageUrl} className="image-container">
+          <Image
+            src={imageUrl}
+            alt={item.title}
+            loading="lazy"
+            width={newWidth}
+            height={newHeight}
+            className="image"
+          />
+        </a>
+      );
     }
-
-    body = editMode ? (
-      <div className="image-container">
-        <Image
-          src={imageUrl}
-          alt={item.title}
-          loading="eager"
-          width={newWidth}
-          height={newHeight}
-          className="image"
-        />
-      </div>
-    ) : (
-      <a data-fancybox={page.slug} href={imageUrl} className="image-container">
-        <Image
-          src={imageUrl}
-          alt={item.title}
-          loading="lazy"
-          width={newWidth}
-          height={newHeight}
-          className="image"
-        />
-      </a>
-    );
   } else {
     return null;
   }
