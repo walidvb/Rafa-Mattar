@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { Label } from '../../components/ui/label';
-import { login } from '../../features/admin/api';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { login } from '../features/admin/api';
 
-export default function AdminLoginPage() {
+export default function LoginPage() {
   const router = useRouter();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
 
     try {
       await login(password);
-      await router.push('/admin');
+      await router.push('/');
     } catch {
       setError('Invalid password');
     } finally {

@@ -6,7 +6,7 @@ export function requireAdmin(context: GetServerSidePropsContext) {
   if (!isAdminAuthenticated(context.req)) {
     return {
       redirect: {
-        destination: '/admin/login',
+        destination: '/login',
         permanent: false,
       },
     } as const;

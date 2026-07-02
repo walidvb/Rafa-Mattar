@@ -50,7 +50,7 @@ export function AdminLayout({
                   size="sm"
                   onClick={async () => {
                     await logout();
-                    window.location.href = '/admin/login';
+                    window.location.href = '/login';
                   }}
                 >
                   Log out
