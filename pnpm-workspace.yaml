@@ -1,0 +1,2 @@
+patchedDependencies:
+  react-player@2.16.1: patches/react-player@2.16.1.patch
