@@ -67,9 +67,12 @@ export async function fetchAdminPages(): Promise<Page[]> {
   return applyPageOrder(json.data, pageOrder);
 }
 
-export async function fetchAdminPageBySlug(slug: string): Promise<Page | null> {
+export async function fetchAdminPageBySlug(
+  slug: string,
+  status: 'draft' | 'published' = 'draft',
+): Promise<Page | null> {
   const json = await adminFetch<StrapiListResponse<Page>>(
-    `pages?filters[slug][$eq]=${encodeURIComponent(slug)}&status=draft&${PAGE_POPULATE}`
+    `pages?filters[slug][$eq]=${encodeURIComponent(slug)}&status=${status}&${PAGE_POPULATE}`
   );
 
   return json.data[0] ?? null;

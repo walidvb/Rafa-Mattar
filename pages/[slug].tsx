@@ -36,8 +36,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async (context) => 
   const slug = (context.params?.slug as string) || MAIN_PAGE_SLUG;
   const pages = await getPages();
   const page = (await getPageBySlug(slug)) ?? pages.find((p) => p.slug === slug) ?? null;
-  const siteConfig = await getSiteConfig();
-
+  const siteConfig = await getSiteConfig()
   if (!page && context.params?.slug) {
     return { notFound: true };
   }
@@ -73,7 +72,7 @@ const HomePage: React.FC<HomePageProps> = ({ pages, page, items, siteConfig }) =
   const ogDescription = page?.og?.description ?? siteConfig?.og?.description ?? undefined;
 
   return (
-    <div className="mx-auto max-w-[1921px] min-h-screen px-2 md:px-4 pb-2 flex flex-col">
+    <div className="mx-auto container min-h-screen px-2 md:px-4 pb-2 flex flex-col">
       <OGTags
         title={page?.og?.title ?? undefined}
         description={ogDescription}
@@ -92,14 +91,18 @@ const HomePage: React.FC<HomePageProps> = ({ pages, page, items, siteConfig }) =
       >
         <Masonry>
           {items.map((item) => (
-            <div key={item.id} className="max-w-full overflow-hidden" style={{ height: 350 }}>
+            <div
+              key={item.id}
+              className="max-w-full overflow-hidden"
+              style={{ height: 350 }}
+            >
               <MediaTile item={item} page={page} />
             </div>
           ))}
         </Masonry>
       </Fancybox>
     </div>
-  );
+  )
 };
 
 export default HomePage;

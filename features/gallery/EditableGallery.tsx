@@ -20,6 +20,7 @@ import { Dialog } from '../../components/ui/dialog';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Textarea } from '../../components/ui/textarea';
+import { cn } from '../../lib/utils';
 import { Masonry } from '../../shared/Masonry';
 import {
   EditableMediaItem,
@@ -70,12 +71,46 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [fileDragActive, setFileDragActive] = useState(false);
+  // undefined = still loading published snapshot; null = never published
+  const [publishedSnapshot, setPublishedSnapshot] = useState<string | null | undefined>(
+    undefined,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const insertIndexRef = useRef(0);
   const fileDragDepthRef = useRef(0);
   const lastSavedRef = useRef<string | null>(null);
   const pageDocumentIdRef = useRef(page.documentId);
   pageDocumentIdRef.current = page.documentId;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchAdminPageBySlug(slug, 'published')
+      .then((published) => {
+        if (cancelled) {
+          return;
+        }
+        setPublishedSnapshot(
+          published
+            ? JSON.stringify(serializeItems(toEditableItems(published.items ?? [])))
+            : null,
+        );
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setPublishedSnapshot(null);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  const hasPendingPublish =
+    publishedSnapshot === null ||
+    (typeof publishedSnapshot === 'string' &&
+      publishedSnapshot !== JSON.stringify(serializeItems(items)));
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -420,7 +455,9 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
       if (refreshed) {
         onPageChange(refreshed);
         const nextItems = toEditableItems(refreshed.items ?? []);
-        lastSavedRef.current = JSON.stringify(serializeItems(nextItems));
+        const snapshot = JSON.stringify(serializeItems(nextItems));
+        lastSavedRef.current = snapshot;
+        setPublishedSnapshot(snapshot);
         setItems(nextItems);
       }
 
@@ -596,9 +633,18 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
           type="button"
           onClick={publish}
           disabled={saving || publishing}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-neutral-900/80 text-white/80 backdrop-blur transition-colors hover:bg-neutral-800 hover:text-white disabled:opacity-50"
+          className={cn(
+            'flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-neutral-900/80 text-white/80 backdrop-blur transition-colors hover:bg-neutral-800 hover:text-white disabled:opacity-50',
+            hasPendingPublish && 'animate-pulse text-white',
+          )}
           aria-label="Publish page"
-          title={publishing ? 'Publishing…' : 'Publish page'}
+          title={
+            publishing
+              ? 'Publishing…'
+              : hasPendingPublish
+                ? 'Publish unpublished changes'
+                : 'Publish page'
+          }
         >
           <Save className="h-4 w-4" />
         </button>
