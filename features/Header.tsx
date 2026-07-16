@@ -21,21 +21,33 @@ export const Header = ({
     <header
       className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
     >
-      <div className=" flex flex-wrap lg:grid lg:grid-cols-3 lg:items-start justify-between  gap-4">
-        <Link passHref href="/">
-          <h1 className="font-title  grow">
-            {'Rafael Mattar'.split('').map((letter, i) => (
-              <span
-                className="inline-block hover:opacity-0 transition-all hover:transition-none"
-                key={i}
-              >
-                {letter === ' ' ? <>&nbsp;</> : letter}
-              </span>
-            ))}
-          </h1>
-        </Link>
-        <ul className="flex grow lg:justify-center items-end self-stretch order-last lg:order-none text-sm ">
-          {pages.map((page, i) => {
+      <div className=" flex flex-wrap lg:grid lg:grid-cols-3 lg:items-center justify-between  gap-4">
+        <div>
+          <Link passHref href="/" className="inline-block">
+            <h1 className="font-title text-[52px] tracking-[1px]  grow">
+              {'Rafael Mattar'.split('').map((letter, i) => (
+                <span
+                  className="inline-block hover:opacity-0 transition-all hover:transition-none"
+                  key={i}
+                >
+                  {letter === ' ' ? <>&nbsp;</> : letter}
+                </span>
+              ))}
+            </h1>
+            <h2 className="text-[16px] tracking-[4.5px] flex justify-between">
+              <div>CINEMATOGRAPHER</div> <div className="">&</div>{' '}
+              <div>PHOTOGRAPHER</div>
+            </h2>
+          </Link>
+        </div>
+        <ul className="flex grow lg:justify-center items-center self-stretch order-last lg:order-none text-sm ">
+          {[
+            ...pages,
+            {
+              name: 'about',
+              slug: 'about',
+            },
+          ].map((page, i) => {
             return (
               <React.Fragment key={page.slug}>
                 {i !== 0 && (
@@ -44,10 +56,10 @@ export const Header = ({
                 <li
                   className="relative"
                   onMouseEnter={() => {
-                    setActive(page.slug);
+                    setActive(page.slug)
                   }}
                   onMouseLeave={() => {
-                    setActive(baseActive);
+                    setActive(baseActive)
                   }}
                 >
                   <Link
@@ -79,11 +91,11 @@ export const Header = ({
                   )}
                 </li>
               </React.Fragment>
-            );
+            )
           })}
         </ul>
         <ul
-          className={`grow text-right inline-flex items-end self-stretch text-sm lg:justify-end gap-4`}
+          className={`grow text-right inline-flex items-center self-stretch text-sm lg:justify-end gap-4`}
         >
           <li>
             <a
@@ -92,7 +104,7 @@ export const Header = ({
               rel="noopener noreferrer"
               className={` group lg:translate-y-[-1px] -translate-y-0.5 inline-block`}
             >
-              <FaInstagram className="h-3.5 w-3.5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <FaInstagram className="w-6 h-6 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
           </li>
           <li>
@@ -102,25 +114,13 @@ export const Header = ({
               rel="noopener noreferrer"
               className=" group  lg:translate-y-[-1px] -translate-y-0.5 inline-block"
             >
-              <VimeoIcon className="h-3.5 w-3.5 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+              <VimeoIcon className="w-6 h-6 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
             </a>
-          </li>
-          <li>
-            <Link href="/contact">
-              {'Contact'.split('').map((letter, i) => (
-                <span
-                  className="inline-block hover:translate-y-[-1px] transition-all"
-                  key={i}
-                >
-                  {letter === ' ' ? <>&nbsp;</> : letter}
-                </span>
-              ))}
-            </Link>
           </li>
         </ul>
       </div>
     </header>
-  );
+  )
 };
 
 const VimeoIcon = (props) => (

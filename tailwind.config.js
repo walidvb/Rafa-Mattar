@@ -10,8 +10,8 @@ module.exports = {
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     fontFamily: {
-      body: ['Helvetica', 'Arial', 'sans-serif'],
-      title: ['Shadows Into Light', 'cursive'],
+      body: ['Inter', 'Arial', 'sans-serif'],
+      title: ['Inter', 'sans-serif'],
     },
     extend: {
       colors: {
@@ -29,4 +29,4 @@ module.exports = {
     extend: {},
   },
   plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate')],
-};
+}

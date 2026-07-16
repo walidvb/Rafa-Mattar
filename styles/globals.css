@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 :root {
   --header-height: 77px;
@@ -9,7 +9,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Shadows Into Light", Helvetica, "Arial", sans-serif;
+  font-family: "Inter", Helvetica, "Arial", sans-serif;
 
   --header-height: 90px;
   max-width: 100vw;
