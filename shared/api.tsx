@@ -77,7 +77,7 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
 export async function getSiteConfig(): Promise<SiteConfig | null> {
   try {
     const json = await fetchStrapi<StrapiSingleResponse<SiteConfig>>(
-      '/site-config?populate[og][populate]=image'
+      '/site-config?populate[og][populate]=image&populate[about][populate]=picture'
     );
 
     return json.data;

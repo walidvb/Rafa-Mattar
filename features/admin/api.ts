@@ -11,7 +11,8 @@ import {
 const PAGE_POPULATE =
   'populate[og][populate]=image&populate[items][populate]=image';
 
-const SITE_CONFIG_POPULATE = 'populate[og][populate]=image';
+const SITE_CONFIG_POPULATE =
+  'populate[og][populate]=image&populate[about][populate]=picture';
 
 async function adminFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`/api/strapi/${path}`, init);
@@ -97,6 +98,10 @@ export async function fetchSiteConfig(): Promise<SiteConfig | null> {
 }
 
 export async function saveSiteConfig(data: {
+  about?: {
+    bio?: string;
+    picture?: number | null;
+  };
   og?: {
     title?: string;
     description?: string;

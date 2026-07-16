@@ -146,7 +146,7 @@ export function EditableMediaTile({
     <div
       ref={setDropRef}
       className={clsx(
-        'group relative max-w-full overflow-hidden font-sans font-normal text-black',
+        'group relative min-w-[200px] max-w-full overflow-hidden font-sans font-normal text-black',
         'font-body',
         !hasTitle && 'ring-2 ring-red-500',
         isDragSource && shownItem.clientId === item.clientId && 'opacity-50',

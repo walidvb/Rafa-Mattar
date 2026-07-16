@@ -6,6 +6,20 @@ import clsx from 'clsx';
 import { motion } from 'motion/react';
 import { Page } from '@shared/strapi-types';
 
+const HoverableText = ({ text }: { text: string }) => {
+  return (
+    <>
+      {text.split('').map((letter, i) => (
+        <span
+          className="inline-block hover:opacity-0 transition-all hover:transition-none transition-delay-300"
+          key={i}
+        >
+          {letter === ' ' ? <>&nbsp;</> : letter}
+        </span>
+      ))}
+    </>
+  )
+}
 export const Header = ({
   pages,
   className = '',
@@ -14,7 +28,8 @@ export const Header = ({
   className?: string;
 }) => {
   const router = useRouter();
-  const baseActive = router.query.slug;
+  const baseActive =
+    (router.query.slug as string | undefined) ?? router.pathname.slice(1)
   const [active, setActive] = useState(baseActive);
 
   return (
@@ -24,19 +39,17 @@ export const Header = ({
       <div className=" flex flex-wrap lg:grid lg:grid-cols-3 lg:items-center justify-between  gap-4">
         <div>
           <Link passHref href="/" className="inline-block">
-            <h1 className="font-title text-[52px] tracking-[1px]  grow">
-              {'Rafael Mattar'.split('').map((letter, i) => (
-                <span
-                  className="inline-block hover:opacity-0 transition-all hover:transition-none"
-                  key={i}
-                >
-                  {letter === ' ' ? <>&nbsp;</> : letter}
-                </span>
-              ))}
+            <h1 className="font-title font-semibold text-[52px] leading-tight tracking-[1px]  grow">
+              <HoverableText text="Rafael Mattar" />
             </h1>
             <h2 className="text-[16px] tracking-[4.5px] flex justify-between">
-              <div>CINEMATOGRAPHER</div> <div className="">&</div>{' '}
-              <div>PHOTOGRAPHER</div>
+              <div>
+                <HoverableText text="CINEMATOGRAPHER" />
+              </div>{' '}
+              <div className="">&</div>{' '}
+              <div>
+                <HoverableText text="PHOTOGRAPHER" />
+              </div>
             </h2>
           </Link>
         </div>

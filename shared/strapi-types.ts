@@ -13,6 +13,11 @@ export interface Og {
   image?: StrapiMedia | null;
 }
 
+export interface About {
+  picture?: StrapiMedia | null;
+  bio?: string | null;
+}
+
 export interface MediaItem {
   id: number;
   type: 'image' | 'video';
@@ -36,6 +41,7 @@ export interface Page {
 export interface SiteConfig {
   id?: number;
   documentId?: string;
+  about?: About | null;
   og?: Og | null;
   pageOrder?: string[] | null;
 }

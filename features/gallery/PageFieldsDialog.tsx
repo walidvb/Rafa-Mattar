@@ -132,7 +132,10 @@ export function PageFieldsDialog({
           <div className="space-y-1">
             <Label>Published</Label>
             <div className="flex items-center gap-2">
-              <Switch checked={pagePublished} onCheckedChange={setPagePublishedState} />
+              <Switch
+                checked={pagePublished}
+                onCheckedChange={setPagePublishedState}
+              />
               <span className="text-sm text-neutral-400">
                 {pagePublished ? 'Live on site' : 'Draft only'}
               </span>
@@ -142,6 +145,10 @@ export function PageFieldsDialog({
           <div className="border-t border-neutral-600 pt-4">
             <p className="mb-3 text-xs font-medium uppercase tracking-wide text-neutral-400">
               Open Graph
+            </p>
+            <p className="mb-3 text-xs text-neutral-400">
+              Displayed when sharing the linkon social media and messenging
+              apps.
             </p>
             <div className="space-y-3">
               <div className="space-y-1">
@@ -208,7 +215,12 @@ export function PageFieldsDialog({
               >
                 Cancel
               </Button>
-              <Button type="button" className="dialog-btn-primary" onClick={save} disabled={saving}>
+              <Button
+                type="button"
+                className="dialog-btn-primary"
+                onClick={save}
+                disabled={saving}
+              >
                 {saving ? 'Saving…' : 'Save'}
               </Button>
             </div>
@@ -216,5 +228,5 @@ export function PageFieldsDialog({
         </div>
       </Dialog>
     </>
-  );
+  )
 }

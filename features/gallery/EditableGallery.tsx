@@ -255,6 +255,23 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
     }
   }
 
+  function handleGalleryDrop(event: React.DragEvent) {
+    if (items.length > 0 || !isFileDrag(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    fileDragDepthRef.current = 0;
+    setFileDragActive(false);
+
+    const files = Array.from(event.dataTransfer.files).filter((file) =>
+      file.type.startsWith('image/'),
+    );
+    if (files.length) {
+      void addFilesAtIndex(files, 0);
+    }
+  }
+
   useEffect(() => {
     function resetFileDrag() {
       fileDragDepthRef.current = 0;
@@ -453,7 +470,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
   }
 
   return (
-    <>
+    <div className="flex flex-1 flex-col">
       <input
         ref={fileInputRef}
         type="file"
@@ -465,7 +482,9 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
 
       {fileDragActive && !activeDragId ? (
         <div className="mb-3 text-center font-sans text-sm font-normal text-black">
-          Drop on an image to add it there
+          {items.length === 0
+            ? 'Drop images here'
+            : 'Drop on an image to add it there'}
         </div>
       ) : null}
 
@@ -476,6 +495,13 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
       ) : null}
 
       <div
+        className={
+          items.length === 0
+            ? `flex min-h-[calc(100vh-10rem)] flex-1 flex-col rounded-lg transition-colors${
+                fileDragActive ? ' border-2 border-dashed border-white/50 bg-white/5' : ''
+              }`
+            : undefined
+        }
         onDragEnter={handleGalleryDragEnter}
         onDragLeave={handleGalleryDragLeave}
         onDragOver={(event) => {
@@ -483,6 +509,7 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
             event.preventDefault()
           }
         }}
+        onDrop={handleGalleryDrop}
       >
         <LayoutGroup>
           <DndContext
@@ -534,33 +561,35 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
             />
           </DndContext>
         </LayoutGroup>
-      </div>
 
-      {items.length === 0 ? (
-        <div className="py-16 text-center">
-          <p className="mb-4 text-white/70">No images yet.</p>
-          <div className="flex items-center justify-center gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              className="gap-2"
-              onClick={() => triggerAdd(0)}
-            >
-              <Camera className="h-4 w-4" />
-              Add image
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="gap-2"
-              onClick={() => addVideoAtIndex(0)}
-            >
-              <Video className="h-4 w-4" />
-              Add video
-            </Button>
+        {items.length === 0 ? (
+          <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
+            <p className="mb-4 text-white/70">
+              {fileDragActive ? 'Drop images to add them' : 'No images yet.'}
+            </p>
+            <div className="flex items-center justify-center gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                className="gap-2"
+                onClick={() => triggerAdd(0)}
+              >
+                <Camera className="h-4 w-4" />
+                Add image
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="gap-2"
+                onClick={() => addVideoAtIndex(0)}
+              >
+                <Video className="h-4 w-4" />
+                Add video
+              </Button>
+            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
 
       <div className="fixed bottom-14 left-3 z-[90]">
         <button
@@ -647,6 +676,6 @@ export function EditableGallery({ slug, page, initialItems, onPageChange }: Edit
           </div>
         </div>
       </Dialog>
-    </>
+    </div>
   )
 }
