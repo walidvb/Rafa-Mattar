@@ -479,6 +479,7 @@ export interface ApiSiteConfigSiteConfig extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    about: Schema.Attribute.Component<'shared.about', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -489,7 +490,6 @@ export interface ApiSiteConfigSiteConfig extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     og: Schema.Attribute.Component<'shared.og', false>;
-    pageOrder: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

@@ -1,5 +1,17 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedAbout extends Struct.ComponentSchema {
+  collectionName: 'components_shared_abouts';
+  info: {
+    displayName: 'About';
+    icon: 'user';
+  };
+  attributes: {
+    bio: Schema.Attribute.Text;
+    picture: Schema.Attribute.Media<'images'>;
+  };
+}
+
 export interface SharedMediaItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_media_items';
   info: {
@@ -34,6 +46,7 @@ export interface SharedOg extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.about': SharedAbout;
       'shared.media-item': SharedMediaItem;
       'shared.og': SharedOg;
     }

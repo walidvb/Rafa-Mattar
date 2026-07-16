@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_abouts",
+  "info": {
+    "displayName": "About",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "picture": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "bio": {
+      "type": "text"
+    }
+  }
+}

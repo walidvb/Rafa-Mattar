@@ -9,14 +9,17 @@
   "options": {
     "draftAndPublish": false
   },
+  "pluginOptions": {},
   "attributes": {
+    "about": {
+      "type": "component",
+      "component": "shared.about",
+      "repeatable": false
+    },
     "og": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.og"
-    },
-    "pageOrder": {
-      "type": "json"
+      "component": "shared.og",
+      "repeatable": false
     }
   }
 }
