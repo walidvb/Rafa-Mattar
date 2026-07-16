@@ -72,7 +72,7 @@ const HomePage: React.FC<HomePageProps> = ({ pages, page, items, siteConfig }) =
   const ogDescription = page?.og?.description ?? siteConfig?.og?.description ?? undefined;
 
   return (
-    <div className="mx-auto container min-h-screen px-2 md:px-4 pb-2 flex flex-col">
+    <div className="min-h-screen px-2 md:px-4 pb-2 flex flex-col">
       <OGTags
         title={page?.og?.title ?? undefined}
         description={ogDescription}

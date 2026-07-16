@@ -10,8 +10,8 @@ module.exports = {
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     fontFamily: {
-      body: ['Inter', 'Arial', 'sans-serif'],
-      title: ['Inter', 'sans-serif'],
+      body: ['Inter', 'Times New Roman', 'sans-serif'],
+      title: ['Inter', 'Times New Roman', 'sans-serif'],
     },
     extend: {
       colors: {
