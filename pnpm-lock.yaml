@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  react-player@2.16.1:
+    hash: 00d176fdcdb67a5a64df8dd09ee4e0e219708195676f6ccb3f578c32fbd96466
+    path: patches/react-player@2.16.1.patch
+
 importers:
 
   .:
@@ -85,7 +90,7 @@ importers:
         version: 4.12.0(react@19.2.7)
       react-player:
         specifier: ^2.16.0
-        version: 2.16.1(react@19.2.7)
+        version: 2.16.1(patch_hash=00d176fdcdb67a5a64df8dd09ee4e0e219708195676f6ccb3f578c32fbd96466)(react@19.2.7)
       react-plock:
         specifier: ^3.0.2
         version: 3.6.1(react@19.2.7)
@@ -4576,7 +4581,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-player@2.16.1(react@19.2.7):
+  react-player@2.16.1(patch_hash=00d176fdcdb67a5a64df8dd09ee4e0e219708195676f6ccb3f578c32fbd96466)(react@19.2.7):
     dependencies:
       deepmerge: 4.3.1
       load-script: 1.0.0

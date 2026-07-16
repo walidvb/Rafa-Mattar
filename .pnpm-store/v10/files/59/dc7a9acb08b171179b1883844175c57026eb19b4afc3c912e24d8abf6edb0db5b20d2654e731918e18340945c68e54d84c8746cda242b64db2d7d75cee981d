@@ -1,0 +1,29 @@
+{
+    "name": "@types/gl-react",
+    "version": "3.15.9",
+    "description": "TypeScript definitions for gl-react",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/gl-react",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Jussi Kinnula",
+            "githubUsername": "jussikinnula",
+            "url": "https://github.com/jussikinnula"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/gl-react"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/react": "*",
+        "csstype": "^3.2.2"
+    },
+    "peerDependencies": {},
+    "typesPublisherContentHash": "96c6da8bd06250ea201a8222cec4ce8281f271e8d1f62451f36e9dc2a7ea92b3",
+    "typeScriptVersion": "5.2"
+}

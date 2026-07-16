@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build && npm run postbuild",
     "postbuild": "next-sitemap",
-    "postinstall": "node scripts/patch-react-player-preview.js",
     "start": "next start",
     "lint": "next lint"
   },

@@ -1,0 +1,118 @@
+import { jsx as c } from "react/jsx-runtime";
+import { useMemo as f, useState as M, useEffect as B } from "react";
+function E(e, t) {
+  return f(
+    () => ({
+      display: "grid",
+      alignItems: "start",
+      gridColumnGap: t,
+      gridTemplateColumns: `repeat(${e}, minmax(0, 1fr))`
+    }),
+    [e, t]
+  );
+}
+function G(e, t, n) {
+  const [r, s] = M({ columns: 0, gap: 1 });
+  return B(() => {
+    if (!e) {
+      s({ columns: t[0], gap: n[0] });
+      return;
+    }
+    const i = e.map(
+      (o) => window.matchMedia(`(min-width: ${o}px)`)
+    ), u = () => {
+      let o = 0;
+      i.forEach((l) => {
+        l.matches && o++;
+      });
+      const a = Math.min(i.length - 1, Math.max(0, o));
+      s({ columns: t[a], gap: n[a] });
+    };
+    u();
+    for (const o of i)
+      o.addEventListener("change", u);
+    return () => {
+      for (const o of i)
+        o.removeEventListener("change", u);
+    };
+  }, [e, t, n]), r;
+}
+function C(e) {
+  return Array.isArray(e) ? e : [e];
+}
+function T({
+  items: e = [],
+  render: t,
+  config: n,
+  as: r = "div",
+  ...s
+}) {
+  const [i, u] = M(/* @__PURE__ */ new Map()), o = f(() => C(n.columns), [n.columns]), a = f(() => C(n.gap), [n.gap]), { columns: l, gap: d } = G(n.media, o, a), w = E(l, d);
+  if (!l) return null;
+  const v = n.useBalancedLayout ? j(e, l, (m) => i.get(m) ?? 0) : S(Q(e, l), l);
+  return /* @__PURE__ */ c(r, { ...s, style: w, children: v.map((m, A) => /* @__PURE__ */ c(H, { gap: d, children: m.map((h, p) => /* @__PURE__ */ c(
+    "div",
+    {
+      ref: (g) => {
+        if (g && n.useBalancedLayout) {
+          const y = g.getBoundingClientRect().height;
+          i.get(h) !== y && u((L) => {
+            const x = new Map(L);
+            return x.set(h, y), x;
+          });
+        }
+      },
+      children: t(h, p)
+    },
+    p
+  )) }, A)) });
+}
+function H({
+  children: e,
+  gap: t
+}) {
+  return /* @__PURE__ */ c(
+    "div",
+    {
+      style: {
+        display: "grid",
+        rowGap: t,
+        gridTemplateColumns: "minmax(0, 1fr)"
+      },
+      children: e
+    }
+  );
+}
+function Q(e = [], t = 3) {
+  const n = [];
+  for (let r = 0; r < e.length; r += t) {
+    const s = e.slice(r, r + t);
+    n.push(s);
+  }
+  return n;
+}
+function S(e = [], t = 3) {
+  const n = Array.from({ length: t }, () => []);
+  for (let r = 0; r < t; r++)
+    for (let s = 0; s < e.length; s += 1)
+      e[s][r] && n[r].push(e[s][r]);
+  return n;
+}
+function j(e, t, n) {
+  const r = Array.from({ length: t }, () => []), s = new Array(t).fill(0);
+  for (const i of e) {
+    let u = 0, o = s[0];
+    for (let a = 1; a < t; a++)
+      s[a] < o && (o = s[a], u = a);
+    r[u].push(i), s[u] += n(i);
+  }
+  return r;
+}
+export {
+  T as Masonry,
+  H as MasonryRow,
+  C as asList,
+  j as createBalancedColumns,
+  Q as createChunks,
+  S as createDataColumns
+};

@@ -1,0 +1,15 @@
+# Installation
+> `npm install --save @types/gl-react`
+
+# Summary
+This package contains type definitions for gl-react (https://github.com/gre/gl-react).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/gl-react.
+
+### Additional Details
+ * Last updated: Tue, 18 Nov 2025 02:14:41 GMT
+ * Dependencies: [@types/react](https://npmjs.com/package/@types/react), [csstype](https://npmjs.com/package/csstype)
+
+# Credits
+These definitions were written by [Jussi Kinnula](https://github.com/jussikinnula).
