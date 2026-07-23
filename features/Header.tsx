@@ -11,7 +11,7 @@ const HoverableText = ({ text }: { text: string }) => {
     <>
       {text.split('').map((letter, i) => (
         <span
-          className="inline-block hover:opacity-0 transition-all hover:transition-none transition-delay-300"
+          className="hover:opacity-0 transition-all hover:transition-none transition-delay-300 last:tracking-[0px]"
           key={i}
         >
           {letter === ' ' ? <>&nbsp;</> : letter}
@@ -34,15 +34,18 @@ export const Header = ({
 
   return (
     <header
-      className={clsx('mx-auto uppercase py-4 tracking-wider', className)}
+      className={clsx(
+        'mx-auto uppercase py-4 lg:py-8 tracking-wider',
+        className,
+      )}
     >
-      <div className=" flex flex-wrap lg:grid lg:grid-cols-3 lg:items-center justify-between  gap-4">
+      <div className=" flex flex-wrap lg:items-center justify-between gap-1">
         <div>
           <Link passHref href="/" className="inline-block">
-            <h1 className="font-title font-semibold text-[52px] leading-tight tracking-[1px]  grow">
+            <h1 className="font-title font-semibold text-[28px] leading-tight tracking-[40%]  grow">
               <HoverableText text="Rafael Mattar" />
             </h1>
-            <h2 className="text-[16px] tracking-[4.5px] flex justify-between">
+            <h2 className="text-[14px] tracking-[2.5px] flex justify-between">
               <div>
                 <HoverableText text="CINEMATOGRAPHER" />
               </div>{' '}
@@ -53,7 +56,7 @@ export const Header = ({
             </h2>
           </Link>
         </div>
-        <ul className="flex grow lg:justify-center items-center self-stretch order-last lg:order-none text-sm ">
+        <ul className="flex justify-between w-full lg:w-auto lg:justify-center items-center self-stretch order-last lg:order-none text-[14px] font-bold ">
           {[
             ...pages,
             {
@@ -64,7 +67,7 @@ export const Header = ({
             return (
               <React.Fragment key={page.slug}>
                 {i !== 0 && (
-                  <li className="w-8 mx-[3px] h-full z-50 bg-[rgba(0,0,0,0.3) backdrop-blur-sm ]"></li>
+                  <li className="w-6 h-full z-50 bg-[rgba(0,0,0,0.3) backdrop-blur-sm ]"></li>
                 )}
                 <li
                   className="relative"
@@ -106,29 +109,31 @@ export const Header = ({
               </React.Fragment>
             )
           })}
-        </ul>
-        <ul
-          className={`grow text-right inline-flex items-center self-stretch text-sm lg:justify-end gap-4`}
-        >
-          <li>
-            <a
-              href="https://instagram.com/rafaelmattar.jpg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={` group lg:translate-y-[-1px] -translate-y-0.5 inline-block`}
+          <li className="ml-4 grow text-right">
+            <ul
+              className={`lg:flex-col text-right inline-flex gap-2 lg:gap-0 items-center self-stretch lg:justify-end lg:divide-y divide-white/90`}
             >
-              <FaInstagram className="w-6 h-6 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://vimeo.com/rafaelmattar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className=" group  lg:translate-y-[-1px] -translate-y-0.5 inline-block"
-            >
-              <VimeoIcon className="w-6 h-6 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
-            </a>
+              <li className="lg:pb-2">
+                <a
+                  href="https://vimeo.com/rafaelmattar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" group  lg:translate-y-[-1px] -translate-y-0.5 inline-block"
+                >
+                  <VimeoIcon className="w-4 h-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+                </a>
+              </li>
+              <li className="lg:pt-2">
+                <a
+                  href="https://instagram.com/rafaelmattar.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={` group lg:translate-y-[-1px] -translate-y-0.5 inline-block`}
+                >
+                  <FaInstagram className="w-4 h-4 group-hover:-translate-y-[2px] translate-y-0 transition inline-block" />
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
